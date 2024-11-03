@@ -1,0 +1,90 @@
+/* Colores fijos para reutilizar en todo el proyecto */
+:root {
+    --primary-color: #4E7678; /*Este color corresponde al color primario de los botones*/
+    --secondary-color: #3B585A; /*Este color corresponde al hover de los botones*/
+}
+
+/* Estilo general */
+* {
+    font-family: 'Nunito Sans', sans-serif; 
+}
+
+.texto-intro {
+    color: white;
+    margin-top: 150px;
+    margin-left: -30px;
+    margin-bottom: 70px;
+}
+
+.texto-intro h2 {
+    margin-top: 200px;
+}
+
+.navbar .navbar-brand {
+    font-size: 32px;
+    margin-left: 120px;
+    color: black !important;
+}
+
+/* Estilo para los botones "Quiero ser Cliente" y "Banca Online" */
+.btn-client-banca {
+    padding: 4px 10px; 
+    border-radius: 8px; 
+    font-size: 1.2rem !important; 
+    height: auto; 
+    line-height: 1.2; 
+    margin: 0; 
+}
+
+/* Estilo para botones de la navbar */
+.navbar-btn {
+    background-color: var(--primary-color); 
+    color: white; 
+    border-radius: 10px;
+    text-decoration: none; 
+    padding: 10px 15px; 
+}
+
+.navbar-btn:hover {
+    background-color: var(--secondary-color); 
+    color: white; 
+}
+
+.navbar a {
+    color: white !important; 
+    font-size: 20px; 
+}
+
+.btn-solicita-grande {
+    font-size: 1.5rem;
+    margin-left: 90px;
+}
+
+/* Estilo para la sección de fondo */
+.seccion-1 {
+    background-image: url(../Images/Background.png);
+    background-position: center top; 
+    height: 70vh; 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+}
+
+.col-sm:last-child {
+    position: relative; 
+}
+
+.imagen-manos-fondo {
+    position: absolute; 
+    top: 0; 
+    left: 250px; 
+    transform: translateY(130%); 
+}
+
+
+
+
+
+
+
+
+
