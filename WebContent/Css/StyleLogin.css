@@ -1,0 +1,70 @@
+/* Estilo para ajustar el tamaño y posición del formulario de login */
+.form-container-custom {
+    width: 400px; 
+    padding: 30px; 
+    margin-top: 80px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
+    background-color: white; 
+    border-radius: 8px; 
+}
+
+/* Ajustes para el texto del título */
+.text-center h3 {
+    color: #333;
+    font-weight: bold; 
+}
+
+/* Estilo para los botones personalizados */
+.btn-customContinuar {
+    background-color: var(--primary-color); 
+    color: white; 
+    border: none; 
+    border-radius: 5px;
+    padding: 10px; 
+    font-size: 1rem; 
+}
+
+.btn-customContinuar:hover {
+    background-color: var(--secondary-color); 
+}
+
+/* Ajutes en el icono de los Textbox */
+
+.input-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center; 
+}
+
+.input-icon {
+    padding-left: 40px; 
+    width: calc(100% - 40px); 
+}
+
+.icon-label {
+    position: absolute;
+    left: 10px; 
+    pointer-events: none; 
+}
+
+.icon-label img {
+    width: 20px;
+    height: 20px; 
+    filter: invert(0) sepia(1) saturate(0) hue-rotate(120deg);
+}
+
+.input-icon:not(:placeholder-shown) + .icon-label {
+    opacity: 0; 
+    visibility: hidden; 
+}
+
+.input-icon::placeholder {
+    color: #aaa; 
+}
+
+.input-icon:not(:placeholder-shown) {
+    padding-left: 10px; 
+}
+
+
+

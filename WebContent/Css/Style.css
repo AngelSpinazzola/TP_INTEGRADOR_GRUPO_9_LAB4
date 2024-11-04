@@ -1,7 +1,7 @@
 /* Colores fijos para reutilizar en todo el proyecto */
 :root {
-    --primary-color: #4E7678; /*Este color corresponde al color primario de los botones*/
-    --secondary-color: #3B585A; /*Este color corresponde al hover de los botones*/
+    --primary-color: #2563EB; /*Este color corresponde al color primario de los botones*/
+    --secondary-color: #1D4ED8; /*Este color corresponde al hover de los botones*/
 }
 
 /* Estilo general */
@@ -29,18 +29,22 @@
 /* Estilo para los botones "Quiero ser Cliente" y "Banca Online" */
 .btn-client-banca {
     padding: 4px 10px; 
-    border-radius: 8px; 
+    border-radius: 5px; 
     font-size: 1.2rem !important; 
     height: auto; 
     line-height: 1.2; 
     margin: 0; 
 }
 
-/* Estilo para botones de la navbar */
+/* Estilo para navbar */
+.navbar {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    background-color: white; 
+}
 .navbar-btn {
     background-color: var(--primary-color); 
     color: white; 
-    border-radius: 10px;
+    border-radius: 5px;
     text-decoration: none; 
     padding: 10px 15px; 
 }
@@ -60,8 +64,8 @@
     margin-left: 90px;
 }
 
-/* Estilo para la sección de fondo */
-.seccion-1 {
+/* Clase específica para el fondo en home.jsp */
+.seccion-fondo-home {
     background-image: url(../Images/Background.png);
     background-position: center top; 
     height: 70vh; 

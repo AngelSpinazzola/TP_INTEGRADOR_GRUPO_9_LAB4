@@ -1,7 +1,7 @@
 <!-- Home.jsp -->
 <%@ include file="Componentes/Head.jsp"%>
 <body>
-	<section class="seccion-1">
+	<section class="seccion-fondo-home">
 	<%@ include file="Componentes/Navbar.jsp"%>
 		<div class="container">
 			<div class="row">
@@ -16,5 +16,4 @@
 			</div>
 		</div>
 	</section>
-	
 </body>
