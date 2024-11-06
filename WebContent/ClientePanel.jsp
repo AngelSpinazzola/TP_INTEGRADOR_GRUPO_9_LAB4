@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
 <head>
     <meta charset="UTF-8">
     <style>
-        /* Evita el uso de selectores generales */
 		body {
-		    background-color: #f5f5f5; /* Este estilo no debería afectar al Navbar */
+		    background-color: #f5f5f5; 
 		    margin: 0;
 		    padding: 0;
 		}
@@ -30,11 +27,10 @@
             text-align: left;
             background-color: #fff;
         }
-        /* Asegúrate de usar selectores específicos */
 		.account-card h3 {
 		    margin: 0;
 		    font-size: 18px;
-		    color: #333; /* Especifica color solo para esta sección */
+		    color: #333;
 			}
         .account-card p {
             margin: 5px 0;
@@ -147,4 +143,3 @@
         </tbody>
     </table>
 </body>
-</html>

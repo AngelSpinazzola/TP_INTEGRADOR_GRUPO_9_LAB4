@@ -11,7 +11,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<div class="navbar-nav">
 				<a class="nav-link text-white" href="Home.jsp">Inicio</a> <a
-					class="nav-link text-white" href="Transferir.jsp">Transferir</a> <a
+					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a> <a
 					class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
 					class="nav-link text-white" href="DatosPersonales.jsp">Datos
 					personales</a>

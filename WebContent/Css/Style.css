@@ -20,7 +20,7 @@
 }
 
 .navbar .navbar-brand {
-    font-size: 24px; /* Tamaño incrementado */
+    font-size: 24px; 
     font-weight: bold;
     color: white !important;
 }
@@ -32,12 +32,12 @@
 
 
 .navbar .navbar-nav {
-    justify-content: center; /* Centra los enlaces de navegación */
+    justify-content: center;
     flex-grow: 1;
 }
 
 .navbar-btn-right {
-    margin-right: 80px; /* Espacio adicional hacia la derecha */
+    margin-right: 80px;
 }
 
 .navbar .nav-link {
@@ -53,7 +53,7 @@
     border-radius: 5px;
     text-decoration: none;
     padding: 10px 15px;
-    margin-right: 10px; /* Espacio entre los botones */
+    margin-right: 10px; 
 }
 
 
@@ -119,11 +119,11 @@
 }
 
 .table-movimientos .monto-negativo {
-    color: var(--navbar-btn-red); /* Rojo para montos negativos */
+    color: var(--navbar-btn-red); 
 }
 
 .table-movimientos .monto-positivo {
-    color: var(--navbar-btn-green); /* Verde para montos positivos */
+    color: var(--navbar-btn-green); 
 }
 
 /* Estilo específico para el fondo en home.jsp */
