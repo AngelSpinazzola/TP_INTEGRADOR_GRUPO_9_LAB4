@@ -13,7 +13,7 @@
 				<a class="nav-link text-white" href="Home.jsp">Inicio</a> <a
 					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a> <a
 					class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
-					class="nav-link text-white" href="DatosPersonales.jsp">Datos
+					class="nav-link text-white" href="ClienteDatos.jsp">Datos
 					personales</a>
 			</div>
 

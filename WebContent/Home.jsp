@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Home.jsp -->
 <%@ include file="Componentes/Head.jsp"%>
 <head>
@@ -8,9 +9,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm">
-					<h2 class="texto-intro h2" style="margin-top: 120px; color:white;">PrÈstamos y Transferencias al instante, cuando m·s lo
+					<h2 class="texto-intro h2" style="margin-top: 120px; color:white;">Pr√©stamos y Transferencias al instante, cuando m√°s lo
 						necesitas.</h2>
-					<a class="btn navbar-btn btn-solicita-grande" style="margin: 30px;" href="#">Solicit· tu cuenta</a>
+					<a class="btn navbar-btn btn-solicita-grande" style="margin: 30px;" href="#">Solicit√° tu cuenta</a>
 				</div>
 				<div class="col-sm">
 					<img class="imagen-manos-fondo" alt="Imagen de manos" src="Images/ManosFondo.png">

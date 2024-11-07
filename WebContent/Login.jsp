@@ -1,4 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="Componentes/Head.jsp"%>
+
+<head>
+</head>
 <body>
     <%@ include file="Componentes/Navbar.jsp"%>
 
@@ -6,11 +10,11 @@
     <div class="form-wrapper" style="margin-top: 70px;">
         <div class="content-wrapper">
             <div class="text-center mt-4">
-                <h2 style="margin-top: 60px;">Ingres· a tu cuenta</h2>
+                <h2 style="margin-top: 60px;">Ingres√° a tu cuenta</h2>
             </div>
             <div class="container d-flex justify-content-center" style="margin-top: 30px;">
                 <div class="form-container-custom mt-4">
-                    <!-- Campo de Nombre de Usuario con Ìcono -->
+                    <!-- Campo de Nombre de Usuario con √≠cono -->
                     <div class="mb-3">
                         <label for="txtNombreUsuario" class="form-label">Usuario</label>
                         <div class="input-icon-container">
@@ -21,9 +25,9 @@
                         </div>
                     </div>
 
-                    <!-- Campo de ContraseÒa con Ìcono -->
+                    <!-- Campo de Contrase√±a con √≠cono -->
                     <div class="mb-4">
-                        <label for="txtPass" class="form-label">ContraseÒa</label>
+                        <label for="txtPass" class="form-label">Contrase√±a</label>
                         <div class="input-icon-container">
                             <input type="password" class="form-control input-icon" placeholder="******" id="txtPass" required>
                             <label class="icon-label" for="txtPass">
@@ -32,7 +36,7 @@
                         </div>
                     </div>
                     
-                    <!-- BotÛn de Continuar -->
+                    <!-- Bot√≥n de Continuar -->
                     <div class="d-grid mb-3">
                         <button type="submit" class="btn btn-customContinuar" style="margin-top: 30px;">Continuar</button>
                     </div>

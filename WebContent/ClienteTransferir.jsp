@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <head>
    <style>
@@ -128,7 +130,7 @@
        <div class="transfer-form">
            <div class="section-header">Cuenta de destino</div>
            <div class="section-content">
-               <label>Ingres· el CBU</label>
+               <label>Ingres√° el CBU</label>
                <input type="text" class="form-input" placeholder="CBU">
                
                <label>Monto</label>
