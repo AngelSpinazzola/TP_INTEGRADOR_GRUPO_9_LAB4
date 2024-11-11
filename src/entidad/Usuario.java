@@ -2,98 +2,54 @@ package entidad;
 
 public class Usuario {
 
-	private int ID;
-	private String User;
-	private String Password;
-	private int UserType;;
+	private int id;
+	private final String nombreUsuario;
+	private static String password = "123";
+	private final TipoUsuario tipo;
+	private boolean activo;
 
 	public Usuario() {
-
+		this.nombreUsuario = "user";
+		this.tipo = TipoUsuario.cliente;
+		this.activo = true;
 	}
 
-	public Usuario(String usuario, String contraseña, int tipoUsuario) {
-
-		this.User = usuario;
-		this.Password = contraseña;
-		this.UserType = tipoUsuario;
+	public Usuario(String nombreUsuario, TipoUsuario tipo, boolean activo) {
+		this.nombreUsuario = nombreUsuario;
+		this.tipo = tipo;
+		this.activo = activo;
 	}
 
-	public int getID() {
-		return this.ID;
+	public int getId() {
+		return id;
 	}
 
-	public String getUser() {
-		return this.User;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setID(int ID) {
-		this.ID = ID;
+	public static String getPassword() {
+		return password;
 	}
 
-	public void setUser(String user) {
-		this.User = user;
+	public static void setPassword(String password) {
+		Usuario.password = password;
 	}
 
-	public String getPassword() {
-		return Password;
+	public boolean isActivo() {
+		return activo;
 	}
 
-	public void setPassword(String password) {
-		Password = password;
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
-	public int getUserType() {
-		return UserType;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
 
-	public void setUserType(int userType) {
-		UserType = userType;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [ID=" + ID + ", User=" + User + ", Password=" + Password + ", UserType=" + UserType + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ID;
-		result = prime * result + ((Password == null) ? 0 : Password.hashCode());
-		result = prime * result + ((User == null) ? 0 : User.hashCode());
-		result = prime * result + UserType;
-		return result;
-	}
-
-	public boolean verificarContraseña(String contraseña) {
-		return this.Password.equals(contraseña);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (ID != other.ID)
-			return false;
-		if (Password == null) {
-			if (other.Password != null)
-				return false;
-		} else if (!Password.equals(other.Password))
-			return false;
-		if (User == null) {
-			if (other.User != null)
-				return false;
-		} else if (!User.equals(other.User))
-			return false;
-		if (UserType != other.UserType)
-			return false;
-		return true;
+	public TipoUsuario getTipo() {
+		return tipo;
 	}
 
 }
