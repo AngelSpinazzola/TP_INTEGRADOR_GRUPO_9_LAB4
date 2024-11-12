@@ -11,8 +11,8 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<div class="navbar-nav">
 				<a class="nav-link text-white" href="Home.jsp">Inicio</a> <a
-					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a> <a
-					class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
+					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a>
+				<a class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
 					class="nav-link text-white" href="ClienteDatos.jsp">Datos
 					personales</a>
 			</div>
@@ -22,8 +22,7 @@
 			%>
 			<!-- Contenedor separado para los botones a la derecha -->
 			<div class="ms-auto">
-				<a class="navbar-btn navbar-btn-right" href="Registro.jsp">Quiero
-					ser Cliente</a> <a class="navbar-btn navbar-btn-right" href="Login.jsp">Banca
+				<a class="navbar-btn navbar-btn-right" href="Login.jsp">Banca
 					Online</a>
 			</div>
 			<%

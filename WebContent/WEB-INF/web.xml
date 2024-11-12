@@ -7,13 +7,7 @@
     <display-name>TP_INTEGRADOR_GRUPO_9_LAB4</display-name>
     
     <welcome-file-list>
-        <welcome-file>Login.jsp</welcome-file>
+        <welcome-file>Home.jsp</welcome-file>
     </welcome-file-list>
-    
-    <!-- No necesitas declarar el servlet si usas @WebServlet -->
-    
-    <session-config>
-        <session-timeout>30</session-timeout>
-    </session-config>
     
 </web-app>
