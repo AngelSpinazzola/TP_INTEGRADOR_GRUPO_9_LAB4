@@ -13,7 +13,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	private static UsuarioDaoImpl instancia = null;
 
 	private static final String login = "SELECT U.Usuario, U.TipoUsuario, U.Estado " + "FROM usuarios U "
-			+ "INNER JOIN clientes C ON C.IDUsuario = U.IDUsuario " + "WHERE C.Email = ? AND U.Contraseña = ?";
+			+ "INNER JOIN clientes C ON C.IDUsuario = U.IDUsuario " + "WHERE C.Email = ? AND U.Contrasenia = ?";
 
 	public static UsuarioDaoImpl ObtenerInstancia() {
 		if (instancia == null) {
