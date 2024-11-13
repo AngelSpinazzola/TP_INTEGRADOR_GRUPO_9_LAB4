@@ -9,16 +9,9 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
-			<div class="navbar-nav">
-				<a class="nav-link text-white" href="Home.jsp">Inicio</a> <a
-					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a>
-				<a class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
-					class="nav-link text-white" href="ClienteDatos.jsp">Datos
-					personales</a>
-			</div>
 
 			<%
-				if (session.getAttribute("sessionLogin") == null) {
+				if (session.getAttribute("usuario") == null) {
 			%>
 			<!-- Contenedor separado para los botones a la derecha -->
 			<div class="ms-auto">
@@ -28,9 +21,16 @@
 			<%
 				} else {
 			%>
+			<div class="navbar-nav">
+				<a class="nav-link text-white" href="Home.jsp">Inicio</a> <a
+					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a>
+				<a class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
+					class="nav-link text-white" href="ClienteDatos.jsp">Datos
+					personales</a>
+			</div>
 			<div class="ms-auto">
-				<a class="btn btn-success me-2" href="Perfil.jsp">Mi perfil</a> <a
-					class="btn btn-danger" href="Logout.jsp">Salir</a>
+				<a class="btn btn-success me-2" href="ClientePanel.jsp">Mi perfil</a> 
+				<a class="btn btn-success me-2" href="LogoutServlet">Salir</a>
 			</div>
 			<%
 				}

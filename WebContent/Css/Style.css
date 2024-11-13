@@ -128,7 +128,7 @@
 
 /* Estilo específico para el fondo en home.jsp */
 .seccion-fondo-home {
-    background-image: url(../Images/Background.png);
+    background-image: url('../Images/Background.jpg');
     background-position: center top;
     height: 70vh;
     background-size: cover;
@@ -143,7 +143,7 @@
 .imagen-manos-fondo {
     position: absolute;
     top: 0;
-    left: 250px;
+    left: 300px;
     transform: translateY(130%);
 }
 

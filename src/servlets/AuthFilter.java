@@ -25,7 +25,7 @@ public class AuthFilter implements Filter {
         String uri = req.getRequestURI();
 
         // Permite acceso sin autenticación a Home.jsp, Login.jsp, ServletLogin, Error.jsp y recursos estáticos
-        if (uri.contains("Home.jsp") || uri.contains("Login.jsp") || uri.contains("ServletLogin") || uri.contains("Error.jsp") || uri.contains("/resources/")) {
+        if (uri.contains("Home.jsp") || uri.contains("Login.jsp") || uri.contains("ServletLogin") || uri.contains("Error.jsp") || uri.contains("/Images/") || uri.contains("/Css/")) {
             chain.doFilter(request, response);
             return;
         }
