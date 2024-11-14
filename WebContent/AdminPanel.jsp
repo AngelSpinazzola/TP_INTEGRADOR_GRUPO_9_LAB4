@@ -14,7 +14,7 @@
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
     
    
-    
+    <h1> Panel principal, acá iria un resumen en general, con el grafico estadistico</h1>
 </body>
 </html>
 

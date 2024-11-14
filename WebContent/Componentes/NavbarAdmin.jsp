@@ -140,15 +140,15 @@
 				<a href="AdminPanel.jsp"><i class="fas fa-home"></i>Inicio</a>
 			</div>
 			<div class="item">
-				<a href="AdminAltaCliente.jsp"><i class="fa-solid fa-users"></i>Clientes</a>
+				<a href="AdminGestionClientes.jsp"><i class="fa-solid fa-users"></i>Clientes</a>
 			</div>
 			<div class="item">
 				<a class="sub-btn"><i class="fas fa-wallet"></i>Préstamos<i
 					class="fas fa-angle-right dropdown"></i></a>
 				<div class="sub-menu">
-					<a href="#" class="sub-item"><i class="fas fa-hourglass-half"></i>Préstamos en revisión</a> <a href="#"
-						class="sub-item"><i class="fas fa-check-circle"></i>Préstamos activos</a> <a href="#"
-						class="sub-item"><i class="fas fa-list-alt"></i>Resumen de préstamos</a>
+					<a href="AdminPrestamosRevision.jsp" class="sub-item"><i class="fas fa-hourglass-half"></i>Préstamos en revisión</a> 
+					<a href="AdminPrestamosActivos.jsp"class="sub-item"><i class="fas fa-check-circle"></i>Préstamos activos</a> 
+					<a href="AdminResumenPrestamos.jsp"class="sub-item"><i class="fas fa-list-alt"></i>Resumen de préstamos</a>
 				</div>
 			</div>
 		</div>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<%@ include file="Componentes/Head.jsp"%>
+	
    <style>
     .container {
       max-width: 1000px;
@@ -15,7 +15,7 @@
       border: 1px solid #ddd;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
-      margin-top: 30px; /* Ajuste para el margen entre el botón y la tabla */
+      margin-top: 30px; 
     }
     h2{
     	margin-bottom: 30px;
@@ -89,8 +89,8 @@
     .btn-nuevo-cliente {
  		width: 200px;
  	}
-    
   </style>
+    <%@ include file="Componentes/Head.jsp"%>
 </head>
 <body>
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
@@ -125,9 +125,9 @@
             <div class="action-buttons">
               <button><i class="fas fa-ellipsis-v"></i></button>
               <div class="action-dropdown">
-                <a href="#">Ver Cliente</a>
-                <a href="AdminEditarClientes.jsp">Editar Cliente</a>
-                <a href="#">Gestionar Cuentas</a>
+                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
+                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
+                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
               </div>
             </div>
           </td>
@@ -142,9 +142,9 @@
             <div class="action-buttons">
               <button><i class="fas fa-ellipsis-v"></i></button>
               <div class="action-dropdown">
-                <a href="#">Ver Cliente</a>
-                <a href="AdminEditarClientes.jsp">Editar Cliente</a>
-                <a href="#">Gestionar Cuentas</a>
+                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
+                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
+                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
               </div>
             </div>
           </td>
@@ -159,9 +159,9 @@
             <div class="action-buttons">
               <button><i class="fas fa-ellipsis-v"></i></button>
               <div class="action-dropdown">
-                <a href="#">Ver Cliente</a>
-                <a href="AdminEditarClientes.jsp">Editar Cliente</a>
-                <a href="#">Gestionar Cuentas</a>
+                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
+                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
+                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
               </div>
             </div>
           </td>
@@ -176,9 +176,9 @@
             <div class="action-buttons">
               <button><i class="fas fa-ellipsis-v"></i></button>
               <div class="action-dropdown">
-                <a href="#">Ver Cliente</a>
-                <a href="AdminEditarClientes.jsp">Editar Cliente</a>
-                <a href="#">Gestionar Cuentas</a>
+                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
+                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
+                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
               </div>
             </div>
           </td>
@@ -193,9 +193,9 @@
             <div class="action-buttons">
               <button><i class="fas fa-ellipsis-v"></i></button>
               <div class="action-dropdown">
-                <a href="#">Ver Cliente</a>
-                <a href="AdminEditarClientes.jsp">Editar Cliente</a>
-                <a href="#">Gestionar Cuentas</a>
+                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
+                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
+                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
               </div>
             </div>
           </td>
