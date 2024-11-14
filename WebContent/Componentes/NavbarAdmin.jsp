@@ -1,256 +1,175 @@
-<%@page import="entidad.Usuario"%>
-<nav class="navbar navbar-expand-lg navbar-dark text-white">
-	<div class="container-fluid">
-		<!-- Botón de menú hamburguesa -->
-		<button class="navbar-toggler border-0" type="button"
-			data-bs-toggle="collapse" data-bs-target="#sidebarMenu"
-			aria-controls="sidebarMenu" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: "Poppins", sans-serif;
+	}
+	
+	body {
+		min-height: 100vh;
+		background-color: #f4f4f4;
+		font-family: "Roboto", sans-serif;
+	}
+	
+	.navbar {
+		background-color: #144A88;
+		padding: 15px;
+		display: flex;
+		justify-content: flex-start; 
+		align-items: center;
+		color: white;
+	}
+	
+	.navbar .menu-icon {
+		font-size: 30px;
+		cursor: pointer;
+		margin-right: 250px; 
+		margin-left: 15px; 
+	}
 
-		<!-- Logo -->
-		<a class="navbar-brand text-white fw-bold titulo-navbar"
-			href="Home.jsp">Banco UTN</a>
+	.navbar .brand-name {
+		font-size: 24px;
+		margin-left: 30px; 
+	}
+	
+	.side-bar {
+		background-color: #144A88; 
+		width: 15%; 
+		height: 100vh;
+		position: fixed;
+		top: 0;
+		left: -100%; 
+		transition: left 0.5s ease; 
+		z-index: 100;
+		overflow-y: auto;
+	}
+	
+	.side-bar.open {
+		left: 0;
+	}
+	
+	.side-bar .menu {
+		width: 100%;
+		margin-top: 80px;
+	}
+	
+	.side-bar .menu .item {
+		position: relative;
+		cursor: pointer;
+	}
+	
+	.side-bar .menu .item a {
+		color: #fff;
+		font-size: 16px;
+		text-decoration: none;
+		display: block;
+		padding: 15px 30px;
+		line-height: 60px;
+	}
+	
+	.side-bar .menu .item a:hover {
+		background: #07886C;
+		transition: 0.3s ease;
+	}
+	
+	.side-bar .menu .item i {
+		margin-right: 12px;
+	}
+	
+	.side-bar .menu .item .sub-menu {
+		background: rgba(255, 255, 255, 0.2);
+		display: none;
+	}
+	
+	.side-bar .menu .item .sub-menu a {
+		padding-left: 80px;
+	}
+	
+	.side-bar .menu .item a .dropdown {
+		position: absolute;
+		right: 0;
+		margin: 20px;
+		transition: 0.3 ease;
+	}
+	
+	.rotate {
+		transform: rotate(90deg);
+	}
+	
+	.side-bar .close-btn {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		font-size: 25px;
+		color: #fff;
+		cursor: pointer;
+	}
+	
+	.content {
+		margin-left: 15%;
+		padding: 20px;
+	}
+	.navbar .logout-btn {
+   		margin-left: auto;  
+    	margin-right: 10%; 
+    	padding: 5px 35px;  
+    	font-size: 20px;  
+    	border-radius: 5px;  
+    	height: auto; 
+	}
+	
+</style>
+<nav>
+	<div class="navbar">
+		<div class="menu-icon" onclick="toggleSidebar()">
+			<i class="fas fa-bars"></i>
+		</div>
+		<div class="brand-name">Banco UTN</div>
+		<%if (session.getAttribute("usuario") != null){ %>
+			<a class="btn btn-success me-2 logout-btn" href="LogoutServlet">Salir</a>
+		<%} %>
+	</div>
 
-		<!-- Botones de la derecha -->
-		<div class="ms-auto">
-			<a class="navbar-btn btn-red" href="LogoutServlet">Salir</a>
+	<div class="side-bar" id="sidebar">
+		<div class="close-btn" onclick="closeSidebar()">
+			<i class="fas fa-times"></i>
+		</div>
+		<div class="menu">
+			<div class="item">
+				<a href="AdminPanel.jsp"><i class="fas fa-home"></i>Inicio</a>
+			</div>
+			<div class="item">
+				<a href="AdminAltaCliente.jsp"><i class="fas fa-home"></i>Clientes</a>
+			</div>
+			<div class="item">
+				<a class="sub-btn"><i class="fas fa-table"></i>Préstamos<i
+					class="fas fa-angle-right dropdown"></i></a>
+				<div class="sub-menu">
+					<a href="#" class="sub-item">Préstamos en revisión</a> <a href="#"
+						class="sub-item">Préstamos activos</a> <a href="#"
+						class="sub-item">Resumen de préstamos</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </nav>
 
-<!-- Menú lateral -->
-<div class="collapse navbar-collapse sidebar" id="sidebarMenu">
-    <div class="sidebar-content">
-        <div class="sidebar-menu">
-            <a href="Inicio.jsp" class="menu-item">
-                <i class="fas fa-home"></i>
-                <span>Inicio</span>
-            </a>
-            <a href="Clientes.jsp" class="menu-item">
-                <i class="fas fa-users"></i>
-                <span>Clientes</span>
-            </a>
-            <div class="menu-item submenu">
-                <a href="#prestamosSubmenu" class="d-flex align-items-center" data-bs-toggle="collapse">
-                    <i class="fas fa-chevron-right"></i>
-                    <span>Préstamos</span>
-                </a>
-                <!-- Se ajusta el submenu para desplegarse hacia abajo -->
-                <div class="collapse" id="prestamosSubmenu">
-                    <a href="PrestamosAdmin.jsp" class="submenu-item">
-                        <i class="fas fa-list"></i>
-                        <span>Préstamos</span>
-                    </a>
-                    <a href="PrestamosRevision.jsp" class="submenu-item">
-                        <i class="fas fa-clock"></i>
-                        <span>Préstamos en revisión</span>
-                    </a>
-                    <a href="HistorialPrestamos.jsp" class="submenu-item">
-                        <i class="fas fa-history"></i>
-                        <span>Historial de préstamos</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.sub-btn').click(function() {
+			$(this).next('.sub-menu').slideToggle();
+			$(this).find('.dropdown').toggleClass('rotate');
+		});
+	});
 
+	function toggleSidebar() {
+		var sidebar = document.getElementById('sidebar');
+		sidebar.classList.toggle('open');
+	}
 
-
-<!-- Overlay para cerrar el menú en móviles -->
-<div class="sidebar-overlay" data-bs-toggle="collapse"
-	data-bs-target="#sidebarMenu"></div>
-
-<style>
-:root {
-    --primary-color: #07886C;
-    --secondary-color: #056A54;
-    --navbar-bg-color: #104489;
-    --navbar-btn-green: #2ECC71;
-    --navbar-btn-red: #E74C3C;
-}
-
-.navbar {
-    background-color: var(--navbar-bg-color);
-    padding: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 1050;
-}
-
-.titulo-navbar {
-    margin-left: 10px;
-    font-size: 24px;
-}
-
-/* Botones del navbar */
-.navbar-btn {
-    padding: 8px 16px;
-    border-radius: 4px;
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    transition: opacity 0.3s;
-}
-
-.navbar-btn:hover {
-    opacity: 0.9;
-    color: white;
-}
-
-.btn-green {
-    background-color: var(--navbar-btn-green);
-}
-
-.btn-red {
-    background-color: var(--navbar-btn-red);
-}
-
-/* Sidebar */
-.sidebar {
-    position: fixed;
-    top: 62px;
-    left: 0;
-    bottom: 0;
-    width: 250px;
-    background: white;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    z-index: 1040;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-}
-
-.sidebar.show {
-    transform: translateX(0);
-}
-
-.sidebar-content {
-    height: 100%;
-    overflow-y: auto;
-}
-
-/* Ajuste de espaciado entre opciones del menú */
-.sidebar-menu a {
-    margin-top: 15px; /* Añadir un espacio entre las opciones */
-}
-
-/* Estilos de los items del menú */
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 20px 25px;
-    color: #333;
-    font-size: 18px;
-    text-decoration: none;
-    transition: background-color 0.2s, padding-left 0.2s;
-}
-
-.menu-item:hover {
-    background-color: #f0f0f0;
-    color: var(--primary-color);
-    text-decoration: none;
-    padding-left: 30px;
-}
-
-.menu-item i {
-    width: 20px;
-    margin-right: 15px;
-}
-
-/* Submenú que se despliega hacia abajo */
-.collapse {
-    display: none;
-    transition: height 0.3s ease;
-}
-
-.collapse.show {
-    display: block;
-    height: auto;
-}
-
-/* Opcional: Añadir espacio entre los elementos del submenú */
-.submenu-item {
-    padding: 15px 25px;
-    display: flex;
-    align-items: center;
-    color: #333;
-    font-size: 16px;
-    text-decoration: none;
-    transition: background-color 0.2s;
-}
-
-.submenu-item:hover {
-    background-color: #f0f0f0;
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-/* Overlay */
-.sidebar-overlay {
-    display: none;
-    position: fixed;
-    top: 62px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 1030;
-}
-
-.sidebar.show + .sidebar-overlay {
-    display: block;
-}
-
-/* Responsive */
-@media (min-width: 992px) {
-    .navbar-toggler {
-        display: block !important;
-    }
-}
-
-</style>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Cerrar menú al hacer clic en un enlace
-    const menuItems = document.querySelectorAll('.menu-item:not(.submenu), .submenu-item');
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const sidebar = document.getElementById('sidebarMenu');
-            const bsCollapse = bootstrap.Collapse.getInstance(sidebar);
-            if (bsCollapse) {
-                bsCollapse.hide();
-            }
-        });
-    });
-
-    // Cambiar la dirección de la flecha al hacer clic en un submenú
-    const submenuToggles = document.querySelectorAll('.submenu > a');
-    submenuToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const icon = toggle.querySelector('i');
-            const submenu = toggle.nextElementSibling; // Div con el submenú
-
-            if (submenu.classList.contains('collapse')) {
-                // Mostrar el submenú
-                submenu.classList.remove('collapse');
-                icon.classList.toggle('fa-chevron-right');
-                icon.classList.toggle('fa-chevron-down');
-                toggle.querySelector('i').classList.add('d-none');
-                toggle.querySelector('.fas.fa-chevron-down').classList.remove('d-none');
-            } else {
-                // Ocultar el submenú
-                submenu.classList.add('collapse');
-                icon.classList.toggle('fa-chevron-right');
-                icon.classList.toggle('fa-chevron-down');
-                toggle.querySelector('i').classList.remove('d-none');
-                toggle.querySelector('.fas.fa-chevron-down').classList.add('d-none');
-            }
-        });
-    });
-});
-
-
+	function closeSidebar() {
+		var sidebar = document.getElementById('sidebar');
+		sidebar.classList.remove('open');
+	}
 </script>

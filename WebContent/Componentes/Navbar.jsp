@@ -13,7 +13,6 @@
 			<%
 				if (session.getAttribute("usuario") == null) {
 			%>
-			<!-- Contenedor separado para los botones a la derecha -->
 			<div class="ms-auto">
 				<a class="navbar-btn navbar-btn-right" href="Login.jsp">Banca
 					Online</a>

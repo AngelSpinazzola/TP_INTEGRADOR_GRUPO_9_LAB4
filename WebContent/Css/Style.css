@@ -147,3 +147,31 @@
     transform: translateY(130%);
 }
 
+/* Ajuste de margen del título y botones */
+.navbar-brand.ms-3 {
+    margin-left: 0; /* Elimina cualquier margen a la izquierda */
+}
+
+.navbar-btn {
+    margin: 0 5px; /* Ajuste de margen */
+}
+
+/* Asegúrate de que el sidebar esté siempre visible */
+#sidebarMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #343a40; /* Fondo oscuro */
+    z-index: 1050; /* Asegura que esté encima del contenido */
+    transform: translateX(-100%); /* Oculto inicialmente */
+    transition: transform 0.3s ease;
+}
+
+/* Mostrar el sidebar cuando está abierto */
+#sidebarMenu.collapse.show {
+    transform: translateX(0); /* Aparece desde la izquierda */
+}
+
+
