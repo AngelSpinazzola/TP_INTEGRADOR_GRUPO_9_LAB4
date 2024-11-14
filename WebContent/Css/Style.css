@@ -7,12 +7,10 @@
     --navbar-btn-red: #E74C3C; /* Color rojo del botón "Salir" */
 }
 
-/* Estilo general */
 * {
     font-family: 'Nunito Sans', sans-serif; 
 }
 
-/* Navbar */
 .navbar {
     background-color: var(--navbar-bg-color);
     padding: 15px;
@@ -46,7 +44,6 @@
     margin-right: 15px;
 }
 
-/* Botones del Navbar */
 .navbar-btn {
     background-color: var(--primary-color);
     color: white;
@@ -62,12 +59,10 @@
     color: white;
 }
 
-/* Efecto hover para los enlaces */
 .navbar .nav-link:hover {
     opacity: 0.8;
 }
 
-/* Estilo de la sección "Mis cuentas" */
 .card {
     border: 1px solid #dddddd;
     border-radius: 5px;
@@ -84,16 +79,14 @@
     color: #555;
 }
 
-/* Diferentes colores para el borde de las tarjetas */
 .card.cuenta-ahorro {
-    border-color: #6c9edf; /* Azul claro */
+    border-color: #6c9edf; 
 }
 
 .card.cuenta-corriente {
-    border-color: #81c784; /* Verde claro */
+    border-color: #81c784; 
 }
 
-/* Estilos para la tabla de "Últimos movimientos" */
 .table-movimientos {
     width: 100%;
     border-collapse: collapse;
@@ -126,7 +119,6 @@
     color: var(--navbar-btn-green); 
 }
 
-/* Estilo específico para el fondo en home.jsp */
 .seccion-fondo-home {
     background-image: url('../Images/Background.jpg');
     background-position: center top;
@@ -135,7 +127,6 @@
     background-repeat: no-repeat;
 }
 
-/* Ajustes de posicionamiento para imágenes en home.jsp */
 .col-sm:last-child {
     position: relative;
 }
@@ -147,31 +138,46 @@
     transform: translateY(130%);
 }
 
-/* Ajuste de margen del título y botones */
 .navbar-brand.ms-3 {
-    margin-left: 0; /* Elimina cualquier margen a la izquierda */
+    margin-left: 0; 
 }
 
 .navbar-btn {
-    margin: 0 5px; /* Ajuste de margen */
+    margin: 0 5px; 
 }
 
-/* Asegúrate de que el sidebar esté siempre visible */
 #sidebarMenu {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     width: 250px;
-    background-color: #343a40; /* Fondo oscuro */
-    z-index: 1050; /* Asegura que esté encima del contenido */
-    transform: translateX(-100%); /* Oculto inicialmente */
+    background-color: #343a40; 
+    z-index: 1050; 
+    transform: translateX(-100%); 
     transition: transform 0.3s ease;
 }
 
-/* Mostrar el sidebar cuando está abierto */
 #sidebarMenu.collapse.show {
-    transform: translateX(0); /* Aparece desde la izquierda */
+    transform: translateX(0); 
 }
+
+/* SECCION DE COMPONENTES PARA REUTILIZAR EN TODO EL PROYECTO */
+
+.btn-general {
+	background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    border: none; 
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-general:hover{
+	background-color: var(--secondary-color);
+}
+
+
 
 
