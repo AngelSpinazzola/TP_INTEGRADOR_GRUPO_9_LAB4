@@ -135,7 +135,9 @@
 						type="password" id="contraseña2" name="repeat-password" required>
 				</div>
 
-				<button type="button" class="button">Volver</button>
+				<a href="AdminGestionClientes.jsp">
+				<button type="button" class="button">Volver</button>				
+				</a>
 				<button type="submit" name="btnDarAlta" class="btn-customDarAlta">Dar de Alta</button>
 
 			</div>
