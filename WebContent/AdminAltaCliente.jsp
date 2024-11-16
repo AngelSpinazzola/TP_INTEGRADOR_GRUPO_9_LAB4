@@ -136,7 +136,7 @@
 				</div>
 
 				<button type="button" class="button">Volver</button>
-				<button type="submit" name="btnDarAlta" class="btn btn-customDarAlta">Dar de Alta</button>
+				<button type="submit" name="btnDarAlta" class="btn-customDarAlta">Dar de Alta</button>
 
 			</div>
 		</form>
@@ -144,6 +144,14 @@
 
 	<style>
 /* Estilos basados en la imagen */
+.btn-customDarAlta{
+	   background-color: green;
+       color: white;
+       border: none;
+       padding: 0.5rem 1rem;
+       border-radius: 4px;
+       cursor: pointer;
+}
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f5f5f5;
@@ -193,16 +201,12 @@ input, select {
 }
 
 button {
-	background-color: #007bff;
-	color: white;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-}
-
-button:hover {
-	background-color: #0056b3;
+	   background-color: #0056b3;
+       color: white;
+       border: none;
+       padding: 0.5rem 1rem;
+       border-radius: 4px;
+       cursor: pointer;
 }
 
 @media ( max-width : 600px) {
