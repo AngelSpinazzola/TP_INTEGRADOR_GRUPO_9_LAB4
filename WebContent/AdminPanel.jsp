@@ -9,6 +9,19 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 	<%@ include file="Componentes/Head.jsp"%>
+	
+	<style>
+		.card-superior {
+   			border-radius: 0 10% 0 10%; 
+    		box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); 
+			width: 100%;
+   		    height: auto;
+		}
+		#statsChart {
+    		height: 400px !important; 
+		}
+	</style>
+	
 </head>
 
 <body>
@@ -16,14 +29,14 @@
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-12">
-				<h2 class="mb-4">Bienvenido/a, Admin</h2>
+				<h3 class="mb-4">Bienvenido/a, Admin</h3>
 				<p class="text-muted">Aquí está el resumen de hoy</p>
 			</div>
 		</div>
 
 		<div class="row mb-4">
 			<div class="col-md-3">
-				<div class="card">
+				<div class="card card-superior">
 					<div class="card-body">
 						<h6 class="card-subtitle mb-2 text-muted">Fondos totales</h6>
 						<h4 class="card-title">$25.620.000,00</h4>
@@ -35,7 +48,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<div class="card">
+				<div class="card card-superior">
 					<div class="card-body">
 						<h6 class="card-subtitle mb-2 text-muted">Deuda clientes</h6>
 						<h4 class="card-title">$1.560.000,00</h4>
@@ -47,7 +60,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<div class="card">
+				<div class="card card-superior">
 					<div class="card-body">
 						<h6 class="card-subtitle mb-2 text-muted">Total cuentas</h6>
 						<h4 class="card-title">4240</h4>
@@ -59,7 +72,7 @@
 			</div>
 
 			<div class="col-md-3">
-				<div class="card">
+				<div class="card card-superior">
 					<div class="card-body">
 						<h6 class="card-subtitle mb-2 text-muted">Préstamos activos</h6>
 						<h4 class="card-title">130</h4>
@@ -85,46 +98,62 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 	<script>
-		const ctx = document.getElementById('statsChart').getContext('2d');
-		const myChart = new Chart(ctx, {
-			type : 'bar',
-			data : {
-				labels : [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
-						'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre',
-						'Noviembre', 'Diciembre' ],
-				datasets : [
-						{
-							label : 'Transferencias realizadas',
-							data : [ 2500, 2000, 2000, 3000, 2000, 2000, 2000,
-									2000, 2000, 4000, 3000, 3000 ],
-							backgroundColor : '#8884d8'
-						},
-						{
-							label : 'Préstamos otorgados',
-							data : [ 3200, 1800, 1500, 1800, 2800, 3800, 3500,
-									3500, 3200, 3200, 3500, 3800 ],
-							backgroundColor : '#ffa726'
-						} ]
-			},
-			options : {
-				responsive : true,
-				scales : {
-					y : {
-						beginAtZero : true,
-						max : 5000,
-						ticks : {
-							stepSize : 1000
-						}
-					}
-				},
-				plugins : {
-					legend : {
-						position : 'bottom'
-					}
-				}
-			}
-		});
+	    const ctx = document.getElementById('statsChart').getContext('2d');
+	    const myChart = new Chart(ctx, {
+	        type: 'bar',
+	        data: {
+	            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+	            datasets: [
+	                {
+	                    label: 'Transferencias realizadas',
+	                    data: [2500, 2000, 2000, 3000, 2000, 2000, 2000, 2000, 2000, 4000, 3000, 3000],
+	                    backgroundColor: '#8884d8'
+	                },
+	                {
+	                    label: 'Préstamos otorgados',
+	                    data: [3200, 1800, 1500, 1800, 2800, 3800, 3500, 3500, 3200, 3200, 3500, 3800],
+	                    backgroundColor: '#ffa726'
+	                }
+	            ]
+	        },
+	        options: {
+	            responsive: true,
+	            scales: {
+	                y: {
+	                    beginAtZero: true,
+	                    max: 5000,
+	                    ticks: {
+	                        stepSize: 1000,
+	                        font: {
+	                            size: 20, 
+	                        }
+	                    }
+	                },
+	                x: {
+	                    ticks: {
+	                        font: {
+	                            size: 20, 
+	                        },
+	                        autoSkip: false,  
+	                        maxRotation: 0,  
+	                        minRotation: 0,   
+	                    }
+	                }
+	            },
+	            plugins: {
+	                legend: {
+	                    position: 'bottom',
+	                    labels: {
+	                        font: {
+	                            size: 20 
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    });
 	</script>
+
 </body>
 </html>
 
