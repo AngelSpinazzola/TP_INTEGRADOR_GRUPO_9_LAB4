@@ -21,11 +21,11 @@
 				} else {
 			%>
 			<div class="navbar-nav">
-				<a class="nav-link text-white" href="Home.jsp">Inicio</a> <a
-					class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a>
-				<a class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> <a
-					class="nav-link text-white" href="ClienteDatos.jsp">Datos
-					personales</a>
+				<a class="nav-link text-white" href="Home.jsp">Inicio</a> 
+				<a class="nav-link text-white" href="ClienteTransferir.jsp">Transferir</a>
+				<a class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> 
+				<a class="nav-link text-white" href="ClienteDatos.jsp">Datos personales</a>
+				<a class="nav-link text-white" href="ClienteMovimientos.jsp">Movimientos</a>
 			</div>
 			<div class="ms-auto">
 				<a class="btn btn-success me-2" href="ClientePanel.jsp">Mi perfil</a> 
