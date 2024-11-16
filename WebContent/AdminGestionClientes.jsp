@@ -98,7 +98,7 @@
 	 <div class="container">
     <h2>Gestión de Clientes</h2>
     <div class="btn-nuevo-cliente-container">
-    	<a href="AdminAltaCliente.jsp">
+    	<a href="ServletAdmAlta?param=1">
        		<button class="btn-general btn-nuevo-cliente">Nuevo Cliente</button>
    		</a>
     </div>

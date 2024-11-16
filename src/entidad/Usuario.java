@@ -32,6 +32,10 @@ public class Usuario {
 		return password;
 	}
 
+	public String getPass() {
+		return password;
+	}
+	
 	public static void setPassword(String password) {
 		Usuario.password = password;
 	}
