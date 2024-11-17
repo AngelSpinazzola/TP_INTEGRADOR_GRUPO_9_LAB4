@@ -1,130 +1,129 @@
 package entidad;
 
-public class Cliente {
+import java.sql.Date;
+import java.util.ArrayList;
 
+public class Cliente extends Usuario{
+	private	int dni;
+	private String cuil;
+	private String nombre;
+	private String apellido;
+	private String sexo;
+	private String nacionalidad;
+	private String email;
+	private Date fechaNacimiento;
+	private int idDireccion;
+	private int estado;
+	private int cantidadCuentas;
 	
-	private	int DNI;
-	private String CUIL;
-	private String Nombre;
-	private String Apellido;
-	private String Sexo;
-	private String Nacionalidad;
-	private String FechaNacimiento;
-	private int IDDireccion;
-	private String Email;
-	private int IDUsuario;
-	
-	private String direccion;
-	private String telefono;
-	
-
-
 	public Cliente() {
 		
 	}
 	
-	
-	
-	
-	public Cliente(int dNI, String cUIL, String nombre, String apellido, String sexo, String nacionalidad,
-			String fechaNacimiento, int iDDireccion, String email, int iDUsuario, String direccion, String telefono) {
+	public Cliente(int dni, String cuil, String nombre, String apellido, String sexo, String nacionalidad, String email,
+			Date fechaNacimiento, int idDireccion, int estado, int cantidadCuentas) {
 		super();
-		DNI = dNI;
-		CUIL = cUIL;
-		Nombre = nombre;
-		Apellido = apellido;
-		Sexo = sexo;
-		Nacionalidad = nacionalidad;
-		FechaNacimiento = fechaNacimiento;
-		IDDireccion = iDDireccion;
-		Email = email;
-		IDUsuario = iDUsuario;
-		this.direccion = direccion;
-		this.telefono = telefono;
+		this.dni = dni;
+		this.cuil = cuil;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.sexo = sexo;
+		this.nacionalidad = nacionalidad;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		this.idDireccion = idDireccion;
+		this.estado = estado;
+		this.cantidadCuentas = cantidadCuentas;
 	}
 
+	public int getDni() {
+		return dni;
+	}
 
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
 
+	public String getCuil() {
+		return cuil;
+	}
 
-	public int getDNI() {
-		return DNI;
+	public void setCuil(String cuil) {
+		this.cuil = cuil;
 	}
-	public void setDNI(int dNI) {
-		DNI = dNI;
-	}
-	public String getCUIL() {
-		return CUIL;
-	}
-	public void setCUIL(String cUIL) {
-		CUIL = cUIL;
-	}
+
 	public String getNombre() {
-		return Nombre;
+		return nombre;
 	}
+
 	public void setNombre(String nombre) {
-		Nombre = nombre;
+		this.nombre = nombre;
 	}
+
 	public String getApellido() {
-		return Apellido;
+		return apellido;
 	}
+
 	public void setApellido(String apellido) {
-		Apellido = apellido;
+		this.apellido = apellido;
 	}
+
 	public String getSexo() {
-		return Sexo;
+		return sexo;
 	}
+
 	public void setSexo(String sexo) {
-		Sexo = sexo;
+		this.sexo = sexo;
 	}
+
 	public String getNacionalidad() {
-		return Nacionalidad;
+		return nacionalidad;
 	}
+
 	public void setNacionalidad(String nacionalidad) {
-		Nacionalidad = nacionalidad;
+		this.nacionalidad = nacionalidad;
 	}
-	public String getFechaNacimiento() {
-		return FechaNacimiento;
-	}
-	public void setFechaNacimiento(String fechaNacimiento) {
-		FechaNacimiento = fechaNacimiento;
-	}
-	public int getIDDireccion() {
-		return IDDireccion;
-	}
-	public void setIDDireccion(int iDDireccion) {
-		IDDireccion = iDDireccion;
-	}
+
 	public String getEmail() {
-		return Email;
+		return email;
 	}
+
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
-	public int getIDUsuario() {
-		return IDUsuario;
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
 	}
-	public void setIDUsuario(int iDUsuario) {
-		IDUsuario = iDUsuario;
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public int getIdDireccion() {
+		return idDireccion;
+	}
+
+	public void setIdDireccion(int idDireccion) {
+		this.idDireccion = idDireccion;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public int getCantidadCuentas() {
+		return cantidadCuentas;
+	}
+
+	public void setCantidadCuentas(int cantidadCuentas) {
+		this.cantidadCuentas = cantidadCuentas;
 	}
 	
-	public String getDireccion() {
-		return direccion;
-	}
-
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-
-	public String getTelefono() {
-		return telefono;
-	}
-
-
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-
+	
 	
 }

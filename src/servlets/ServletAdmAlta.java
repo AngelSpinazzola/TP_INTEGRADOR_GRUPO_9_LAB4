@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -74,15 +75,15 @@ public class ServletAdmAlta extends HttpServlet {
 		AdminNegocioImpl ani = new AdminNegocioImpl();
 		
 		if(request.getParameter("btnDarAlta") != null) {	// si se hizo click en "dar de alta"
+			String fechaNacimiento = request.getParameter("fechaNacimiento");
 			
-			
-			cliente.setDNI(Integer.parseInt(request.getParameter("dni")));
-			cliente.setCUIL("11-1111111-1");	// valor hardcode
+			cliente.setDni(Integer.parseInt(request.getParameter("dni")));
+			cliente.setCuil("11-1111111-1");	// valor hardcode
 			cliente.setNombre(request.getParameter("nombre"));
 			cliente.setApellido(request.getParameter("apellido"));
 			cliente.setSexo(request.getParameter("sexo"));
 			cliente.setNacionalidad(request.getParameter("nacionalidad"));
-			cliente.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+			cliente.setFechaNacimiento(Date.valueOf(fechaNacimiento));
 //			cliente.setIDDireccion();
 			cliente.setEmail(request.getParameter("email"));
 //			cliente.setIDUsuario();

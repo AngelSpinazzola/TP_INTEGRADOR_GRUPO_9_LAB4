@@ -11,7 +11,7 @@ import entidad.Usuario;
 import negocio.IAdminNegocio;
 
 public class AdminNegocioImpl implements IAdminNegocio{
-
+	
 	@Override
 	public ArrayList<Provincia> CargarDDLProv() {
 
@@ -42,7 +42,7 @@ public class AdminNegocioImpl implements IAdminNegocio{
 		return filas;
 	}
 
-
+	/*
 	public ArrayList<Cuentas> ObtenerListaCuentas() {
 
 		AdminDaoImpl adi = new AdminDaoImpl();
@@ -51,6 +51,7 @@ public class AdminNegocioImpl implements IAdminNegocio{
 		
 		return lcuentas;
 	}	
+	*/
 	
 	
 }

@@ -1,7 +1,5 @@
 package daoImpl;
 
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +32,6 @@ public class AdminDaoImpl {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -241,8 +238,9 @@ public class AdminDaoImpl {
 	}
 	
 	
+}
 	
-	
+	/*
 	public ArrayList<Cuentas> ObtenerListaCuentas(){
 		
 		ArrayList<Cuentas> LCuentas = new ArrayList<Cuentas>();
@@ -269,7 +267,7 @@ public class AdminDaoImpl {
 				cuenta.setDNICliente(rs.getInt("DNICliente"));
 				cuenta.setNombreApelido(rs.getString("Nombre y Apellido"));
 				
-//				cuenta.setESTADO(rs.getBoolean("ESTADO"));
+				//cuenta.setESTADO(rs.getBoolean("ESTADO"));
 				
 				if(rs.getBoolean("ESTADO") == true) {
 					cuenta.setSestado("Activo");
@@ -288,5 +286,5 @@ public class AdminDaoImpl {
 		return LCuentas;	
 		
 	}
+	*/
 	
-}

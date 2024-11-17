@@ -5,37 +5,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-	public static Conexion instancia;
-	private Connection connection;
+	private static String host = "jdbc:mysql://localhost:3306/tpintegradorlaboratorio4";
+	private static String user = "root";
+	private static String pass = "root";
+	private static String dbName = "tpintegradorlaboratorio4";
 
-	private Conexion() {
+	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tpintegradorlaboratorio4",
-					"root", "root");
-			this.connection.setAutoCommit(false);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.err.println("Error al cargar el driver JDBC: " + e.getMessage());
 		}
 	}
 
-	public static Conexion getConexion() {
-		if (instancia == null) {
-			instancia = new Conexion();
-		}
-		return instancia;
+	public static Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(host, user, pass);
 	}
-
-	public Connection getSQLConexion() {
-		return this.connection;
-	}
-
-	public void cerrarConexion() {
-		try {
-			this.connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		instancia = null;
-	}
+	
 }

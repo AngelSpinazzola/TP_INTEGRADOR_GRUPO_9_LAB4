@@ -12,9 +12,6 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 
 	private static UsuarioDaoImpl instancia = null;
 
-	private static final String login = "SELECT U.Usuario, U.TipoUsuario, U.Estado " + "FROM usuarios U "
-			+ "INNER JOIN clientes C ON C.IDUsuario = U.IDUsuario " + "WHERE C.Email = ? AND U.Contrasenia = ?";
-
 	public static UsuarioDaoImpl ObtenerInstancia() {
 		if (instancia == null) {
 			instancia = new UsuarioDaoImpl();
@@ -24,35 +21,42 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 
 	@Override
 	public Usuario Loguear(String email, String contraseña) {
-		PreparedStatement statement;
-		Connection conexion = Conexion.getConexion().getSQLConexion();
+		String login = "SELECT U.Usuario, U.TipoUsuario, U.Estado " + "FROM usuarios U "
+				+ "INNER JOIN clientes C ON C.IDUsuario = U.IDUsuario " + "WHERE C.Email = ? AND U.Contrasenia = ?";
 		Usuario usuario = null;
 
-		try {
-			statement = conexion.prepareStatement(login);
-			statement.setString(1, email); 
-			statement.setString(2, contraseña); 
-			ResultSet rs = statement.executeQuery();
-			TipoUsuario tipo = null;
+		try (Connection conexion = Conexion.getConnection();
+				PreparedStatement statement = conexion.prepareStatement(login)) {
 
-			if (rs.next()) {
-				String nombre = rs.getString("Usuario");
-				int tipoCodigo = rs.getInt("TipoUsuario");
+			// Configurar los parámetros de la consulta
+			statement.setString(1, email);
+			statement.setString(2, contraseña);
 
-				switch (tipoCodigo) {
-				case 1:
-					tipo = TipoUsuario.admin;
-					break;
-				case 2:
-					tipo = TipoUsuario.cliente;
-					break;
+			// Ejecutar la consulta
+			try (ResultSet rs = statement.executeQuery()) {
+				if (rs.next()) {
+					// Extraer datos del ResultSet
+					String nombre = rs.getString("Usuario");
+					int tipoCodigo = rs.getInt("TipoUsuario");
+					boolean activo = rs.getBoolean("Estado");
+
+					// Determinar el tipo de usuario
+					TipoUsuario tipo = null;
+					switch (tipoCodigo) {
+					case 1:
+						tipo = TipoUsuario.admin;
+						break;
+					case 2:
+						tipo = TipoUsuario.cliente;
+						break;
+					}
+
+					// Crear el objeto Usuario
+					usuario = new Usuario(nombre, tipo, activo);
 				}
-
-				boolean activo = rs.getBoolean("Estado");
-				usuario = new Usuario(nombre, tipo, activo);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Error al intentar loguear al usuario: " + e.getMessage());
 		}
 
 		return usuario;
