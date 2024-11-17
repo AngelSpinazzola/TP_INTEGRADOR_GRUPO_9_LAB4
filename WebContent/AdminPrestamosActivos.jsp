@@ -1,17 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banco UTN - Préstamos Activos</title>
+    <title>Banco UTN - Pr�stamos Activos</title>
     <style>
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         .navbar {
@@ -126,35 +123,13 @@
             margin-bottom: 0.5rem;
         }
     </style>
+	<%@ include file="Componentes/Head.jsp"%>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <span>☰</span>
-            Banco UTN
-        </div>
-        <button class="logout-btn">Salir</button>
-    </nav>
-
-    <div class="sidebar">
-        <a href="#" class="menu-item">
-            <span>🏠</span> Inicio
-        </a>
-        <a href="#" class="menu-item">
-            <span>👥</span> Clientes
-        </a>
-        <div class="prestamos-dropdown">
-            <span>💰</span> Préstamos
-        </div>
-        <div class="submenu">
-            <a href="#" class="menu-item">Préstamos en revisión</a>
-            <a href="#" class="menu-item active">Préstamos activos</a>
-            <a href="#" class="menu-item">Historial de préstamos</a>
-        </div>
-    </div>
-
+	<%@ include file="Componentes/NavbarAdmin.jsp"%>
+ 
     <div class="main-content">
-        <h2 class="page-title">Préstamos activos</h2>
+        <h2 class="page-title">Pr�stamos activos</h2>
         <table>
             <thead>
                 <tr>
@@ -188,7 +163,7 @@
                     <td>$50.000</td>
                 </tr>
                 <tr>
-                    <td>Pepe Sáenz</td>
+                    <td>Pepe Saenz</td>
                     <td>4214141</td>
                     <td>Vacaciones</td>
                     <td>$35.000</td>
@@ -203,9 +178,8 @@
                 </tr>
             </tbody>
         </table>
-
         <div class="pagination">
-            <span>Mostrando página 1 de 3</span>
+            <span>Mostrando p�gina 1 de 3</span>
             <a href="#" class="active">1</a>
             <a href="#">2</a>
             <a href="#">3</a>

@@ -1,142 +1,122 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="es">
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html lang="es"><meta charset="UTF-8">
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco UTN - Solicitudes de préstamos</title>
-<style>
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: Arial, sans-serif;
-}
-
-.navbar {
-	background-color: #004b93;
-	color: white;
-	padding: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.navbar-brand {
-	font-size: 1.2rem;
-	font-weight: bold;
-}
-
-.logout-btn {
-	background-color: #39a9b3;
-	color: white;
-	border: none;
-	padding: 0.5rem 1rem;
-	border-radius: 4px;
-	cursor: pointer;
-}
-
-.sidebar {
-	width: 200px;
-	background-color: #f5f5f5;
-	height: calc(100vh - 56px);
-	padding: 1rem;
-	float: left;
-}
-
-.sidebar-item {
-	padding: 0.5rem;
-	margin-bottom: 0.5rem;
-	cursor: pointer;
-}
-
-.sidebar-item.active {
-	background-color: #cce5ff;
-	border-radius: 4px;
-}
-
-.main-content {
-	margin-left: 200px;
-	padding: 2rem;
-}
-
-.page-title {
-	color: #333;
-	margin-bottom: 2rem;
-}
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 1rem;
-}
-
-th, td {
-	padding: 0.75rem;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
-}
-
-.btn {
-	padding: 0.25rem 0.75rem;
-	border: none;
-	border-radius: 4px;
-	color: white;
-	cursor: pointer;
-	margin-right: 0.5rem;
-}
-
-.btn-success {
-	background-color: #28a745;
-}
-
-.btn-danger {
-	background-color: #dc3545;
-}
-
-.pagination {
-	margin-top: 1rem;
-	display: flex;
-	gap: 0.5rem;
-	align-items: center;
-}
-
-.pagination a {
-	padding: 0.25rem 0.5rem;
-	text-decoration: none;
-	color: #004b93;
-}
-
-.pagination a.active {
-	background-color: #004b93;
-	color: white;
-	border-radius: 4px;
-}
-</style>
+<title>Banco UTN - Solicitudes de pr�stamos</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		
+		.navbar {
+			background-color: #004b93;
+			color: white;
+			padding: 1rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		
+		.navbar-brand {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+		
+		.logout-btn {
+			background-color: #39a9b3;
+			color: white;
+			border: none;
+			padding: 0.5rem 1rem;
+			border-radius: 4px;
+			cursor: pointer;
+		}
+		
+		.sidebar {
+			width: 200px;
+			background-color: #f5f5f5;
+			height: calc(100vh - 56px);
+			padding: 1rem;
+			float: left;
+		}
+		
+		.sidebar-item {
+			padding: 0.5rem;
+			margin-bottom: 0.5rem;
+			cursor: pointer;
+		}
+		
+		.sidebar-item.active {
+			background-color: #cce5ff;
+			border-radius: 4px;
+		}
+		
+		.main-content {
+			margin-left: 200px;
+			padding: 2rem;
+		}
+		
+		.page-title {
+			color: #333;
+			margin-bottom: 2rem;
+		}
+		
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 1rem;
+		}
+		
+		th, td {
+			padding: 0.75rem;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+		
+		.btn {
+			padding: 0.25rem 0.75rem;
+			border: none;
+			border-radius: 4px;
+			color: white;
+			cursor: pointer;
+			margin-right: 0.5rem;
+		}
+		
+		.btn-success {
+			background-color: #28a745;
+		}
+		
+		.btn-danger {
+			background-color: #dc3545;
+		}
+		
+		.pagination {
+			margin-top: 1rem;
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+		}
+		
+		.pagination a {
+			padding: 0.25rem 0.5rem;
+			text-decoration: none;
+			color: #004b93;
+		}
+		
+		.pagination a.active {
+			background-color: #004b93;
+			color: white;
+			border-radius: 4px;
+		}
+	</style>
+	<%@ include file="Componentes/Head.jsp"%>
 </head>
 <body>
-	<nav class="navbar">
-	<div class="navbar-brand">
-		<span>☰</span> Banco UTN
-	</div>
-	<button class="logout-btn">Salir</button>
-	</nav>
 
-	<div class="sidebar">
-		<div class="sidebar-item">
-			<span>🏠</span> Inicio
-		</div>
-		<div class="sidebar-item">
-			<span>👥</span> Clientes
-		</div>
-		<div class="sidebar-item active">
-			<span>💰</span> Préstamos
-		</div>
-	</div>
-
+	<%@ include file="Componentes/NavbarAdmin.jsp"%>
 	<div class="main-content">
-		<h2 class="page-title">Solicitudes de préstamos</h2>
+		<h2 class="page-title">Solicitudes de pr�stamos</h2>
 		<table>
 			<thead>
 				<tr>
@@ -186,7 +166,7 @@ th, td {
 		</table>
 
 		<div class="pagination">
-			<span>Mostrando página 1 de 2</span> <a href="#" class="active">1</a>
+			<span>Mostrando p�gina 1 de 2</span> <a href="#" class="active">1</a>
 			<a href="#">2</a> <a href="#">3</a> <a href="#">Siguiente</a>
 		</div>
 	</div>
