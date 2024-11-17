@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ page import="java.util.ArrayList"%>
+<%@ page import="entidad.Cuentas"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -95,6 +97,9 @@
 <body>
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
 
+<% ArrayList<Cuentas> LCuentas = (ArrayList<Cuentas>)request.getAttribute("lcuentas");%>
+
+
 	 <div class="container">
     <h2>Gestión de Clientes</h2>
     <div class="btn-nuevo-cliente-container">
@@ -115,12 +120,20 @@
         </tr>
       </thead>
       <tbody>
+      
+      
+      <%
+      		if(LCuentas != null)      			
+ 			for(Cuentas c : LCuentas){           
+      %>
+      
+      
         <tr>
-          <td>1234</td>
-          <td>22422424</td>
-          <td>Leonardo Saenz</td>
-          <td>Activo</td>
-          <td>3</td>
+          <td><%= c.getIDCuenta() %> </td>
+          <td> <%= c.getDNICliente() %> </td>
+          <td> <%= c.getNombreApelido() %>  </td>
+          <td> <%=  c.getSestado()  %> </td>
+          <td> <%= c.getCuentas() %> </td>
           <td>
             <div class="action-buttons">
               <button><i class="fas fa-ellipsis-v"></i></button>
@@ -131,75 +144,13 @@
               </div>
             </div>
           </td>
+          						<%
+							}
+						%>
         </tr>
-        <tr>
-          <td>4321</td>
-          <td>22422424</td>
-          <td>Mateo Perez</td>
-          <td>Activo</td>
-          <td>2</td>
-          <td>
-            <div class="action-buttons">
-              <button><i class="fas fa-ellipsis-v"></i></button>
-              <div class="action-dropdown">
-                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
-                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
-                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>5987</td>
-          <td>22422424</td>
-          <td>Marcos Ponzio</td>
-          <td>Activo</td>
-          <td>3</td>
-          <td>
-            <div class="action-buttons">
-              <button><i class="fas fa-ellipsis-v"></i></button>
-              <div class="action-dropdown">
-                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
-                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
-                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>1569</td>
-          <td>22422424</td>
-          <td>Leo Neder</td>
-          <td>Baja</td>
-          <td>2</td>
-          <td>
-            <div class="action-buttons">
-              <button><i class="fas fa-ellipsis-v"></i></button>
-              <div class="action-dropdown">
-                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
-                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
-                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
-              </div>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>1236</td>
-          <td>22422424</td>
-          <td>Thomas Rulf</td>
-          <td>Activo</td>
-          <td>3</td>
-          <td>
-            <div class="action-buttons">
-              <button><i class="fas fa-ellipsis-v"></i></button>
-              <div class="action-dropdown">
-                <a href="AdminDetalleCliente.jsp">Ver Cliente</a>
-                <a href="AdminEditarCliente.jsp">Editar Cliente</a>
-                <a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
-              </div>
-            </div>
-          </td>
-        </tr>
+  
+        
+        
       </tbody>
     </table>
     </div>

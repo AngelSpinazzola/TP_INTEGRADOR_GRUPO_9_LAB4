@@ -140,7 +140,7 @@
 				<a href="AdminPanel.jsp"><i class="fas fa-home"></i>Inicio</a>
 			</div>
 			<div class="item">
-				<a href="AdminGestionClientes.jsp"><i class="fa-solid fa-users"></i>Clientes</a>
+				<a href="ServletGestionClientes?param=1"><i class="fa-solid fa-users"></i>Clientes</a>
 			</div>
 			<div class="item">
 				<a class="sub-btn"><i class="fas fa-wallet"></i>Préstamos<i

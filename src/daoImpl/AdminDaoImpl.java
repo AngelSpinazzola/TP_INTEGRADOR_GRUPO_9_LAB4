@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.sql.Statement;
 import entidad.Provincia;
 import entidad.Cliente;
+import entidad.Cuentas;
 import entidad.Localidad;
 import entidad.Usuario;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class AdminDaoImpl {
 	
 	private String queryProvincia = "select * from provincias";
 	private String queryLocalidad = "select * from localidades";
-	
+	private String queryCuentas = "select  C.IDCuenta, C.DNICliente, CONCAT(CL.Nombre, ' ', CL.Apellido) as 'Nombre y Apellido', c.ESTADO, (select count(distinct C.DNICliente)) as 'cuentas' from Cuentas as C inner join Clientes as CL on C.DNICliente = CL.DNI group by C.DNICliente"; 
 	private String host = "jdbc:mysql://localhost:3306/";
 	private String user = "root";
 	private String pass = "root";
@@ -239,5 +240,53 @@ public class AdminDaoImpl {
 		
 	}
 	
+	
+	
+	
+	public ArrayList<Cuentas> ObtenerListaCuentas(){
+		
+		ArrayList<Cuentas> LCuentas = new ArrayList<Cuentas>();
+		
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Connection cn = null;				
+		try {
+			
+			cn = DriverManager.getConnection(host + dbName, user, pass);
+			Statement st = cn.createStatement();
+			ResultSet rs = st.executeQuery(queryCuentas);
+
+			while (rs.next()) {						
+				
+				Cuentas cuenta = new Cuentas();
+				cuenta.setIDCuenta(rs.getInt("IDCuenta"));
+				cuenta.setDNICliente(rs.getInt("DNICliente"));
+				cuenta.setNombreApelido(rs.getString("Nombre y Apellido"));
+				
+//				cuenta.setESTADO(rs.getBoolean("ESTADO"));
+				
+				if(rs.getBoolean("ESTADO") == true) {
+					cuenta.setSestado("Activo");
+				}else {
+					cuenta.setSestado("Baja");
+				}
+				
+				cuenta.setCuentas(rs.getInt("cuentas"));
+				LCuentas.add(cuenta);
+			}
+			cn.close();			
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return LCuentas;	
+		
+	}
 	
 }

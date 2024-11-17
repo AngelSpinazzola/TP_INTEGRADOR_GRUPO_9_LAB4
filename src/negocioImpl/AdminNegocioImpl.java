@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import daoImpl.AdminDaoImpl;
 import entidad.Cliente;
+import entidad.Cuentas;
 import entidad.Localidad;
 import entidad.Provincia;
 import entidad.Usuario;
@@ -39,6 +40,16 @@ public class AdminNegocioImpl implements IAdminNegocio{
 		filas =  adi.cargarCliente(cliente, loc, usu);
 		
 		return filas;
+	}
+
+
+	public ArrayList<Cuentas> ObtenerListaCuentas() {
+
+		AdminDaoImpl adi = new AdminDaoImpl();
+		ArrayList<Cuentas> lcuentas = new ArrayList<Cuentas>();
+		lcuentas = adi.ObtenerListaCuentas();		
+		
+		return lcuentas;
 	}	
 	
 	
