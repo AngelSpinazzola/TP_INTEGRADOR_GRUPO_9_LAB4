@@ -15,7 +15,7 @@
 <body>
 	<!-- Menú de Navegación -->
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
-	<!-- Contenedor principal para centrar el formulario -->
+	<!-- Contenedor principal para del formulario -->
 	<div class="d-flex justify-content-center align-items-center vh-100">
 		<div class="p-4 border rounded shadow-lg bg-white"
 			style="max-width: 800px; width: 100%;">

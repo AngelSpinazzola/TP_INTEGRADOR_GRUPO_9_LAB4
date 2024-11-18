@@ -28,19 +28,15 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 		try (Connection conexion = Conexion.getConnection();
 				PreparedStatement statement = conexion.prepareStatement(login)) {
 
-			// Configurar los parámetros de la consulta
 			statement.setString(1, email);
 			statement.setString(2, contraseña);
 
-			// Ejecutar la consulta
 			try (ResultSet rs = statement.executeQuery()) {
 				if (rs.next()) {
-					// Extraer datos del ResultSet
 					String nombre = rs.getString("Usuario");
 					int tipoCodigo = rs.getInt("TipoUsuario");
 					int estado = rs.getInt("Estado");
 
-					// Determinar el tipo de usuario
 					TipoUsuario tipo = null;
 					switch (tipoCodigo) {
 					case 1:
@@ -51,7 +47,6 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 						break;
 					}
 
-					// Crear el objeto Usuario
 					usuario = new Usuario(nombre, tipo, estado);
 				}
 			}

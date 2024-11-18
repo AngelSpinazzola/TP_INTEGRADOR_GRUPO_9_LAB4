@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import dao.IClienteDao;
 import daoImpl.ClienteDaoImpl;
 import entidad.Cliente;
-import entidad.Direccion;
 import excepciones.ClienteNegocioException;
 import negocio.IClienteNegocio;
 
@@ -35,14 +34,27 @@ public class ClienteNegocioImpl implements IClienteNegocio{
 	}
 	
 	@Override
-	public ArrayList<Cliente> listarClientes() {
-		ArrayList<Cliente> clientes = iClienteDao.listarClientes();
+	public ArrayList<Cliente> listarClientes(int page, int pageSize) {
+	    ArrayList<Cliente> clientes = iClienteDao.listarClientes(page, pageSize);
 
-		if (clientes == null || clientes.isEmpty()) {
-			System.out.println("No hay clientes activos.");
-			return new ArrayList<>();
-		}
+	    if (clientes == null || clientes.isEmpty()) {
+	        System.out.println("No hay clientes activos.");
+	        return new ArrayList<>();
+	    }
 
-		return clientes;
+	    return clientes;
 	}
+
+	@Override
+	public int calcularTotalPaginas(int pageSize) {
+        int totalClientes = getTotalClientesCount(); 
+        return (int) Math.ceil((double) totalClientes / pageSize); 
+    }
+	
+	
+    @Override
+	public int getTotalClientesCount() {
+        return iClienteDao.getTotalClientesCount();
+    }
+
 }

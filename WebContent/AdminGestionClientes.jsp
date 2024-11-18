@@ -1,6 +1,6 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="entidad.Cliente" %>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="entidad.Cliente"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -105,7 +105,7 @@ h2 {
 	width: 200px;
 }
 </style>
-	<%@ include file="Componentes/Head.jsp"%>
+<%@ include file="Componentes/Head.jsp"%>
 </head>
 <body>
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
@@ -131,43 +131,56 @@ h2 {
 					</tr>
 				</thead>
 				<tbody>
-				    <% 
-    					ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) request.getAttribute("listaClientes"); 
-   						Iterator<Cliente> iteradorClientes = listaClientes.iterator();
-    
-    					while (iteradorClientes.hasNext()) {
-    						Cliente cliente = iteradorClientes.next();
+					<%
+						ArrayList<Cliente> listaClientes = (ArrayList<Cliente>) request.getAttribute("listaClientes");
+						Iterator<Cliente> iteradorClientes = listaClientes.iterator();
+
+						while (iteradorClientes.hasNext()) {
+							Cliente cliente = iteradorClientes.next();
 					%>
-						<tr>
-							<td><%= cliente.getDni() %></td>
-							<td><%= cliente.getNombre() %></td>
-							<td><%= cliente.getApellido() %></td>
-							<td><%= cliente.getCantidadCuentas() %></td>
-							<td><%= cliente.getEstado() %></td>
-							<td>
-								<div class="action-buttons">
-									<button>
-										<i class="fas fa-ellipsis-v"></i>
-									</button>
-									<div class="action-dropdown">
-										<a href="AdminDetalleCliente.jsp">Ver Cliente</a> <a
-											href="AdminEditarCliente.jsp">Editar Cliente</a> <a
-											href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
-									</div>
+					<tr>
+						<td><%=cliente.getDni()%></td>
+						<td><%=cliente.getNombre()%></td>
+						<td><%=cliente.getApellido()%></td>
+						<td><%=cliente.getCantidadCuentas()%></td>
+						<td><%=cliente.getEstado()%></td>
+						<td>
+							<div class="action-buttons">
+								<button>
+									<i class="fas fa-ellipsis-v"></i>
+								</button>
+								<div class="action-dropdown">
+									<a href="AdminDetalleCliente.jsp">Ver Cliente</a> <a
+										href="AdminEditarCliente.jsp">Editar Cliente</a> <a
+										href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
 								</div>
-							</td>
-						</tr>
-						<%} %>
+							</div>
+						</td>
+					</tr>
+					<%
+						}
+					%>
 				</tbody>
 			</table>
 		</div>
 		<div class="pagination">
-			<button class="active">1</button>
-			<button>2</button>
-			<button>3</button>
-			<button>4</button>
-			<button>5</button>
+			<%
+				int totalPages = (Integer) request.getAttribute("totalPages");
+				int currentPage = (Integer) request.getAttribute("currentPage");
+
+				for (int i = 1; i <= totalPages; i++) {
+					String activeClass = (i == currentPage) ? "active" : "";
+			%>
+			<button class="<%=activeClass%>"
+				onclick="window.location.href='ListarClientesSv?page=<%=i%>&pageSize=5'">
+				<%=i%>
+			</button>
+			<%
+				}
+			%>
 		</div>
+
+
 	</div>
 </body>
 </html>

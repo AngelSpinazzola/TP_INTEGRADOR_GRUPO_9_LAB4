@@ -40,7 +40,6 @@ public class ProvinciaDaoImpl implements IProvinciaDao {
 	    try (Connection conexion = Conexion.getConnection();
 	         PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        // Establecer el parámetro del id
 	        statement.setInt(1, id);
 
 	        try (ResultSet resultSet = statement.executeQuery()) {
