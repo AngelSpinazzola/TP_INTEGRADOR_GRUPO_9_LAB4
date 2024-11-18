@@ -71,27 +71,38 @@ h2 {
 	display: block;
 }
 
+.pagination-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center; 
+	margin-top: 20px;
+}
 .pagination {
 	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+	justify-content: flex-end; 
 }
 
 .pagination button {
-	background-color: #f1f1f1;
+	background-color: #aac4ee;
 	border: none;
-	color: black;
+	color: white;
 	padding: 8px 16px;
-	text-align: center;
 	text-decoration: none;
-	display: inline-block;
 	font-size: 16px;
 	margin: 4px 2px;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border-radius: 2px;
+}
+
+.pagination button:hover {
+	background-color: #2F4E93;
+	color: white;
 }
 
 .pagination button.active {
-	background-color: #4CAF50;
+	text-color: white;
+	background-color: #2F4E93;
 	color: white;
 }
 
@@ -99,6 +110,11 @@ h2 {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 10px;
+}
+
+.pagination-info {
+	font-size: 16px;
+	color: #333;
 }
 
 .btn-nuevo-cliente {
@@ -163,21 +179,32 @@ h2 {
 				</tbody>
 			</table>
 		</div>
-		<div class="pagination">
-			<%
-				int totalPages = (Integer) request.getAttribute("totalPages");
-				int currentPage = (Integer) request.getAttribute("currentPage");
+		<!-- Paginación -->
+		<div class="pagination-container">
+			<div class="pagination-info">
+				Mostrando página
+				<%=request.getAttribute("currentPage")%>
+				de
+				<%=request.getAttribute("totalPages")%>
+			</div>
 
-				for (int i = 1; i <= totalPages; i++) {
-					String activeClass = (i == currentPage) ? "active" : "";
-			%>
-			<button class="<%=activeClass%>"
-				onclick="window.location.href='ListarClientesSv?page=<%=i%>&pageSize=5'">
-				<%=i%>
-			</button>
-			<%
-				}
-			%>
+			<!-- Botones de paginación -->
+			<div class="pagination">
+				<%
+					int totalPages = (Integer) request.getAttribute("totalPages");
+					int currentPage = (Integer) request.getAttribute("currentPage");
+
+					for (int i = 1; i <= totalPages; i++) {
+						String activeClass = (i == currentPage) ? "active" : "";
+				%>
+				<button class="<%=activeClass%>"
+					onclick="window.location.href='ListarClientesSv?page=<%=i%>&pageSize=5'">
+					<%=i%>
+				</button>
+				<%
+					}	
+				%>
+			</div>
 		</div>
 
 
