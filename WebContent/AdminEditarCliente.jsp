@@ -6,59 +6,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Banco UTN</title>
-	<style>
-	body {
-		font-family: Arial, sans-serif;
-	}
-	
-	.container {
-		max-width: 500px;
-		margin: auto;
-		padding: 20px;
-		border: 1px solid #ddd;
-		border-radius: 5px;
-	}
-	
-	.form-control {
-		width: 100%;
-		padding: 8px;
-		margin-bottom: 10px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-	
-	.boton {
-		background-color: #007bff;
-		color: white;
-		padding: 10px 20px;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-	} 
-	
-	.btn-GuardarCambios {
-		background-color: green;
-		color: white;
-	}
-	
-	.btn-DardeBaja {
-		background-color: red;
-		color: white;
-	}
-	
-	.btn-Volver {
-		background-color: blue;
-		color: white;
-	}
-	button {
-	   background-color: #f44336;
-       color: white;
-       border: none;
-       padding: 0.5rem 1rem;
-       border-radius: 4px;
-       cursor: pointer;
-	}
-	</style>
+
 	<%@ include file="Componentes/Head.jsp"%>
 	</head>
 	<body>

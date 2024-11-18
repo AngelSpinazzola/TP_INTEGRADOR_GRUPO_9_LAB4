@@ -3,57 +3,55 @@ package entidad;
 public class Usuario {
 
 	private int id;
-	private final String nombreUsuario;
-	private static String password = "123";
+	private String nombreUsuario;
+	private String password = "123";
 	private final TipoUsuario tipo;
-	private boolean activo;
+	private int estado;
 
 	public Usuario() {
 		this.nombreUsuario = "user";
 		this.tipo = TipoUsuario.cliente;
-		this.activo = true;
+		this.estado = 1;
 	}
 
-	public Usuario(String nombreUsuario, TipoUsuario tipo, boolean activo) {
+	public Usuario(String nombreUsuario, TipoUsuario tipo, int estado) {
 		this.nombreUsuario = nombreUsuario;
 		this.tipo = tipo;
-		this.activo = activo;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public static String getPassword() {
-		return password;
-	}
-
-	public String getPass() {
-		return password;
-	}
-	
-	public static void setPassword(String password) {
-		Usuario.password = password;
-	}
-
-	public boolean isActivo() {
-		return activo;
-	}
-
-	public void setActivo(boolean activo) {
-		this.activo = activo;
+		this.estado = estado;
 	}
 
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}
 
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	public TipoUsuario getTipo() {
 		return tipo;
 	}
+
+	
 
 }

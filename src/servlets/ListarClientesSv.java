@@ -24,7 +24,6 @@ public class ListarClientesSv extends HttpServlet {
 			throws ServletException, IOException {
 
 		ArrayList<Cliente> listaClientes = iClienteNegocio.listarClientes();
-
 		request.setAttribute("listaClientes", listaClientes);
 		request.getRequestDispatcher("/AdminGestionClientes.jsp").forward(request, response);
 
@@ -34,5 +33,4 @@ public class ListarClientesSv extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

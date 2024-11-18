@@ -38,7 +38,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 					// Extraer datos del ResultSet
 					String nombre = rs.getString("Usuario");
 					int tipoCodigo = rs.getInt("TipoUsuario");
-					boolean activo = rs.getBoolean("Estado");
+					int estado = rs.getInt("Estado");
 
 					// Determinar el tipo de usuario
 					TipoUsuario tipo = null;
@@ -52,7 +52,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 					}
 
 					// Crear el objeto Usuario
-					usuario = new Usuario(nombre, tipo, activo);
+					usuario = new Usuario(nombre, tipo, estado);
 				}
 			}
 		} catch (SQLException e) {

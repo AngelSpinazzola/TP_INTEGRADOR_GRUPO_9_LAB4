@@ -10,18 +10,17 @@ public class Cliente extends Usuario{
 	private String apellido;
 	private String sexo;
 	private String nacionalidad;
-	private String email;
 	private Date fechaNacimiento;
-	private int idDireccion;
-	private int estado;
+	private Direccion direccion;
+	private String email;
 	private int cantidadCuentas;
 	
 	public Cliente() {
 		
 	}
 	
-	public Cliente(int dni, String cuil, String nombre, String apellido, String sexo, String nacionalidad, String email,
-			Date fechaNacimiento, int idDireccion, int estado, int cantidadCuentas) {
+	public Cliente(int dni, String cuil, String nombre, String apellido, String sexo, String nacionalidad,
+			Date fechaNacimiento, Direccion direccion, String email) {
 		super();
 		this.dni = dni;
 		this.cuil = cuil;
@@ -29,11 +28,9 @@ public class Cliente extends Usuario{
 		this.apellido = apellido;
 		this.sexo = sexo;
 		this.nacionalidad = nacionalidad;
-		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
-		this.idDireccion = idDireccion;
-		this.estado = estado;
-		this.cantidadCuentas = cantidadCuentas;
+		this.direccion = direccion;
+		this.email = email;
 	}
 
 	public int getDni() {
@@ -84,14 +81,6 @@ public class Cliente extends Usuario{
 		this.nacionalidad = nacionalidad;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
@@ -100,30 +89,27 @@ public class Cliente extends Usuario{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public int getIdDireccion() {
-		return idDireccion;
+	public Direccion getDireccion() {
+		return direccion;
 	}
 
-	public void setIdDireccion(int idDireccion) {
-		this.idDireccion = idDireccion;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
-	public int getEstado() {
-		return estado;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEstado(int estado) {
-		this.estado = estado;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
+	
 	public int getCantidadCuentas() {
 		return cantidadCuentas;
 	}
-
+	
 	public void setCantidadCuentas(int cantidadCuentas) {
 		this.cantidadCuentas = cantidadCuentas;
 	}
-	
-	
-	
 }

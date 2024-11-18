@@ -1,223 +1,173 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="Componentes/Head.jsp"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="entidad.Provincia"%>
 <%@ page import="entidad.Localidad"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agregar Médico</title>
+<title>Agregar cliente</title>
+<%@ include file="Componentes/Head.jsp"%>
 </head>
 
 <body>
-
+	<!-- Menú de Navegación -->
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
+	<!-- Contenedor principal para centrar el formulario -->
+	<div class="d-flex justify-content-center align-items-center vh-100">
+		<div class="p-4 border rounded shadow-lg bg-white"
+			style="max-width: 800px; width: 100%;">
+			<h2 class="add-title text-center">Agregar Nuevo Cliente</h2>
+			<form action="AltaClienteSv" method="post">
+				<div class="row g-3">
+					<!-- Nombre de usuario -->
+					<div class="col-md-6">
+						<label for="nombreUsuario" class="form-label">Nombre de
+							usuario</label> <input type="text" id="nombreUsuario"
+							name="nombreUsuario" class="form-control" required
+							placeholder="Nombre de usuario">
+					</div>
 
-	<br>
-	<br>
-	<div class="container">
-		<h1>Agregar Cliente</h1>
-		<form action="ServletAdmAlta" method="POST">
-			<div class="form-group">
-				<div class="form-field">
-					<label for="dni">DNI</label> <input type="text" id="dni" name="dni"
-						required>
+					<!-- Email -->
+					<div class="col-md-6">
+						<label for="email" class="form-label">Email</label> <input
+							type="email" id="email" name="email" class="form-control"
+							required placeholder="Email">
+					</div>
+
+					<!-- Contraseña -->
+					<div class="col-md-6">
+						<label for="password" class="form-label">Contraseña</label> <input
+							type="password" id="password" name="password"
+							class="form-control" required placeholder="Contraseña">
+					</div>
+
+					<!-- Nombre -->
+					<div class="col-md-6">
+						<label for="nombre" class="form-label">Nombre</label> <input
+							type="text" id="nombre" name="nombre" class="form-control"
+							required placeholder="Ingrese el nombre del cliente">
+					</div>
+
+					<!-- Apellido -->
+					<div class="col-md-6">
+						<label for="apellido" class="form-label">Apellido</label> <input
+							type="text" id="apellido" name="apellido" class="form-control"
+							required placeholder="Ingrese el apellido del cliente">
+					</div>
+
+					<!-- DNI -->
+					<div class="col-md-6">
+						<label for="dni" class="form-label">DNI</label> <input type="text"
+							id="dni" name="dni" class="form-control" required
+							placeholder="Ingrese el DNI">
+					</div>
+
+					<!-- CUIL -->
+					<div class="col-md-6">
+						<label for="cuil" class="form-label">Cuil</label> <input
+							type="text" id="cuil" name="cuil" class="form-control" required
+							placeholder="Ingrese el Cuil">
+					</div>
+
+					<!-- Sexo -->
+					<div class="col-md-6">
+						<label for="sexo" class="form-label">Sexo</label> <select
+							id="sexo" name="sexo" class="form-control">
+							<option value="">Seleccione el sexo</option>
+							<option value="M">Masculino</option>
+							<option value="F">Femenino</option>
+						</select>
+					</div>
+
+					<!-- Nacionalidad -->
+					<div class="col-md-6">
+						<label for="nacionalidad" class="form-label">Nacionalidad</label>
+						<select name="nacionalidad" class="form-select" id="nacionalidad">
+							<option value="Argentino">Argentino</option>
+							<option value="Boliviano">Boliviano</option>
+							<option value="Brasileño">Brasileño</option>
+							<option value="Chileno">Chileno</option>
+							<option value="Colombiano">Colombiano</option>
+							<!-- Más opciones aquí -->
+						</select>
+					</div>
+
+					<!-- Fecha de Nacimiento -->
+					<div class="col-md-6">
+						<label for="fechaNacimiento" class="form-label">Fecha de
+							Nacimiento</label> <input type="date" id="fechaNacimiento" required
+							name="fechaNacimiento" class="form-control">
+					</div>
+
+					<!-- Provincia -->
+					<div class="col-md-6">
+						<label for="provincia" class="form-label">Provincia</label> <select
+							id="provincia" name="provincia" class="form-control">
+							<option value="">Seleccione la provincia</option>
+							<%
+								ArrayList<Provincia> listaProvincias = (ArrayList<Provincia>) request.getAttribute("listaProvincias");
+								for (Provincia provincia : listaProvincias) {
+							%>
+							<option value="<%=provincia.getIdProvincia()%>"><%=provincia.getNombre()%></option>
+							<%
+								}
+							%>
+						</select>
+					</div>
+
+					<!-- Localidad -->
+					<div class="col-md-6">
+						<label for="localidad" class="form-label">Localidad</label> <select
+							id="localidad" name="localidad" class="form-control">
+							<option value="">Seleccione la localidad</option>
+							<%
+								ArrayList<Localidad> listaLocalidades = (ArrayList<Localidad>) request.getAttribute("listaLocalidades");
+								for (Localidad localidad : listaLocalidades) {
+							%>
+							<option value="<%=localidad.getIdLocalidad()%>"><%=localidad.getNombre()%></option>
+							<%
+								}
+							%>
+						</select>
+					</div>
+
+					<!-- Código Postal -->
+					<div class="col-md-6">
+						<label for="codigoPostal" class="form-label">Código Postal</label>
+						<input type="text" id="codigoPostal" name="codigoPostal"
+							class="form-control" required placeholder="Código Postal">
+					</div>
+
+					<!-- Calle -->
+					<div class="col-md-6">
+						<label for="calle" class="form-label">Calle</label> <input
+							type="text" id="calle" name="calle" class="form-control" required
+							placeholder="Calle">
+					</div>
+
+					<!-- Número -->
+					<div class="col-md-6">
+						<label for="numero" class="form-label">Número</label> <input
+							type="text" id="numero" name="numero" class="form-control"
+							required placeholder="Número">
+					</div>
 				</div>
 
-				<div class="form-field">
-					<label for="name">Nombre</label> <input type="text" id="nombre"
-						name="nombre" required>
+				<!-- Botones -->
+				<div class="mt-4 text-center">
+					<button type="submit" class="btn btn-primary">Guardar
+						Cliente</button>
 				</div>
-
-				<div class="form-field">
-					<label for="surname">Apellido</label> <input type="text"
-						id="apellido" name="apellido" required>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="form-field">
-					<label for="birthdate">Fecha de nacimiento</label> <input
-						type="date" id="fechaNacimiento" name="fechaNacimiento" required>
-				</div>
-
-				<div class="form-field">
-					<label for="nacionalidad">Nacionalidad</label> <select name="nacionalidad"
-						class="form-select">
-						<option value="Argentino">Argentino</option>
-						<option value="Uruguayo">Uruguayo</option>
-						<option value="Chileno">Chileno</option>
-						<option value="Brazilero">Brazilero</option>
-						<option value="Peruano">Peruano</option>
-						<option value="Otra nacionalidad">Otra nacionalidad..</option>
-					</select>
-				</div>
-
-				<div class="form-field">
-					<label for="sexo">Sexo</label> <select name="sexo"class="form-select">
-						<option value="Masculino">Masculino</option>
-						<option value="Femenino">Femenino</option>
-						<option value="Otro">Otro</option>
-					</select>
-				</div>
-
-
-
-			</div>
-
-			<div class="form-group">
-
-				<div class="form-group">
-					<label for="provincia">Provincia</label> <select
-						class="form-select">
-
-						<%
-							ArrayList<Provincia> lprovincia = (ArrayList<Provincia>) request.getAttribute("ListaProv");
-							if (lprovincia != null)
-								for (Provincia p : lprovincia) {
-						%>
-						<option value="<%=p.getIDProvincia()%>">
-							<%=p.getNombre()%>
-						</option>
-						<%
-							}
-						%>
-
-					</select>
-				</div>
-
-				<div class="form-group">
-					<label for="localidad">Localidad</label> <select name="localidad"
-						class="form-select">
-
-						<%
-							ArrayList<Localidad> llocalidad = (ArrayList<Localidad>) request.getAttribute("ListaLoc");
-							if (llocalidad != null)
-								for (Localidad l : llocalidad) {
-						%>
-						<option value="<%=l.getIDLocalidad()%>">
-							<%=l.getNombre()%>
-						</option>
-						<%
-							}
-						%>
-
-
-					</select>
-				</div>
-
-
-				<div class="form-field">
-					<label for="email">Correo electrónico</label> <input type="email"
-						id="email" name="email" required>
-				</div>
-
-			</div>
-
-
-			<div class="form-group">
-
-				<div class="form-field">
-					<label for="username">Nombre de usuario</label> <input type="text"
-						id="usuario" name="username" required>
-				</div>
-
-
-				<div class="form-field">
-					<label for="password">Contraseña</label> <input type="password"
-						id="contraseña" name="password" required>
-				</div>
-
-				<div class="form-field">
-					<label for="repeat-password">Repetir contraseña</label> <input
-						type="password" id="contraseña2" name="repeat-password" required>
-				</div>
-
-				<a href="AdminGestionClientes.jsp">
-				<button type="button" class="button">Volver</button>				
-				</a>
-				<button type="submit" name="btnDarAlta" class="btn-customDarAlta">Dar de Alta</button>
-
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 
-	<style>
-/* Estilos basados en la imagen */
-.btn-customDarAlta{
-	   background-color: green;
-       color: white;
-       border: none;
-       padding: 0.5rem 1rem;
-       border-radius: 4px;
-       cursor: pointer;
-}
-body {
-	font-family: Arial, sans-serif;
-	background-color: #f5f5f5;
-	color: #333;
-}
 
-.container {
-	max-width: 800px;
-	margin: 0 auto;
-	padding: 20px;
-	background-color: white;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-	gap: 20px;
-	margin-bottom: 15px;
-}
-
-.form-field {
-	margin-bottom: 15px;
-}
-
-label {
-	display: block;
-	font-weight: bold;
-	margin-bottom: 5px;
-}
-
-input, select {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-.radio-group {
-	display: flex;
-	align-items: center;
-	margin-top: 5px;
-}
-
-.radio-group label {
-	margin-right: 10px;
-}
-
-button {
-	   background-color: #0056b3;
-       color: white;
-       border: none;
-       padding: 0.5rem 1rem;
-       border-radius: 4px;
-       cursor: pointer;
-}
-
-@media ( max-width : 600px) {
-	.container {
-		padding: 10px;
-	}
-}
-</style>
 
 </body>
+</html>
 
 

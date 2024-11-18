@@ -1,48 +1,28 @@
 package entidad;
 
 public class Localidad {
-
-
-	private int IDLocalidad;
-	private String Nombre;
-	private int IDProvincia;
+	private int idLocalidad;
+	private String nombre;
 	
-	public Localidad(){
+	public Localidad() {
 		
 	}
-	public Localidad(int idLocalidad, String nombre, int idProvincia){
-		this.IDLocalidad = idLocalidad;
-		this.Nombre = nombre;
-		this.IDProvincia = idProvincia;
+	
+	public Localidad(int idLocalidad, String nombre){
+		this.idLocalidad = idLocalidad;
+		this.nombre = nombre;
 	}
 	
-	
-	public int getIDLocalidad() {
-		return IDLocalidad;
+	public int getIdLocalidad() {
+		return idLocalidad;
 	}
-	public void setIDLocalidad(int iDLocalidad) {
-		IDLocalidad = iDLocalidad;
+	public void setIdLocalidad(int idLocalidad) {
+		this.idLocalidad = idLocalidad;
 	}
 	public String getNombre() {
-		return Nombre;
+		return nombre;
 	}
 	public void setNombre(String nombre) {
-		Nombre = nombre;
+		this.nombre = nombre;
 	}
-	public int getIDProvincia() {
-		return IDProvincia;
-	}
-	public void setIDProvincia(int iDProvincia) {
-		IDProvincia = iDProvincia;
-	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Localidad [IDLocalidad=" + IDLocalidad + ", Nombre=" + Nombre + ", IDProvincia=" + IDProvincia + "]";
-	}
-		
-	
-	
 }

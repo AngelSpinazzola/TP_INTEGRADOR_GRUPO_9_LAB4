@@ -115,7 +115,7 @@ h2 {
 	<div class="container">
 		<h2>Gestión de Clientes</h2>
 		<div class="btn-nuevo-cliente-container">
-			<a href="ServletAdmAlta?param=1">
+			<a href="CargarDesplegablesSv?action=agregarCliente">
 				<button class="btn-general btn-nuevo-cliente">Nuevo Cliente</button>
 			</a>
 		</div>
@@ -123,11 +123,11 @@ h2 {
 			<table class="client-table">
 				<thead>
 					<tr>
-						<th>ID</th>
+						<th>DNI</th>
 						<th>Nombre</th>
 						<th>Apellido</th>
-						<th>Estado</th>
 						<th>Cuentas</th>
+						<th>Estado</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -139,11 +139,11 @@ h2 {
     						Cliente cliente = iteradorClientes.next();
 					%>
 						<tr>
-							<td><%= cliente.getId() %></td>
+							<td><%= cliente.getDni() %></td>
 							<td><%= cliente.getNombre() %></td>
 							<td><%= cliente.getApellido() %></td>
-							<td><%= cliente.getEstado() %></td>
 							<td><%= cliente.getCantidadCuentas() %></td>
+							<td><%= cliente.getEstado() %></td>
 							<td>
 								<div class="action-buttons">
 									<button>
