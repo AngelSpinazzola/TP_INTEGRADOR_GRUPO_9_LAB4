@@ -1,3 +1,11 @@
+<%@ page import="entidad.Cliente"%>
+<% 
+    Cliente cliente = (Cliente) request.getAttribute("cliente");
+    if (cliente == null) {
+        out.print("Cliente no encontrado.");
+        return;
+    }
+%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -161,22 +169,24 @@
         <div class="card">
             <h3 class="card-title">Información personal</h3>
             <div class="info-grid">
-                <span class="info-label">Usuario:</span>
-                <span>juanuser432</span>
-                <span class="info-label">Nombre y apellido:</span>
-                <span>Juan Perez</span>
-                <span class="info-label">Email:</span>
-                <span>juan_perez@gmail.com</span>
-                <span class="info-label">DNI:</span>
-                <span>2411232132</span>
-                <span class="info-label">Estado:</span>
-                <span>Activo</span>
-                <span class="info-label">Teléfono:</span>
-                <span>12321312</span>
+                 <span class="info-label">Usuario:</span>
+            	<span><%= cliente.getNombreUsuario() %></span>
+	            <span class="info-label">Nombre y apellido:</span>
+	            <span><%= cliente.getNombre() + " " + cliente.getApellido() %></span>
+	            <span class="info-label">Email:</span>
+	            <span><%= cliente.getEmail() %></span>
+	            <span class="info-label">DNI:</span>
+	            <span><%= cliente.getDni() %></span>
+	            <span class="info-label">Estado:</span>
+	            <span><%= cliente.getEstado() == 1 ? "Activo" : "Inactivo" %></span>
+	            <span class="info-label">Teléfono:</span>
+	            <span><%= cliente.getTelefono() %></span>
                 <span class="info-label">Dirección:</span>
                 <span>Las heras 341</span>
             </div>
         </div>
+        
+        
 
         <div class="card">
             <h3 class="card-title">Resumen de cuentas</h3>

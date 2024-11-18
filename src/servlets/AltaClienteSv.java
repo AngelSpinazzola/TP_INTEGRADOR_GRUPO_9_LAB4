@@ -7,14 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import entidad.Cliente;
 import entidad.Direccion;
-import entidad.Localidad;
-import entidad.Provincia;
 import negocioImpl.ClienteNegocioImpl;
-import negocioImpl.LocalidadNegocioImpl;
-import negocioImpl.ProvinciaNegocioImpl;
 
 @WebServlet("/AltaClienteSv")
 public class AltaClienteSv extends HttpServlet {

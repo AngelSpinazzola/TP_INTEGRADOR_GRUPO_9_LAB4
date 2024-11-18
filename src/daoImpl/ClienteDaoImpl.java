@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import dao.IClienteDao;
 import entidad.Cliente;
 
@@ -21,7 +20,7 @@ public class ClienteDaoImpl implements IClienteDao {
 		try {
 			conexion = Conexion.getConnection();
 			System.out.println("Conexión establecida");
-			
+
 			conexion.setAutoCommit(false);
 
 			// Inserto el usuario para luego obtener su ID y usarlo en el insert del cliente
@@ -107,71 +106,95 @@ public class ClienteDaoImpl implements IClienteDao {
 
 	@Override
 	public ArrayList<Cliente> listarClientes(int page, int pageSize) {
-	    int offset = (page - 1) * pageSize;
+		int offset = (page - 1) * pageSize;
 
-	    String query = "SELECT c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado, COUNT(cu.IDCuenta) AS cantCuentas "
-	                 + "FROM CLIENTES c "
-	                 + "LEFT JOIN Usuarios u ON u.IDUsuario = c.IDUsuario "
-	                 + "LEFT JOIN Cuentas cu ON cu.DNICliente = c.DNI "
-	                 + "WHERE u.TipoUsuario = 2 "
-	                 + "GROUP BY c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado "
-	                 + "LIMIT ? OFFSET ?";
+		String query = "SELECT c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado, COUNT(cu.IDCuenta) AS cantCuentas "
+				+ "FROM CLIENTES c " + "LEFT JOIN Usuarios u ON u.IDUsuario = c.IDUsuario "
+				+ "LEFT JOIN Cuentas cu ON cu.DNICliente = c.DNI " + "WHERE u.TipoUsuario = 2 "
+				+ "GROUP BY c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado " + "LIMIT ? OFFSET ?";
 
-	    ArrayList<Cliente> listaClientes = new ArrayList<>();
+		ArrayList<Cliente> listaClientes = new ArrayList<>();
 
-	    try (Connection conexion = Conexion.getConnection();
-	         PreparedStatement statement = conexion.prepareStatement(query)) {
+		try (Connection conexion = Conexion.getConnection();
+				PreparedStatement statement = conexion.prepareStatement(query)) {
 
-	        statement.setInt(1, pageSize);  
-	        statement.setInt(2, offset);   
+			statement.setInt(1, pageSize);
+			statement.setInt(2, offset);
 
-	        try (ResultSet resultSet = statement.executeQuery()) {
-	            while (resultSet.next()) {
-	                Cliente cliente = new Cliente();
-	                cliente.setDni(resultSet.getInt("DNI"));
-	                cliente.setNombre(resultSet.getString("Nombre"));
-	                cliente.setApellido(resultSet.getString("Apellido"));
-	                cliente.setEstado(resultSet.getInt("Estado"));
-	                cliente.setCantidadCuentas(resultSet.getInt("cantCuentas"));
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					Cliente cliente = new Cliente();
+					cliente.setDni(resultSet.getInt("DNI"));
+					cliente.setNombre(resultSet.getString("Nombre"));
+					cliente.setApellido(resultSet.getString("Apellido"));
+					cliente.setEstado(resultSet.getInt("Estado"));
+					cliente.setCantidadCuentas(resultSet.getInt("cantCuentas"));
 
-	                listaClientes.add(cliente);
-	            }
-	        }
+					listaClientes.add(cliente);
+				}
+			}
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return listaClientes;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listaClientes;
 	}
 
-
-	
 	@Override
 	public int getTotalClientesCount() {
-	    String query = "SELECT COUNT(*) FROM CLIENTES c "
-	                 + "LEFT JOIN Usuarios u ON u.IDUsuario = c.IDUsuario "
-	                 + "WHERE u.TipoUsuario = 2";
-	    
-	    int totalClientes = 0;
+		String query = "SELECT COUNT(*) FROM CLIENTES c " + "LEFT JOIN Usuarios u ON u.IDUsuario = c.IDUsuario "
+				+ "WHERE u.TipoUsuario = 2";
 
-	    try (Connection conexion = Conexion.getConnection();
-	         PreparedStatement statement = conexion.prepareStatement(query);
-	         ResultSet resultSet = statement.executeQuery()) {
+		int totalClientes = 0;
 
-	        if (resultSet.next()) {
-	            totalClientes = resultSet.getInt(1);
-	        }
+		try (Connection conexion = Conexion.getConnection();
+				PreparedStatement statement = conexion.prepareStatement(query);
+				ResultSet resultSet = statement.executeQuery()) {
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+			if (resultSet.next()) {
+				totalClientes = resultSet.getInt(1);
+			}
 
-	    return totalClientes;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return totalClientes;
 	}
 	
+	@Override
 	public int calcularTotalPaginas(int pageSize) {
-	    int totalClientes = getTotalClientesCount();
-	    return (int) Math.ceil((double) totalClientes / pageSize);
+		int totalClientes = getTotalClientesCount();
+		return (int) Math.ceil((double) totalClientes / pageSize);
+	}
+	
+	@Override
+	public Cliente getDetalleCliente(int dni) {
+		Cliente cliente = null;
+
+		String query = "SELECT u.Usuario, c.Nombre, c.Apellido, c.Email, c.DNI, c.ESTADO, " + "t.NumeroTelefonico "
+				+ "FROM clientes c " + "INNER JOIN usuarios u ON u.IDUsuario = c.IDUsuario "
+				+ "INNER JOIN telefonos t ON t.DNICliente = c.DNI " + "WHERE c.DNI = ?";
+
+		try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
+			ps.setInt(1, dni);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				cliente = new Cliente();
+				cliente.setNombreUsuario(rs.getString("Usuario"));
+				cliente.setNombre(rs.getString("Nombre"));
+				cliente.setApellido(rs.getString("Apellido"));
+				cliente.setEmail(rs.getString("Email"));
+				cliente.setDni(rs.getInt("DNI"));
+				cliente.setEstado(rs.getInt("ESTADO"));
+				cliente.setTelefono(rs.getString("NumeroTelefonico"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cliente;
 	}
 
 }

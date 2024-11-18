@@ -1,7 +1,6 @@
 package entidad;
 
 import java.sql.Date;
-import java.util.ArrayList;
 
 public class Cliente extends Usuario{
 	private	int dni;
@@ -14,6 +13,7 @@ public class Cliente extends Usuario{
 	private Direccion direccion;
 	private String email;
 	private int cantidadCuentas;
+	private String numeroTelefono;
 	
 	public Cliente() {
 		
@@ -31,6 +31,14 @@ public class Cliente extends Usuario{
 		this.fechaNacimiento = fechaNacimiento;
 		this.direccion = direccion;
 		this.email = email;
+	}
+	
+	public void setTelefono(String numeroTelefono) {
+		this.numeroTelefono = numeroTelefono;
+	}
+	
+	public String getTelefono() {
+		return numeroTelefono;
 	}
 
 	public int getDni() {

@@ -56,5 +56,10 @@ public class ClienteNegocioImpl implements IClienteNegocio{
 	public int getTotalClientesCount() {
         return iClienteDao.getTotalClientesCount();
     }
+    
+    @Override
+    public Cliente getDetalleCliente(int dni) {
+		return iClienteDao.getDetalleCliente(dni);
+    }
 
 }

@@ -76,7 +76,7 @@ CREATE TABLE PRESTAMOS (
     ImporteAPagar DECIMAL(10,2) NOT NULL,
     Cuotas INT NOT NULL,
     Fecha DATE NOT NULL,
-    Estado BIT NOT NULL,
+    Estado TINYINT NOT NULL,
     CONSTRAINT fk_Prestamos_Clientes FOREIGN KEY (DNICliente) REFERENCES CLIENTES(DNI),
 	CONSTRAINT fk_PrestamoId FOREIGN KEY (IDTipoPrestamo) REFERENCES TIPO_PRESTAMOS(IDTipoPrestamo),
     CONSTRAINT chk_Monto CHECK (MontoPedido REGEXP '^[0-9]+(\\.[0-9]{1,2})?$'),
@@ -128,8 +128,8 @@ CREATE TABLE TIPO_MOVIMIENTOS (
 );
 
 INSERT INTO TIPO_MOVIMIENTOS (Nombre) VALUES ('Alta de cuenta');
-INSERT INTO TIPO_MOVIMIENTOS (Nombre) VALUES ('Alta de un pr√©stamo');
-INSERT INTO TIPO_MOVIMIENTOS (Nombre) VALUES ('Pago de pr√©stamo');
+INSERT INTO TIPO_MOVIMIENTOS (Nombre) VALUES ('Alta de un pr√É¬©stamo');
+INSERT INTO TIPO_MOVIMIENTOS (Nombre) VALUES ('Pago de pr√É¬©stamo');
 INSERT INTO TIPO_MOVIMIENTOS (Nombre) VALUES ('Transferencia');
 
 
@@ -150,17 +150,17 @@ INSERT INTO PROVINCIAS (Nombre) VALUES ('Buenos Aires');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Catamarca');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Chaco');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Chubut');
-INSERT INTO PROVINCIAS (Nombre) VALUES ('CÛrdoba');
+INSERT INTO PROVINCIAS (Nombre) VALUES ('C√≥rdoba');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Corrientes');
-INSERT INTO PROVINCIAS (Nombre) VALUES ('Entre RÌos');
+INSERT INTO PROVINCIAS (Nombre) VALUES ('Entre R√≠os');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Formosa');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Jujuy');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('La Pampa');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('La Rioja');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Mendoza');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Misiones');
-INSERT INTO PROVINCIAS (Nombre) VALUES ('NeuquÈn');
-INSERT INTO PROVINCIAS (Nombre) VALUES ('RÌo Negro');
+INSERT INTO PROVINCIAS (Nombre) VALUES ('Neuqu√©n');
+INSERT INTO PROVINCIAS (Nombre) VALUES ('R√≠o Negro');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Salta');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('San Juan');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('San Luis');
@@ -168,32 +168,32 @@ INSERT INTO PROVINCIAS (Nombre) VALUES ('Santa Cruz');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Santa Fe');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Santiago del Estero');
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Tierra del Fuego');
-INSERT INTO PROVINCIAS (Nombre) VALUES ('Tucum·n');
-INSERT INTO PROVINCIAS (Nombre) VALUES ('Ciudad AutÛnoma de Buenos Aires');
+INSERT INTO PROVINCIAS (Nombre) VALUES ('Tucum√°n');
+INSERT INTO PROVINCIAS (Nombre) VALUES ('Ciudad Aut√≥noma de Buenos Aires');
 
 
 -- Inserts para la tabla LOCALIDADES (asumiendo IDProvincia = 1 para todas las localidades de Buenos Aires)
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('La Plata', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Mar del Plata', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('BahÌa Blanca', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Bah√≠a Blanca', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Tandil', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('San Nicol·s de los Arroyos', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('JunÌn', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('San Nicol√°s de los Arroyos', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Jun√≠n', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Pergamino', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Chivilcoy', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Z·rate', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Z√°rate', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('San Pedro', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Luj·n', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Luj√°n', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('San Antonio de Areco', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Necochea', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Azul', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('OlavarrÌa', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Olavarr√≠a', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('La Matanza', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Tres de Febrero', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('MorÛn', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Mor√≥n', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('San Isidro', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Tigre', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Vicente LÛpez', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Vicente L√≥pez', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Berazategui', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Quilmes', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Avellaneda', 1);
@@ -202,17 +202,17 @@ INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Escobar', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Merlo', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Moreno', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Lomas de Zamora', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('AdroguÈ', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Adrogu√©', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('San Miguel', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('ItuzaingÛ', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Ituzaing√≥', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Berisso', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Ensenada', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Campana', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Villa Gesell', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Pinamar', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Mar de AjÛ', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Mar de Aj√≥', 1);
 INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Miramar', 1);
-INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('CarilÛ', 1);
+INSERT INTO LOCALIDADES (Nombre, IDProvincia) VALUES ('Caril√≥', 1);
 
 -- Inserts para la tabla USUARIOS
 INSERT INTO USUARIOS (Usuario, Contrasenia, TipoUsuario, Estado) VALUES ('admin', '123', 1, 1);
@@ -232,7 +232,7 @@ INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (2, '1407', 'Calle Defensa', 250);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (3, '1425', 'Calle Anchorena', 500);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1043', 'Avenida Callao', 300);
-INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1428', 'Calle AzcuÈnaga', 750);
+INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1428', 'Calle Azcu√©naga', 750);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1073', 'Avenida Las Heras', 450);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1056', 'Calle Suipacha', 850);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1089', 'Avenida 9 de Julio', 101);
@@ -243,18 +243,18 @@ INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1400', 'Calle Armenia', 90);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1450', 'Avenida Santa Fe', 320);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1520', 'Calle Parera', 550);
-INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1600', 'Avenida CÛrdoba', 250);
+INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1600', 'Avenida C√≥rdoba', 250);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1702', 'Calle Juncal', 620);
 INSERT INTO DIRECCIONES (IDLocalidad, CodigoPostal, Calle, Numero) VALUES (1, '1804', 'Avenida Alvear', 300);
 
 -- Inserts para la tabla CLIENTES
-INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (33333333, '20-33333333-3', 'JoaquÌn', 'RamÌrez', 'Masculino', 'Argentino', '1993-01-15', 1, 'joaquin.ramirez@mail.com', 1, true);
-INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (55555555, '27-55555555-5', 'MarÌa', 'Gonz·lez', 'Femenino', 'Argentina', '1987-08-23', 2, 'maria.gonzalez@mail.com', 2, true);
+INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (33333333, '20-33333333-3', 'Joaqu√≠n', 'Ram√≠rez', 'Masculino', 'Argentino', '1993-01-15', 1, 'joaquin.ramirez@mail.com', 1, true);
+INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (55555555, '27-55555555-5', 'Mar√≠a', 'Gonz√°lez', 'Femenino', 'Argentina', '1987-08-23', 2, 'maria.gonzalez@mail.com', 2, true);
 INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (66666666, '20-66666666-6', 'Diego', 'Vega', 'Masculino', 'Argentino', '1992-10-30', 4, 'diego.vega@mail.com', 3, true);
 INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (77777777, '27-77777777-7', 'Natalia', 'Ortiz', 'Femenino', 'Argentina', '1995-07-04', 7, 'natalia.ortiz@mail.com', 4, true);
 INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (88888888, '20-88888888-8', 'Fernando', 'Luna', 'Masculino', 'Argentino', '1990-11-02', 8, 'fernando.luna@mail.com', 5, true);
 INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (99999999, '27-99999999-9', 'Valeria', 'Mendoza', 'Femenino', 'Argentina', '1989-03-12', 9, 'valeria.mendoza@mail.com', 6, true);
-INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (12345678, '20-12345678-1', 'MartÌn', 'Su·rez', 'Masculino', 'Argentino', '1996-04-20', 10, 'martin.suarez@mail.com', 7, true);
+INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (12345678, '20-12345678-1', 'Mart√≠n', 'Su√°rez', 'Masculino', 'Argentino', '1996-04-20', 10, 'martin.suarez@mail.com', 7, true);
 INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (87654321, '27-87654321-2', 'Florencia', 'Cabrera', 'Femenino', 'Argentina', '1998-09-15', 11, 'florcabrera@mail.com', 8, true);
 INSERT INTO CLIENTES (DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario, ESTADO) VALUES (13579135, '20-13579135-3', 'Ignacio', 'Ponce', 'Masculino', 'Argentino', '1983-02-28', 13, 'ignacio.ponce@mail.com', 9, true);
 
@@ -270,15 +270,15 @@ INSERT INTO TELEFONOS (DNICliente, NumeroTelefonico) VALUES (87654321, '11113355
 INSERT INTO TELEFONOS (DNICliente, NumeroTelefonico) VALUES (13579135, '1133557788');
 
 
--- Inserts para los TIPO de prÈstamos 
+-- Inserts para los TIPO de pr√©stamos 
 INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('Personal TNA 25%', 25);
 INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('Hipotecario TNA 10%', 5);
 INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('Automotriz TNA 15%', 10);
 INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('Vacaciones TNA 20%', 15);
 INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('Comercial TNA 5%', 20);
-INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('AgrÌcola TNA 10%', 18);
+INSERT INTO TIPO_PRESTAMOS (Tipo, TNA) VALUES ('Agr√≠cola TNA 10%', 18);
 
--- Inserts para la tabla prÈstamos
+-- Inserts para la tabla pr√©stamos
 INSERT INTO PRESTAMOS (IDPrestamo, IDTipoPrestamo, DNICliente, MontoPedido, ImporteAPagar, Cuotas, Fecha, Estado) VALUES 
 (1, 2, 33333333, 20000.00, 22000.00, 12, '2023-06-06', 0),   -- Hipotecario TNA 10%
 (2, 3, 33333333, 15000.00, 17250.00, 24, '2022-02-05', 0),   -- Automotriz TNA 15%

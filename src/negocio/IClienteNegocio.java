@@ -8,4 +8,5 @@ public interface IClienteNegocio {
 	public ArrayList<Cliente> listarClientes(int page, int pageSize);
 	public int getTotalClientesCount();
 	public int calcularTotalPaginas(int pageSize);
+	public Cliente getDetalleCliente(int dni);
 }
