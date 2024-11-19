@@ -51,7 +51,6 @@ public class ClienteNegocioImpl implements IClienteNegocio{
         return (int) Math.ceil((double) totalClientes / pageSize); 
     }
 	
-	
     @Override
 	public int getTotalClientesCount() {
         return iClienteDao.getTotalClientesCount();

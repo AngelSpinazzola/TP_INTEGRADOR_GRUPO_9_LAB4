@@ -128,31 +128,45 @@ th {
 	color: white;
 }
 
-/* Pagination */
+.pagination-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
+}
+
 .pagination {
 	display: flex;
 	justify-content: flex-end;
-	gap: 5px;
-	margin-top: 15px;
 }
 
 .pagination button {
-	padding: 5px 10px;
-	border: 1px solid #ddd;
-	background: white;
+	background-color: #aac4ee;
+	border: none;
+	color: white;
+	padding: 8px 16px;
+	text-decoration: none;
+	font-size: 16px;
+	margin: 4px 2px;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
+	border-radius: 2px;
+}
+
+.pagination button:hover {
+	background-color: #2F4E93;
+	color: white;
 }
 
 .pagination button.active {
-	background-color: #007bff;
+	text-color: white;
+	background-color: #2F4E93;
 	color: white;
-	border-color: #007bff;
 }
 
-@media ( max-width : 768px) {
-	.info-grid {
-		grid-template-columns: 1fr;
-	}
+.pagination-info {
+	font-size: 16px;
+	color: #333;
 }
 </style>
 </head>
@@ -169,10 +183,10 @@ th {
 		ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) request.getAttribute("prestamos");
 		ArrayList<Cuenta> cuentas = (ArrayList<Cuenta>) request.getAttribute("cuentas");
 	%>
-	
+
 	<div class="container">
-	
-		<!-- Detalles del cliente -->		
+
+		<!-- Detalles del cliente -->
 		<h2 class="page-title">Detalles de Cliente</h2>
 		<div class="card">
 			<h3 class="card-title">Información personal</h3>
@@ -281,6 +295,40 @@ th {
 					%>
 				</tbody>
 			</table>
+
+			<!-- Paginación -->
+			<div class="pagination-container">
+				<%
+					int totalPrestamos = (Integer) request.getAttribute("totalPrestamos");
+						if (totalPrestamos > 3) {
+				%>
+				<div class="pagination-info">
+					Mostrando página
+					<%=request.getAttribute("paginaActual")%>
+					de
+					<%=request.getAttribute("totalPaginas")%>
+				</div>
+				<div class="pagination">
+					<%
+						int totalPaginas = (Integer) request.getAttribute("totalPaginas");
+								int paginaActual = (Integer) request.getAttribute("paginaActual");
+								String dniCliente = request.getParameter("dni");
+
+								for (int i = 1; i <= totalPaginas; i++) {
+									String activeClass = (i == paginaActual) ? "active" : "";
+					%>
+					<button class="<%=activeClass%>"
+						onclick="window.location.href='DetalleClienteSv?dni=<%=dniCliente%>&page=<%=i%>&pageSize=3'">
+						<%=i%>
+					</button>
+					<%
+						}
+					%>
+				</div>
+				<%
+					}
+				%>
+			</div>
 			<%
 				} else {
 			%>

@@ -40,13 +40,28 @@ public class DetalleClienteSv extends HttpServlet {
 	    int dni = -1;
 	    dni = Integer.parseInt(dniCliente);
 	    
+	    String pageParam = request.getParameter("page");
+        String pageSizeParam = request.getParameter("pageSize");
+
+        int page = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
+        int pageSize = (pageSizeParam != null && !pageSizeParam.isEmpty()) ? Integer.parseInt(pageSizeParam) : 3;
+	    
+	    
 	    Cliente cliente = iClienteNegocio.getDetalleCliente(dni);
-	    ArrayList<Prestamo> prestamos = iPrestamoNegocio.getPrestamosPorCliente(dni);
+	    ArrayList<Prestamo> prestamos = iPrestamoNegocio.getPrestamosPorCliente(dni, page, pageSize);
+	    
+	    int totalPrestamos = iPrestamoNegocio.getTotalPrestamosCount(dni);
+        int totalPaginas = (int) Math.ceil((double) totalPrestamos / pageSize);
+        
 	    ArrayList<Cuenta> cuentas = iCuentaNegocio.getCuentasDelCliente(dni);
 
 	    request.setAttribute("cliente", cliente);
 	    request.setAttribute("prestamos", prestamos);
-	    request.setAttribute("cuentas", cuentas);
+	    request.setAttribute("cuentas", cuentas); 
+	    request.setAttribute("totalPrestamos", totalPrestamos);
+	    request.setAttribute("totalPaginas", totalPaginas);
+        request.setAttribute("paginaActual", page);
+
 	    
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminDetalleCliente.jsp");
 	    dispatcher.forward(request, response);
