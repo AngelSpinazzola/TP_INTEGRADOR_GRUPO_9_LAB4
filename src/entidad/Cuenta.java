@@ -2,24 +2,28 @@ package entidad;
 
 import java.sql.Date;
 
-public class Cuenta {
+public class Cuenta{
 	private int idCuenta;
-	private TipoCuenta tipoCuenta;
 	private Date fechaCreacion;
 	private long numeroCuenta;
-	private long cbu;
+	private String cbu;
 	private float saldo;
 	private boolean estadoCuenta;
-
-	public Cuenta(int idCuenta, Date fechaCreacion, long numeroCuenta, long cbu, float saldo, TipoCuenta tipoCuenta, boolean estadoCuenta) {
-		this.idCuenta = idCuenta;
-		this.fechaCreacion = fechaCreacion;
-		this.numeroCuenta = numeroCuenta;
-		this.cbu = cbu;
-		this.saldo = saldo;
-		this.tipoCuenta = tipoCuenta;
-		this.estadoCuenta = estadoCuenta;
+	private TipoCuenta tipoCuenta;
+	
+	public Cuenta() {
+		
 	}
+	
+	public Cuenta(int idCuenta, Date fechaCreacion, long numeroCuenta, String cbu, float saldo, TipoCuenta tipoCuenta, boolean estadoCuenta) {
+        this.idCuenta = idCuenta;
+        this.fechaCreacion = fechaCreacion;
+        this.numeroCuenta = numeroCuenta;
+        this.cbu = cbu;
+        this.saldo = saldo;
+        this.tipoCuenta = tipoCuenta;  
+        this.estadoCuenta = estadoCuenta;
+    }
 
 	public int getIdCuenta() {
 		return idCuenta;
@@ -27,14 +31,6 @@ public class Cuenta {
 
 	public void setIdCuenta(int idCuenta) {
 		this.idCuenta = idCuenta;
-	}
-
-	public TipoCuenta getTipoCuenta() {
-		return tipoCuenta;
-	}
-
-	public void setTipoCuenta(TipoCuenta tipoCuenta) {
-		this.tipoCuenta = tipoCuenta;
 	}
 
 	public Date getFechaCreacion() {
@@ -53,11 +49,11 @@ public class Cuenta {
 		this.numeroCuenta = numeroCuenta;
 	}
 
-	public long getCbu() {
+	public String getCbu() {
 		return cbu;
 	}
 
-	public void setCbu(long cbu) {
+	public void setCbu(String cbu) {
 		this.cbu = cbu;
 	}
 
@@ -76,4 +72,12 @@ public class Cuenta {
 	public void setEstadoCuenta(boolean estadoCuenta) {
 		this.estadoCuenta = estadoCuenta;
 	}
+	
+	public TipoCuenta getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(TipoCuenta tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
 }

@@ -4,6 +4,10 @@ public class TipoCuenta {
 	private int idTipoCuenta;
 	private String tipo;
 	
+	public TipoCuenta() {
+		
+	}
+	
 	public TipoCuenta(int idTipoCuenta, String tipo) {
 		this.idTipoCuenta = idTipoCuenta;
 		this.tipo = tipo;

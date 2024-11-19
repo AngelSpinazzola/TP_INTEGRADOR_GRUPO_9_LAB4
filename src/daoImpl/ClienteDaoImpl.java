@@ -161,20 +161,20 @@ public class ClienteDaoImpl implements IClienteDao {
 
 		return totalClientes;
 	}
-	
+
 	@Override
 	public int calcularTotalPaginas(int pageSize) {
 		int totalClientes = getTotalClientesCount();
 		return (int) Math.ceil((double) totalClientes / pageSize);
 	}
-	
+
 	@Override
 	public Cliente getDetalleCliente(int dni) {
 		Cliente cliente = null;
 
-		String query = "SELECT u.Usuario, c.Nombre, c.Apellido, c.Email, c.DNI, c.ESTADO, " + "t.NumeroTelefonico "
-				+ "FROM clientes c " + "INNER JOIN usuarios u ON u.IDUsuario = c.IDUsuario "
-				+ "INNER JOIN telefonos t ON t.DNICliente = c.DNI " + "WHERE c.DNI = ?";
+		String query = "SELECT u.Usuario, c.Nombre, c.Apellido, c.Email, c.DNI, c.ESTADO, "
+				+ "t.NumeroTelefonico FROM clientes c " + "INNER JOIN usuarios u ON u.IDUsuario = c.IDUsuario "
+				+ "LEFT JOIN telefonos t ON t.DNICliente = c.DNI " + "WHERE c.DNI = ?";
 
 		try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 
