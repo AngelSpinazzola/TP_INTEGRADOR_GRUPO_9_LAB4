@@ -6,22 +6,18 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
 <%@ include file="Componentes/Head.jsp"%>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Banco UTN - Detalles de Cliente</title>
 <style>
 body {
-	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
 	background-color: #f5f5f5;
 }
 
-/* Header styles */
 .header {
 	background-color: #003b7a;
 	color: white;
@@ -45,7 +41,6 @@ body {
 	cursor: pointer;
 }
 
-/* Container styles */
 .container {
 	max-width: 1200px;
 	margin: 20px auto;
@@ -56,8 +51,6 @@ body {
 	font-size: 24px;
 	margin-bottom: 20px;
 }
-
-/* Card styles */
 .card {
 	background-color: white;
 	border-radius: 8px;
@@ -65,44 +58,64 @@ body {
 	margin-bottom: 20px;
 	padding: 20px;
 }
-
-.card-title {
-	font-size: 18px;
-	margin-bottom: 15px;
-	color: #333;
+.card-title, .info-section-title {
+	font-family: Arial, sans-serif;
+	color: #333; 
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 15px; 
+	border-bottom: 2px solid #e0e0e0;
+	padding-bottom: 5px;
 }
-
-/* Personal info styles */
 .info-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+.info-row {
 	display: grid;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: 200px 1fr;
 	gap: 10px;
-	line-height: 1.6;
+	align-items: center;
 }
 
+.info-grid.two-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+
+.info-column {
+	width: 100%;
+}
+
+.info-section {
+	background-color: transparent;
+	padding: 15px;
+	border-radius: 6px;
+}
 .info-label {
 	font-weight: bold;
 	color: #666;
+	text-align: left;
 }
-
-/* Account table styles */
+.info-row span {
+	text-align: left;
+}
 table {
 	width: 100%;
 	border-collapse: collapse;
 	margin-top: 10px;
 }
-
 th, td {
 	padding: 12px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
 }
-
 th {
 	color: #666;
 	font-weight: bold;
 }
-
 .balance {
 	color: #28a745;
 }
@@ -189,16 +202,67 @@ th {
 		<!-- Detalles del cliente -->
 		<h2 class="page-title">Detalles de Cliente</h2>
 		<div class="card">
-			<h3 class="card-title">Información personal</h3>
-			<div class="info-grid">
-				<span class="info-label">Usuario:</span> <span><%=cliente.getNombreUsuario()%></span>
-				<span class="info-label">Nombre y apellido:</span> <span><%=cliente.getNombre() + " " + cliente.getApellido()%></span>
-				<span class="info-label">Email:</span> <span><%=cliente.getEmail()%></span>
-				<span class="info-label">DNI:</span> <span><%=cliente.getDni()%></span>
-				<span class="info-label">Estado:</span> <span><%=cliente.getEstado() == 1 ? "Activo" : "Inactivo"%></span>
-				<span class="info-label">Teléfono:</span> <span> <%=cliente.getTelefono() != null ? cliente.getTelefono() : "Sin teléfono"%>
-				</span> <span class="info-label">Dirección:</span> <span>Las heras
-					341</span>
+			<div class="info-grid two-columns">
+				<div class="info-column">
+					<div class="info-section">
+						<h3 class="info-section-title">Información personal</h3>
+						<div class="info-row">
+							<span class="info-label">Usuario:</span> <span><%=cliente.getNombreUsuario()%></span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Nombre y apellido:</span> <span><%=cliente.getNombre() + " " + cliente.getApellido()%></span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Email:</span> <span><%=cliente.getEmail()%></span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">DNI:</span> <span><%=cliente.getDni()%></span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Cuil:</span> <span><%=cliente.getCuil()%></span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Estado:</span> <span><%=cliente.getEstado() == 1 ? "Activo" : "Inactivo"%></span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Teléfono:</span> <span><%=cliente.getTelefono() != null ? cliente.getTelefono() : "Sin teléfono"%></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="info-column">
+					<div class="info-section">
+						<h3 class="info-section-title">Dirección</h3>
+						<div class="info-row">
+							<span class="info-label">Provincia:</span> <span> <%=cliente.getDireccion() != null && cliente.getDireccion().getProvincia() != null
+					? cliente.getDireccion().getProvincia().getNombre()
+					: "Sin provincia"%>
+							</span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Localidad:</span> <span> <%=cliente.getDireccion() != null && cliente.getDireccion().getLocalidad() != null
+					? cliente.getDireccion().getLocalidad().getNombre()
+					: "Sin localidad"%>
+							</span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Código Postal:</span> <span> <%=cliente.getDireccion() != null ? cliente.getDireccion().getCodigoPostal() : "Sin código postal"%>
+							</span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Calle:</span> <span> <%=cliente.getDireccion() != null && cliente.getDireccion().getCalle() != null
+					? cliente.getDireccion().getCalle()
+					: "Sin calle"%>
+							</span>
+						</div>
+						<div class="info-row">
+							<span class="info-label">Altura:</span> <span> <%=cliente.getDireccion() != null && cliente.getDireccion().getNumero() != 0
+					? cliente.getDireccion().getNumero()
+					: "Sin número"%>
+							</span>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -341,3 +405,4 @@ th {
 	</div>
 </body>
 </html>
+

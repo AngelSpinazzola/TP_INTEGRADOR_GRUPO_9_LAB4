@@ -143,10 +143,13 @@ CREATE TABLE MOVIMIENTOS (
     CONSTRAINT chk_Importe CHECK (Importe REGEXP '^[0-9]+(\\.[0-9]{1,2})?$')
 );
 
+
+-- SECCIÓN TRIGGERS
+
 -- Trigger que genera cbu + numero de cuenta y registra la fecha actual del sistema al insertar una cuenta
+
 -- Elimina el trigger si existe
 DROP TRIGGER IF EXISTS before_insert_cuenta;
-
 --
 
 DELIMITER //
@@ -179,8 +182,90 @@ END;
 
 DELIMITER ;
 
--- Fin sección de triggers
+-- FIN SECCIÓN TRIGGERS
 
+-- PROCEDIMIENTOS ALMACENADOS
+
+-- Procedimiento para obtener detalles del cliente
+DELIMITER $$
+
+CREATE PROCEDURE SP_DetalleCliente(
+    IN p_dni INT
+)
+BEGIN
+    SELECT 
+        u.Usuario AS usuario,
+        c.Nombre AS nombre,
+        c.Apellido AS apellido,
+        c.Email AS email,
+        c.DNI AS dni,
+        c.CUIL AS cuil,
+        c.ESTADO AS estado,
+        t.NumeroTelefonico AS numeroTelefonico,
+        d.Calle AS calle,
+        d.Numero AS numero,
+        d.CodigoPostal AS codigoPostal,
+        l.Nombre AS localidad,
+        p.Nombre AS provincia
+    FROM 
+        clientes c
+    INNER JOIN 
+        usuarios u ON u.IDUsuario = c.IDUsuario
+    LEFT JOIN 
+        telefonos t ON t.DNICliente = c.DNI
+    LEFT JOIN 
+        direcciones d ON d.IDDireccion = c.IDDireccion
+    LEFT JOIN 
+        localidades l ON l.IDLocalidad = d.IDLocalidad
+    LEFT JOIN 
+        provincias p ON p.IDProvincia = l.IDProvincia
+    WHERE 
+        c.DNI = p_dni;
+END$$
+
+DELIMITER ;
+
+-- Procedimiento para el alta de un cliente
+DELIMITER $$
+
+CREATE PROCEDURE SP_AgregarCliente(
+    IN p_nombreUsuario VARCHAR(255),
+    IN p_password VARCHAR(255),
+    IN p_dni INT,
+    IN p_cuil VARCHAR(20),
+    IN p_nombre VARCHAR(255),
+    IN p_apellido VARCHAR(255),
+    IN p_sexo VARCHAR(1),
+    IN p_nacionalidad VARCHAR(50),
+    IN p_fechaNacimiento DATE,
+    IN p_codigoPostal VARCHAR(20),
+    IN p_calle VARCHAR(255),
+    IN p_numero INT,
+    IN p_idLocalidad INT,
+    OUT p_idUsuario INT,
+    OUT p_idDireccion INT
+)
+BEGIN
+    -- Inserción en la tabla USUARIOS
+    INSERT INTO USUARIOS(Usuario, Contrasenia, TipoUsuario, Estado) 
+    VALUES (p_nombreUsuario, p_password, 2, true);
+
+    SET p_idUsuario = LAST_INSERT_ID();  -- Obtener el ID del usuario recién insertado
+
+    -- Inserción en la tabla DIRECCIONES
+    INSERT INTO DIRECCIONES(IDLocalidad, CodigoPostal, Calle, Numero)
+    VALUES (p_idLocalidad, p_codigoPostal, p_calle, p_numero);
+
+    SET p_idDireccion = LAST_INSERT_ID();  -- Obtener el ID de la dirección recién insertada
+
+    -- Inserción en la tabla CLIENTES
+    INSERT INTO CLIENTES(DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario)
+    VALUES (p_dni, p_cuil, p_nombre, p_apellido, p_sexo, p_nacionalidad, p_fechaNacimiento, p_idDireccion, NULL, p_idUsuario);
+END $$
+
+DELIMITER ;
+
+-- FIN SECCIÓN DE PROCEDIMIENTOS ALMACENADOS
 
 -- Inserts para la tabla PROVINCIAS
 INSERT INTO PROVINCIAS (Nombre) VALUES ('Buenos Aires');

@@ -1,106 +1,57 @@
 package daoImpl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+
 import dao.IClienteDao;
 import entidad.Cliente;
+import entidad.Direccion;
+import entidad.Localidad;
+import entidad.Provincia;
 
 public class ClienteDaoImpl implements IClienteDao {
 
 	@Override
 	public boolean agregarCliente(Cliente cliente) {
 		Connection conexion = null;
-		int idUsuario = -1;
-		int idDireccion = -1;
 
 		try {
 			conexion = Conexion.getConnection();
-			System.out.println("Conexión establecida");
+			String query = "{CALL SP_AgregarCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
-			conexion.setAutoCommit(false);
+			try (CallableStatement statement = conexion.prepareCall(query)) {
+				statement.setString(1, cliente.getNombreUsuario());
+				statement.setString(2, cliente.getPassword());
+				statement.setInt(3, cliente.getDni());
+				statement.setString(4, cliente.getCuil());
+				statement.setString(5, cliente.getNombre());
+				statement.setString(6, cliente.getApellido());
+				statement.setString(7, cliente.getSexo());
+				statement.setString(8, cliente.getNacionalidad());
+				statement.setDate(9, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
+				statement.setString(10, cliente.getDireccion().getCodigoPostal());
+				statement.setString(11, cliente.getDireccion().getCalle());
+				statement.setInt(12, cliente.getDireccion().getNumero());
+				statement.setInt(13, cliente.getDireccion().getLocalidad().getIdLocalidad());
+				statement.registerOutParameter(14, Types.INTEGER); 
+				statement.registerOutParameter(15, Types.INTEGER);
 
-			// Inserto el usuario para luego obtener su ID y usarlo en el insert del cliente
-			String queryUsuario = "INSERT INTO USUARIOS(Usuario, Contrasenia, TipoUsuario, Estado) VALUES (?, ?, ?, ?)";
-			try (PreparedStatement statementUsuario = conexion.prepareStatement(queryUsuario,
-					Statement.RETURN_GENERATED_KEYS)) {
-				statementUsuario.setString(1, cliente.getNombreUsuario());
-				statementUsuario.setString(2, cliente.getPassword());
-				statementUsuario.setInt(3, 2); // Tipo de usuario "Cliente"
-				statementUsuario.setBoolean(4, true); // Estado activo
-				statementUsuario.executeUpdate();
-				System.out.println("Usuario insertado correctamente");
+				statement.executeUpdate();
+				return true;
 
-				try (ResultSet generatedKeys = statementUsuario.getGeneratedKeys()) {
-					if (generatedKeys.next()) {
-						idUsuario = generatedKeys.getInt(1);
-					} else {
-						throw new SQLException("Fallo al obtener el ID del usuario.");
-					}
-				}
-			}
-
-			// Inserto la direccion para obtener su ID y usarlo en el insert del cliente
-			String queryDireccion = "INSERT INTO DIRECCIONES(IDLocalidad, CodigoPostal, Calle, Numero) VALUES (?, ?, ?, ?)";
-			try (PreparedStatement statementDireccion = conexion.prepareStatement(queryDireccion,
-					Statement.RETURN_GENERATED_KEYS)) {
-				statementDireccion.setInt(1, cliente.getDireccion().getIdLocalidad());
-				statementDireccion.setString(2, cliente.getDireccion().getCodigoPostal());
-				statementDireccion.setString(3, cliente.getDireccion().getCalle());
-				statementDireccion.setInt(4, cliente.getDireccion().getNumero());
-				statementDireccion.executeUpdate();
-				System.out.println("Dirección insertada correctamente");
-
-				try (ResultSet generatedKeys = statementDireccion.getGeneratedKeys()) {
-					if (generatedKeys.next()) {
-						idDireccion = generatedKeys.getInt(1);
-					} else {
-						throw new SQLException("Fallo al obtener el ID de la dirección.");
-					}
-				}
-			}
-
-			// Inserto el cliente
-			String queryCliente = "INSERT INTO CLIENTES(DNI, CUIL, Nombre, Apellido, Sexo, Nacionalidad, FechaNacimiento, IDDireccion, Email, IDUsuario) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			try (PreparedStatement statementCliente = conexion.prepareStatement(queryCliente)) {
-				statementCliente.setInt(1, cliente.getDni());
-				statementCliente.setString(2, cliente.getCuil());
-				statementCliente.setString(3, cliente.getNombre());
-				statementCliente.setString(4, cliente.getApellido());
-				statementCliente.setString(5, cliente.getSexo());
-				statementCliente.setString(6, cliente.getNacionalidad());
-				statementCliente.setDate(7, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
-				statementCliente.setInt(8, idDireccion);
-				statementCliente.setString(9, cliente.getEmail());
-				statementCliente.setInt(10, idUsuario);
-				statementCliente.executeUpdate();
-			}
-
-			conexion.commit();
-			return true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			try {
-				if (conexion != null) {
-					conexion.rollback();
-				}
-			} catch (SQLException rollbackEx) {
-				rollbackEx.printStackTrace();
-			}
-			return false;
-		} finally {
-			try {
-				if (conexion != null) {
-					conexion.setAutoCommit(true);
-				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return false;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -172,24 +123,39 @@ public class ClienteDaoImpl implements IClienteDao {
 	public Cliente getDetalleCliente(int dni) {
 		Cliente cliente = null;
 
-		String query = "SELECT u.Usuario, c.Nombre, c.Apellido, c.Email, c.DNI, c.ESTADO, "
-				+ "t.NumeroTelefonico FROM clientes c " + "INNER JOIN usuarios u ON u.IDUsuario = c.IDUsuario "
-				+ "LEFT JOIN telefonos t ON t.DNICliente = c.DNI " + "WHERE c.DNI = ?";
+		String sp = "{ CALL SP_DetalleCliente(?) }";
 
-		try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+		try (Connection conn = Conexion.getConnection(); CallableStatement cs = conn.prepareCall(sp)) {
 
-			ps.setInt(1, dni);
-			ResultSet rs = ps.executeQuery();
+			cs.setInt(1, dni);
+			ResultSet rs = cs.executeQuery();
 
 			if (rs.next()) {
 				cliente = new Cliente();
-				cliente.setNombreUsuario(rs.getString("Usuario"));
-				cliente.setNombre(rs.getString("Nombre"));
-				cliente.setApellido(rs.getString("Apellido"));
-				cliente.setEmail(rs.getString("Email"));
-				cliente.setDni(rs.getInt("DNI"));
-				cliente.setEstado(rs.getInt("ESTADO"));
-				cliente.setTelefono(rs.getString("NumeroTelefonico"));
+
+				cliente.setNombreUsuario(rs.getString("usuario"));
+				cliente.setNombre(rs.getString("nombre"));
+				cliente.setApellido(rs.getString("apellido"));
+				cliente.setEmail(rs.getString("email"));
+				cliente.setDni(rs.getInt("dni"));
+				cliente.setCuil(rs.getString("cuil"));
+				cliente.setEstado(rs.getInt("estado"));
+				cliente.setTelefono(rs.getString("numeroTelefonico"));
+
+				Direccion direccion = new Direccion();
+				direccion.setCalle(rs.getString("calle"));
+				direccion.setNumero(rs.getInt("numero"));
+				direccion.setCodigoPostal(rs.getString("codigoPostal"));
+
+				Localidad localidad = new Localidad();
+				localidad.setNombre(rs.getString("localidad"));
+
+				Provincia provincia = new Provincia();
+				provincia.setNombre(rs.getString("provincia"));
+
+				direccion.setLocalidad(localidad);
+				direccion.setProvincia(provincia);
+				cliente.setDireccion(direccion); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -3,22 +3,32 @@ package entidad;
 public class Direccion {
 	private int idDireccion;
 	private int numero;
-	private int idLocalidad;
 	private String calle;
 	private String codigoPostal;
-	
+	private Provincia provincia;
+	private Localidad localidad;
+
 	public Direccion() {
-		this.idLocalidad = 1; // 1 Por default, seria Bs As.
-		this.codigoPostal = "Codigo postal Default";
-		this.calle = "Calle Default";
-		this.numero = 123;
+
 	}
-	
-	public Direccion(int idLocalidad, String codigoPostal, String calle, int numero) {
-		this.idLocalidad = idLocalidad;
-		this.codigoPostal = codigoPostal;
-		this.calle = calle;
+
+	public Direccion(int idDireccion, int numero, String calle, String codigoPostal, Provincia provincia,
+			Localidad localidad) {
+		super();
+		this.idDireccion = idDireccion;
 		this.numero = numero;
+		this.calle = calle;
+		this.codigoPostal = codigoPostal;
+		this.provincia = provincia;
+		this.localidad = localidad;
+	}
+
+	public int getIdDireccion() {
+		return idDireccion;
+	}
+
+	public void setIdDireccion(int idDireccion) {
+		this.idDireccion = idDireccion;
 	}
 
 	public int getNumero() {
@@ -27,14 +37,6 @@ public class Direccion {
 
 	public void setNumero(int numero) {
 		this.numero = numero;
-	}
-
-	public int getIdLocalidad() {
-		return idLocalidad;
-	}
-
-	public void setIdLocalidad(int idLocalidad) {
-		this.idLocalidad = idLocalidad;
 	}
 
 	public String getCalle() {
@@ -53,7 +55,19 @@ public class Direccion {
 		this.codigoPostal = codigoPostal;
 	}
 
-	public int getIdDireccion() {
-		return idDireccion;
+	public Provincia getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(Provincia provincia) {
+		this.provincia = provincia;
+	}
+
+	public Localidad getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(Localidad localidad) {
+		this.localidad = localidad;
 	}
 }
