@@ -14,7 +14,10 @@ public class Cliente extends Usuario{
 	private String email;
 	private int cantidadCuentas;
 	private String numeroTelefono;
+	private int IDUsuario;
 	
+
+
 	public Cliente() {
 		
 	}
@@ -119,5 +122,13 @@ public class Cliente extends Usuario{
 	
 	public void setCantidadCuentas(int cantidadCuentas) {
 		this.cantidadCuentas = cantidadCuentas;
+	}
+	
+	public int getIDUsuario() {
+		return IDUsuario;
+	}
+
+	public void setIDUsuario(int iDUsuario) {
+		IDUsuario = iDUsuario;
 	}
 }

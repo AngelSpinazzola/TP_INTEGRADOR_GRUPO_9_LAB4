@@ -24,13 +24,16 @@
 	
 </head>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <body>
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-12">
 				<h3 class="mb-4">Bienvenido/a, Admin</h3>
-				<p class="text-muted">AquÌ est· el resumen de hoy</p>
+				<p class="text-muted">Aqu√≠ est√° el resumen de hoy</p>
 			</div>
 		</div>
 
@@ -74,7 +77,7 @@
 			<div class="col-md-3">
 				<div class="card card-superior">
 					<div class="card-body">
-						<h6 class="card-subtitle mb-2 text-muted">PrÈstamos activos</h6>
+						<h6 class="card-subtitle mb-2 text-muted">Pr√©stamos activos</h6>
 						<h4 class="card-title">130</h4>
 						<p class="card-text text-danger">
 							<i class="fas fa-arrow-down"></i> 3% vs mes anterior
@@ -87,7 +90,7 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="d-flex justify-content-between align-items-center mb-4">
-					<h5 class="card-title">PerÌodo 01/01/2021 - 01/01/2022</h5>
+					<h5 class="card-title">Per√≠odo 01/01/2021 - 01/01/2022</h5>
 					<button class="btn btn-general">Aplicar filtro</button>
 				</div>
 				<canvas id="statsChart"></canvas>
@@ -110,7 +113,7 @@
 	                    backgroundColor: '#8884d8'
 	                },
 	                {
-	                    label: 'PrÈstamos otorgados',
+	                    label: 'Pr√©stamos otorgados',
 	                    data: [3200, 1800, 1500, 1800, 2800, 3800, 3500, 3500, 3200, 3200, 3500, 3800],
 	                    backgroundColor: '#ffa726'
 	                }

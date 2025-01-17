@@ -155,11 +155,13 @@ h2 {
 							Cliente cliente = iteradorClientes.next();
 					%>
 					<tr>
+						<td><%=cliente.getIDUsuario()%></td>
 						<td><%=cliente.getDni()%></td>
 						<td><%=cliente.getNombre()%></td>
 						<td><%=cliente.getApellido()%></td>
 						<td><%=cliente.getCantidadCuentas()%></td>
 						<td><%=cliente.getEstado()%></td>
+						
 						<td>
 							<div class="action-buttons">
 								<button>

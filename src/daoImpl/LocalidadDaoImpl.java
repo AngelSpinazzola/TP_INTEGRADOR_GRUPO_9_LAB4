@@ -55,4 +55,27 @@ public class LocalidadDaoImpl implements ILocalidadDao {
 
 		return localidad;
 	}
+	
+	@Override
+	public ArrayList<Localidad> listarLocalidadesXProvincia(){
+	    String query = "SELECT idLocalidad, nombre FROM localidades WHERE IDProvincia = ?";
+		ArrayList<Localidad> listaLocalidades = new ArrayList<>();	
+		
+	    try (Connection conexion = Conexion.getConnection();
+		         PreparedStatement statement = conexion.prepareStatement(query);
+		         ResultSet resultSet = statement.executeQuery()) {
+
+		        while (resultSet.next()) {
+		            Localidad localidad = new Localidad();
+		            
+		            localidad.setIdLocalidad(resultSet.getInt("idLocalidad"));
+		            localidad.setNombre(resultSet.getString("nombre"));
+		            listaLocalidades.add(localidad);
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+	    
+		return listaLocalidades;
+	}
 }

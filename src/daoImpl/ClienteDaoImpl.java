@@ -23,7 +23,8 @@ public class ClienteDaoImpl implements IClienteDao {
 
 		try {
 			conexion = Conexion.getConnection();
-			String query = "{CALL SP_AgregarCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+			String query = "{CALL SP_AgregarCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+
 
 			try (CallableStatement statement = conexion.prepareCall(query)) {
 				statement.setString(1, cliente.getNombreUsuario());
@@ -32,15 +33,17 @@ public class ClienteDaoImpl implements IClienteDao {
 				statement.setString(4, cliente.getCuil());
 				statement.setString(5, cliente.getNombre());
 				statement.setString(6, cliente.getApellido());
-				statement.setString(7, cliente.getSexo());
-				statement.setString(8, cliente.getNacionalidad());
-				statement.setDate(9, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
-				statement.setString(10, cliente.getDireccion().getCodigoPostal());
-				statement.setString(11, cliente.getDireccion().getCalle());
-				statement.setInt(12, cliente.getDireccion().getNumero());
-				statement.setInt(13, cliente.getDireccion().getLocalidad().getIdLocalidad());
-				statement.registerOutParameter(14, Types.INTEGER); 
-				statement.registerOutParameter(15, Types.INTEGER);
+				statement.setString(7, cliente.getEmail());
+				statement.setString(8, cliente.getSexo());
+				statement.setString(9, cliente.getNacionalidad());
+				statement.setDate(10, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
+				statement.setString(11, cliente.getDireccion().getCodigoPostal());
+				statement.setString(12, cliente.getDireccion().getCalle());
+				statement.setInt(13, cliente.getDireccion().getNumero());
+				statement.setInt(14, cliente.getDireccion().getLocalidad().getIdLocalidad());
+				
+				statement.registerOutParameter(15, Types.INTEGER); 
+				statement.registerOutParameter(16, Types.INTEGER);
 
 				statement.executeUpdate();
 				return true;
@@ -75,6 +78,7 @@ public class ClienteDaoImpl implements IClienteDao {
 			try (ResultSet resultSet = statement.executeQuery()) {
 				while (resultSet.next()) {
 					Cliente cliente = new Cliente();
+					cliente.setIDUsuario(resultSet.getInt("IDUsuario"));
 					cliente.setDni(resultSet.getInt("DNI"));
 					cliente.setNombre(resultSet.getString("Nombre"));
 					cliente.setApellido(resultSet.getString("Apellido"));

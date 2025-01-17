@@ -2,8 +2,7 @@
 <%@ page import="entidad.Cuenta"%>
 <%@ page import="entidad.Prestamo"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -233,6 +232,12 @@ th {
 				<div class="info-column">
 					<div class="info-section">
 						<h3 class="info-section-title">Dirección</h3>
+						
+						
+						<c:forEach>
+						</c:forEach>
+						
+						
 						<div class="info-row">
 							<span class="info-label">Provincia:</span> <span> <%=cliente.getDireccion() != null && cliente.getDireccion().getProvincia() != null
 					? cliente.getDireccion().getProvincia().getNombre()
