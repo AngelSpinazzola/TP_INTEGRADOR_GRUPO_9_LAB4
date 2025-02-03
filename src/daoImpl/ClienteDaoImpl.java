@@ -14,38 +14,37 @@ import entidad.Cliente;
 import entidad.Direccion;
 import entidad.Localidad;
 import entidad.Provincia;
+import entidad.Usuario;
 
 public class ClienteDaoImpl implements IClienteDao {
-
+	
 	@Override
 	public boolean agregarCliente(Cliente cliente) {
-		Connection conexion = null;
 
-		try {
-			conexion = Conexion.getConnection();
-			String query = "{CALL SP_AgregarCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+		try(Connection cn = Conexion.getConnection()) {
+		   
+			String sql = "{CALL SP_AgregarCliente(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
 
-
-			try (CallableStatement statement = conexion.prepareCall(query)) {
-				statement.setString(1, cliente.getNombreUsuario());
-				statement.setString(2, cliente.getPassword());
-				statement.setInt(3, cliente.getDni());
-				statement.setString(4, cliente.getCuil());
-				statement.setString(5, cliente.getNombre());
-				statement.setString(6, cliente.getApellido());
-				statement.setString(7, cliente.getEmail());
-				statement.setString(8, cliente.getSexo());
-				statement.setString(9, cliente.getNacionalidad());
-				statement.setDate(10, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
-				statement.setString(11, cliente.getDireccion().getCodigoPostal());
-				statement.setString(12, cliente.getDireccion().getCalle());
-				statement.setInt(13, cliente.getDireccion().getNumero());
-				statement.setInt(14, cliente.getDireccion().getLocalidad().getIdLocalidad());
+			try (CallableStatement st = cn.prepareCall(sql)) {
+				st.setString(1, cliente.getUsuario().getNombreUsuario());
+				st.setString(2, cliente.getUsuario().getPassword());
+				st.setInt(3, cliente.getDni());
+				st.setString(4, cliente.getCuil());
+				st.setString(5, cliente.getNombre());
+				st.setString(6, cliente.getApellido());
+				st.setString(7, cliente.getEmail());
+				st.setString(8, cliente.getSexo());
+				st.setString(9, cliente.getNacionalidad());
+				st.setDate(10, new java.sql.Date(cliente.getFechaNacimiento().getTime()));
+				st.setString(11, cliente.getDireccion().getCodigoPostal());
+				st.setString(12, cliente.getDireccion().getCalle());
+				st.setInt(13, cliente.getDireccion().getNumero());
+				st.setInt(14, cliente.getDireccion().getLocalidad().getIdLocalidad());
 				
-				statement.registerOutParameter(15, Types.INTEGER); 
-				statement.registerOutParameter(16, Types.INTEGER);
+				st.registerOutParameter(15, Types.INTEGER); 
+				st.registerOutParameter(16, Types.INTEGER);
 
-				statement.executeUpdate();
+				st.executeUpdate();
 				return true;
 
 			} catch (SQLException e) {
@@ -60,6 +59,7 @@ public class ClienteDaoImpl implements IClienteDao {
 
 	@Override
 	public ArrayList<Cliente> listarClientes(int page, int pageSize) {
+		
 		int offset = (page - 1) * pageSize;
 
 		String query = "SELECT c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado, COUNT(cu.IDCuenta) AS cantCuentas "
@@ -68,30 +68,32 @@ public class ClienteDaoImpl implements IClienteDao {
 				+ "GROUP BY c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado " + "LIMIT ? OFFSET ?";
 
 		ArrayList<Cliente> listaClientes = new ArrayList<>();
+		
+		try ( Connection cn = Conexion.getConnection();
+			  PreparedStatement ps = cn.prepareStatement(query)) {
 
-		try (Connection conexion = Conexion.getConnection();
-				PreparedStatement statement = conexion.prepareStatement(query)) {
-
-			statement.setInt(1, pageSize);
-			statement.setInt(2, offset);
-
-			try (ResultSet resultSet = statement.executeQuery()) {
-				while (resultSet.next()) {
+			ps.setInt(1, pageSize);
+			ps.setInt(2, offset);
+			
+			try (ResultSet rs = ps.executeQuery()){
+				while (rs.next()) {
 					Cliente cliente = new Cliente();
-					cliente.setIDUsuario(resultSet.getInt("IDUsuario"));
-					cliente.setDni(resultSet.getInt("DNI"));
-					cliente.setNombre(resultSet.getString("Nombre"));
-					cliente.setApellido(resultSet.getString("Apellido"));
-					cliente.setEstado(resultSet.getInt("Estado"));
-					cliente.setCantidadCuentas(resultSet.getInt("cantCuentas"));
+					cliente.setIDUsuario(rs.getInt("IDUsuario"));
+					cliente.setDni(rs.getInt("DNI"));
+					cliente.setNombre(rs.getString("Nombre"));
+					cliente.setApellido(rs.getString("Apellido"));
+					cliente.setEstado(rs.getInt("Estado"));
+					cliente.setCantidadCuentas(rs.getInt("cantCuentas"));
 
 					listaClientes.add(cliente);
 				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			} catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		} 		
+		catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
 		return listaClientes;
 	}
 
@@ -102,8 +104,8 @@ public class ClienteDaoImpl implements IClienteDao {
 
 		int totalClientes = 0;
 
-		try (Connection conexion = Conexion.getConnection();
-				PreparedStatement statement = conexion.prepareStatement(query);
+		try (Connection cn = Conexion.getConnection();
+				PreparedStatement statement = cn.prepareStatement(query);
 				ResultSet resultSet = statement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -129,42 +131,59 @@ public class ClienteDaoImpl implements IClienteDao {
 
 		String sp = "{ CALL SP_DetalleCliente(?) }";
 
-		try (Connection conn = Conexion.getConnection(); CallableStatement cs = conn.prepareCall(sp)) {
-
+		try ( Connection con = Conexion.getConnection(); 
+			  CallableStatement cs = con.prepareCall(sp)) {
+			
+			System.out.println(dni);
 			cs.setInt(1, dni);
-			ResultSet rs = cs.executeQuery();
-
-			if (rs.next()) {
-				cliente = new Cliente();
-
-				cliente.setNombreUsuario(rs.getString("usuario"));
-				cliente.setNombre(rs.getString("nombre"));
-				cliente.setApellido(rs.getString("apellido"));
-				cliente.setEmail(rs.getString("email"));
-				cliente.setDni(rs.getInt("dni"));
-				cliente.setCuil(rs.getString("cuil"));
-				cliente.setEstado(rs.getInt("estado"));
-				cliente.setTelefono(rs.getString("numeroTelefonico"));
-
-				Direccion direccion = new Direccion();
-				direccion.setCalle(rs.getString("calle"));
-				direccion.setNumero(rs.getInt("numero"));
-				direccion.setCodigoPostal(rs.getString("codigoPostal"));
-
-				Localidad localidad = new Localidad();
-				localidad.setNombre(rs.getString("localidad"));
-
-				Provincia provincia = new Provincia();
-				provincia.setNombre(rs.getString("provincia"));
-
-				direccion.setLocalidad(localidad);
-				direccion.setProvincia(provincia);
-				cliente.setDireccion(direccion); 
-			}
+			
+	        try (ResultSet rs = cs.executeQuery()) {
+	            if (rs.next()) {
+	                cliente = construirClienteDesdeResultSet(rs);
+	            }
+	        }
 		} catch (Exception e) {
+	        System.err.println("Error al obtener los detalles del cliente con DNI: " + dni);
 			e.printStackTrace();
 		}
 		return cliente;
+	}
+	
+	private Cliente construirClienteDesdeResultSet(ResultSet rs) throws SQLException {
+	    Cliente cliente = new Cliente();
+	    
+	    cliente.setNombre(rs.getString("nombre"));
+	    cliente.setApellido(rs.getString("apellido"));
+	    cliente.setEmail(rs.getString("email"));
+	    cliente.setDni(rs.getInt("dni"));
+	    cliente.setCuil(rs.getString("cuil"));
+	    cliente.setEstado(rs.getInt("estado"));
+	    System.out.println(rs.getInt("estado"));
+	    cliente.setNumeroTelefono(rs.getString("numeroTelefonico"));
+
+	    Direccion direccion = new Direccion();
+	    direccion.setCalle(rs.getString("calle"));
+	    direccion.setNumero(rs.getInt("numero"));
+	    direccion.setCodigoPostal(rs.getString("codigoPostal"));
+
+	    Localidad localidad = new Localidad();
+	    localidad.setNombre(rs.getString("localidad"));
+
+	    Provincia provincia = new Provincia();
+	    provincia.setNombre(rs.getString("provincia"));
+
+	    direccion.setLocalidad(localidad);
+	    direccion.setProvincia(provincia);
+	    cliente.setDireccion(direccion);
+	    
+	    Usuario usuario = new Usuario();
+        usuario.setNombreUsuario(rs.getString("usuario"));
+        usuario.setEstado(1);
+        usuario.setTipo(1);
+        usuario.setPassword("");
+        cliente.setUsuario(usuario);
+
+	    return cliente;
 	}
 
 }

@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import entidad.Cliente;
 import entidad.Usuario;
 
 @WebFilter("/*")
@@ -21,7 +23,7 @@ public class AuthFilter implements Filter {
 		HttpSession session = req.getSession(false);
 
 		// Verifica si existe una sesión
-		Usuario usuario = (session != null) ? (Usuario) session.getAttribute("usuario") : null;
+		Cliente usuario = (session != null) ? (Cliente) session.getAttribute("usuario") : null;
 		String uri = req.getRequestURI();
 
 		// Permite acceso sin autenticación a Home.jsp, Login.jsp, ServletLogin, Error.jsp y recursos estáticos
@@ -38,7 +40,7 @@ public class AuthFilter implements Filter {
 		}
 		
 		// Si el usuario es un administrador, redirige si intenta acceder a Home.jsp
-        if (uri.contains("Home.jsp") && usuario.getTipo().codigo == 1) {
+        if (uri.contains("Home.jsp") && usuario.getUsuario().getTipo() == 1) {
             session.setAttribute("errorMsj", "Acceso no autorizado. Los administradores no pueden acceder a esta página.");
             res.sendRedirect("Error.jsp");
             return;
@@ -49,7 +51,7 @@ public class AuthFilter implements Filter {
 				|| uri.contains("AdminAltaCliente.jsp") || uri.contains("AdminDetalleCliente.jsp")
 				|| uri.contains("AdminEditarCliente.jsp") || uri.contains("AdminPrestamosActivos.jsp")
 				|| uri.contains("AdminPrestamosRevision.jsp") || uri.contains("AdminResumenPrestamos.jsp"))
-				&& usuario.getTipo().codigo != 1) {
+				&& usuario.getUsuario().getTipo() != 1) {
 			session.setAttribute("errorMsj",
 					"Acceso no autorizado. Solo administradores pueden acceder a esta página.");
 			res.sendRedirect("Error.jsp");
@@ -60,7 +62,7 @@ public class AuthFilter implements Filter {
 		if ((uri.contains("ClientePanel.jsp") || uri.contains("ClienteDatos.jsp")
 				|| uri.contains("ClienteMovimientos.jsp") || uri.contains("ClienteTransferir.jsp")
 				|| uri.contains("MisPrestamos.jsp") || uri.contains("PagarCuotas.jsp") || uri.contains("Prestamos.jsp"))
-				&& usuario.getTipo().codigo != 2) {
+				&& usuario.getUsuario().getTipo() != 2) {
 			session.setAttribute("errorMsj", "Acceso no autorizado. Solo clientes pueden acceder a esta página.");
 			res.sendRedirect("Error.jsp");
 			return;

@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import entidad.Cliente;
+import entidad.Direccion;
+import entidad.Localidad;
+import entidad.Provincia;
 import entidad.Usuario;
 import negocioImpl.UsuarioNegocioImpl;
 
@@ -18,6 +23,7 @@ public class ServletLogin extends HttpServlet {
 		super();
 	}
 
+	@SuppressWarnings("unused")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -31,9 +37,10 @@ public class ServletLogin extends HttpServlet {
 		}
 
 		UsuarioNegocioImpl usuarioNegocioImpl = new UsuarioNegocioImpl();
-		Usuario usuarioLogin = usuarioNegocioImpl.login(email, pass);
+		Cliente usuarioLogin = usuarioNegocioImpl.login(email, pass);
 
 		if (usuarioLogin == null) {
+			System.out.println("usuario es nulo");
 			request.setAttribute("error", "Usuario o contraseña incorrectos");
 			request.getRequestDispatcher("Login.jsp").forward(request, response);
 			return;
@@ -41,11 +48,14 @@ public class ServletLogin extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("usuario", usuarioLogin);
-
-		if (usuarioLogin.getTipo().codigo == 1) {
+		
+		if (usuarioLogin.getUsuario().getTipo() == 1) {
 			response.sendRedirect("AdminPanel.jsp");
-		} else if (usuarioLogin.getTipo().codigo == 2) {
+		} else if (usuarioLogin.getUsuario().getTipo() == 2) {
 			response.sendRedirect("ClientePanel.jsp");
+		}
+		else if (usuarioLogin.getUsuario().getTipo() == 0) {
+			System.out.println("usuario es nulo");
 		}
 	}
 
@@ -54,3 +64,7 @@ public class ServletLogin extends HttpServlet {
 		response.sendRedirect("Login.jsp");
 	}
 }
+
+
+
+

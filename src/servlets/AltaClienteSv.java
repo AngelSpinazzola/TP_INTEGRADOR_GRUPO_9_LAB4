@@ -11,6 +11,7 @@ import entidad.Cliente;
 import entidad.Direccion;
 import entidad.Localidad;
 import entidad.Provincia;
+import entidad.Usuario;
 import negocioImpl.ClienteNegocioImpl;
 
 @WebServlet("/AltaClienteSv")
@@ -51,9 +52,8 @@ public class AltaClienteSv extends HttpServlet {
         nuevoCliente.setCuil(cuil);
         nuevoCliente.setSexo(sexo);
         nuevoCliente.setNacionalidad(nacionalidad);
-        nuevoCliente.setNombreUsuario(nombreUsuario);
         nuevoCliente.setEmail(email);
-        nuevoCliente.setPassword(pass);
+        nuevoCliente.setEstado(1);
         nuevoCliente.setFechaNacimiento(Date.valueOf(fechaNacimiento));
 
         Provincia provincia = new Provincia(Integer.parseInt(idProvincia), "NombreProvincia");  
@@ -61,6 +61,13 @@ public class AltaClienteSv extends HttpServlet {
 
         Direccion nuevaDireccion = new Direccion(0, numero, calle, codigoPostal, provincia, localidad); 
         nuevoCliente.setDireccion(nuevaDireccion);
+        
+        Usuario usuario = new Usuario();
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setPassword(pass);
+        usuario.setTipo(2);
+        usuario.setEstado(1);
+        nuevoCliente.setUsuario(usuario);
         
         ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
         clienteNegocio.agregarCliente(nuevoCliente);

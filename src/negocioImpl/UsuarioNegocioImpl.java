@@ -1,6 +1,7 @@
 package negocioImpl;
 
 import daoImpl.UsuarioDaoImpl;
+import entidad.Cliente;
 import entidad.Usuario;
 import negocio.IUsuarioNegocio;
 
@@ -9,12 +10,15 @@ public class UsuarioNegocioImpl implements IUsuarioNegocio {
 	private UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
 
 	@Override
-	public Usuario login(String email, String pass) {
-		Usuario usuarioRegistrado = null;
+	public Cliente login(String email, String pass) {
+		Cliente usuarioRegistrado = null;
 
 		usuarioRegistrado = usuarioDaoImpl.Loguear(email, pass);
+		
+		
 
 		if (usuarioRegistrado == null) {
+			System.out.println("El usuario salio nulo"); 
 			return null;
 		}
 		return usuarioRegistrado;

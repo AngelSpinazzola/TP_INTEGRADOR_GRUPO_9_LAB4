@@ -143,6 +143,7 @@ h2 {
 						<th>Nombre</th>
 						<th>Apellido</th>
 						<th>Cuentas</th>
+						<th>Cuentas</th>
 						<th>Estado</th>
 					</tr>
 				</thead>

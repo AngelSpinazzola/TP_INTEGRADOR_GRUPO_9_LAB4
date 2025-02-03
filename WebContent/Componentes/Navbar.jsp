@@ -27,7 +27,7 @@
 				<a class="nav-link text-white" href="ClienteMovimientos.jsp">Movimientos</a>
 			</div>
 			<div class="ms-auto">
-				<a class="btn btn-success me-2" href="ClienteDatosSv?dni=<%= cliente.getDni() %>">Mi perfil</a> 
+				<a class="btn btn-success me-2"  href="ClienteDatosSv?param=1">Mi perfil</a> 
 				<a class="btn btn-success me-2" href="LogoutServlet">Salir</a>
 			</div>
 			<%

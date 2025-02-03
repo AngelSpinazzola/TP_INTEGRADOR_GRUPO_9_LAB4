@@ -206,7 +206,7 @@ th {
 					<div class="info-section">
 						<h3 class="info-section-title">Información personal</h3>
 						<div class="info-row">
-							<span class="info-label">Usuario:</span> <span><%=cliente.getNombreUsuario()%></span>
+							<span class="info-label">Usuario:</span> <span><%=cliente.getUsuario().getNombreUsuario()%></span>
 						</div>
 						<div class="info-row">
 							<span class="info-label">Nombre y apellido:</span> <span><%=cliente.getNombre() + " " + cliente.getApellido()%></span>
@@ -224,7 +224,7 @@ th {
 							<span class="info-label">Estado:</span> <span><%=cliente.getEstado() == 1 ? "Activo" : "Inactivo"%></span>
 						</div>
 						<div class="info-row">
-							<span class="info-label">Teléfono:</span> <span><%=cliente.getTelefono() != null ? cliente.getTelefono() : "Sin teléfono"%></span>
+							<span class="info-label">Teléfono:</span> <span><%=cliente.getNumeroTelefono() != null ? cliente.getNumeroTelefono() : "Sin teléfono"%></span>
 						</div>
 					</div>
 				</div>

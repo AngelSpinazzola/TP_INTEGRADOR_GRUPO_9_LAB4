@@ -4,19 +4,17 @@ public class Usuario {
 
 	private int id;
 	private String nombreUsuario;
-	private String password = "123";
-	private final TipoUsuario tipo;
+	private String password;
 	private int estado;
+	private int tipoUsu;
 
 	public Usuario() {
-		this.nombreUsuario = "user";
-		this.tipo = TipoUsuario.cliente;
-		this.estado = 1;
 	}
 
-	public Usuario(String nombreUsuario, TipoUsuario tipo, int estado) {
+	public Usuario(String nombreUsuario, String contraseña , int tipo, int estado) {
 		this.nombreUsuario = nombreUsuario;
-		this.tipo = tipo;
+		this.password = contraseña;
+		this.tipoUsu = tipo;
 		this.estado = estado;
 	}
 
@@ -44,14 +42,20 @@ public class Usuario {
 		this.estado = estado;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}
 
-	public TipoUsuario getTipo() {
-		return tipo;
+	public int getTipo() {
+		return tipoUsu;
 	}
-
 	
-
+	public void setTipo(int tipo) {
+		this.tipoUsu = tipo;
+	}
+	
 }

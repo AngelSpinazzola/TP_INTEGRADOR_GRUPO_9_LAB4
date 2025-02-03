@@ -1,7 +1,7 @@
 package dao;
 
-import entidad.Usuario;
+import entidad.Cliente;
 
 public interface IUsuarioDao {
-	Usuario Loguear(String nombre_usuario, String pass);
+	Cliente Loguear(String nombre_usuario, String pass);
 }

@@ -2,7 +2,7 @@ package entidad;
 
 import java.sql.Date;
 
-public class Cliente extends Usuario{
+public class Cliente{
 	private	int dni;
 	private String cuil;
 	private String nombre;
@@ -10,20 +10,22 @@ public class Cliente extends Usuario{
 	private String sexo;
 	private String nacionalidad;
 	private Date fechaNacimiento;
-	private Direccion direccion;
 	private String email;
 	private int cantidadCuentas;
 	private String numeroTelefono;
 	private int IDUsuario;
+	private int Estado;
 	
-
+	private Direccion direccion;
+	
+	private Usuario usuario;
 
 	public Cliente() {
 		
 	}
 	
 	public Cliente(int dni, String cuil, String nombre, String apellido, String sexo, String nacionalidad,
-			Date fechaNacimiento, Direccion direccion, String email) {
+			Date fechaNacimiento, Direccion direccion, String email, Usuario usuario) {
 		super();
 		this.dni = dni;
 		this.cuil = cuil;
@@ -34,13 +36,14 @@ public class Cliente extends Usuario{
 		this.fechaNacimiento = fechaNacimiento;
 		this.direccion = direccion;
 		this.email = email;
+		this.usuario = usuario;
 	}
 	
-	public void setTelefono(String numeroTelefono) {
+	public void setNumeroTelefono(String numeroTelefono) {
 		this.numeroTelefono = numeroTelefono;
 	}
 	
-	public String getTelefono() {
+	public String getNumeroTelefono() {
 		return numeroTelefono;
 	}
 
@@ -130,5 +133,21 @@ public class Cliente extends Usuario{
 
 	public void setIDUsuario(int iDUsuario) {
 		IDUsuario = iDUsuario;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public int getEstado() {
+		return Estado;
+	}
+
+	public void setEstado(int estado) {
+		Estado = estado;
 	}
 }

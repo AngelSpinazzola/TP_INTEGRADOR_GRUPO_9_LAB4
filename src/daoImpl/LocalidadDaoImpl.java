@@ -57,13 +57,15 @@ public class LocalidadDaoImpl implements ILocalidadDao {
 	}
 	
 	@Override
-	public ArrayList<Localidad> listarLocalidadesXProvincia(){
+	public ArrayList<Localidad> listarLocalidadesXProvincia(int idProv){
 	    String query = "SELECT idLocalidad, nombre FROM localidades WHERE IDProvincia = ?";
 		ArrayList<Localidad> listaLocalidades = new ArrayList<>();	
 		
 	    try (Connection conexion = Conexion.getConnection();
-		         PreparedStatement statement = conexion.prepareStatement(query);
-		         ResultSet resultSet = statement.executeQuery()) {
+		         PreparedStatement ps = conexion.prepareStatement(query);
+		         ResultSet resultSet = ps.executeQuery()) {
+	    		
+	    		ps.setInt(1, idProv);
 
 		        while (resultSet.next()) {
 		            Localidad localidad = new Localidad();

@@ -1,7 +1,7 @@
 package negocio;
 
-import entidad.Usuario;
+import entidad.Cliente;
 
 public interface IUsuarioNegocio {
-	Usuario login(String email, String pass);
+	Cliente login(String email, String pass);
 }

@@ -158,7 +158,9 @@ body {
 
 						<!-- Provincia y Localidad -->
 						<div class="col-md-6">
-							<label for="provincia" class="form-label">Provincia</label> <select
+							<label for="provincia" class="form-label">Provincia</label> 
+							
+							<select
 								id="provincia" name="provincia" class="form-control">
 								<option value="">Seleccione la provincia</option>
 								<%
