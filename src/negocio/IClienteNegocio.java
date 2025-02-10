@@ -9,4 +9,5 @@ public interface IClienteNegocio {
 	public int getTotalClientesCount();
 	public int calcularTotalPaginas(int pageSize);
 	public Cliente getDetalleCliente(int dni);
+	boolean editarCliente(Cliente cliente);
 }

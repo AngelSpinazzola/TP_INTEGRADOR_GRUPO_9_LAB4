@@ -134,7 +134,6 @@ public class ClienteDaoImpl implements IClienteDao {
 		try ( Connection con = Conexion.getConnection(); 
 			  CallableStatement cs = con.prepareCall(sp)) {
 			
-			System.out.println(dni);
 			cs.setInt(1, dni);
 			
 	        try (ResultSet rs = cs.executeQuery()) {
@@ -156,12 +155,15 @@ public class ClienteDaoImpl implements IClienteDao {
 	    cliente.setApellido(rs.getString("apellido"));
 	    cliente.setEmail(rs.getString("email"));
 	    cliente.setDni(rs.getInt("dni"));
+	    cliente.setSexo(rs.getString("sexo"));
+	    cliente.setNacionalidad(rs.getString("Nacionalidad"));
 	    cliente.setCuil(rs.getString("cuil"));
+	    cliente.setFechaNacimiento(rs.getDate("Fecha"));
 	    cliente.setEstado(rs.getInt("estado"));
-	    System.out.println(rs.getInt("estado"));
 	    cliente.setNumeroTelefono(rs.getString("numeroTelefonico"));
 
 	    Direccion direccion = new Direccion();
+	    direccion.setIdDireccion(rs.getInt("IDDireccion"));
 	    direccion.setCalle(rs.getString("calle"));
 	    direccion.setNumero(rs.getInt("numero"));
 	    direccion.setCodigoPostal(rs.getString("codigoPostal"));
@@ -178,12 +180,48 @@ public class ClienteDaoImpl implements IClienteDao {
 	    
 	    Usuario usuario = new Usuario();
         usuario.setNombreUsuario(rs.getString("usuario"));
+        usuario.setId(rs.getInt("idUsuario"));
         usuario.setEstado(1);
         usuario.setTipo(1);
-        usuario.setPassword("");
+        usuario.setPassword("password");
         cliente.setUsuario(usuario);
 
 	    return cliente;
 	}
+	
+	public boolean EditarCliente (Cliente Cliente) {
+				
+		String sp = "{ CALL SP_EditarCliente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }";
 
+		try ( Connection con = Conexion.getConnection(); 
+			  CallableStatement cs = con.prepareCall(sp)) {
+			
+			cs.setString(1, Cliente.getUsuario().getNombreUsuario());
+			cs.setString(2, Cliente.getUsuario().getPassword());
+			cs.setInt(3, Cliente.getUsuario().getId());
+			
+			cs.setInt(4, Cliente.getDni());
+			cs.setString(5, Cliente.getCuil());
+			cs.setString(6, Cliente.getNombre());
+			cs.setString(7, Cliente.getApellido());
+			cs.setString(8, Cliente.getEmail());
+			cs.setString(9, Cliente.getSexo());
+			cs.setString(10, Cliente.getNacionalidad());
+			cs.setDate(11, new java.sql.Date(Cliente.getFechaNacimiento().getTime()));
+			
+			cs.setInt(12, Cliente.getDireccion().getIdDireccion());
+			cs.setString(13, Cliente.getDireccion().getCodigoPostal());
+			cs.setString(14, Cliente.getDireccion().getCalle());
+			cs.setInt(15, Cliente.getDireccion().getNumero());
+			cs.setInt(16, Cliente.getDireccion().getLocalidad().getIdLocalidad());
+			
+			int filasAfectadas = cs.executeUpdate();
+	        return filasAfectadas > 0;
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return false;
+		
+	}
 }

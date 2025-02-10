@@ -36,11 +36,15 @@ public class CargarDesplegablesSv extends HttpServlet {
         request.setAttribute("listaLocalidades", listaLocalidades);
         
         if ("agregarCliente".equals(action)) {
-        	request.getRequestDispatcher("AdminAltaCliente.jsp").forward(request, response);
+            request.getRequestDispatcher("AdminAltaCliente.jsp").forward(request, response);
+            return;
         }
-        else {
-            request.getRequestDispatcher("Error.jsp").forward(request, response);        	
+
+        if ("editarCliente".equals(action)) {
+            request.getRequestDispatcher("AdminEditarCliente.jsp").forward(request, response);
+            return;
         }
+        request.getRequestDispatcher("Error.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -169,8 +169,8 @@ h2 {
 									<i class="fas fa-ellipsis-v"></i>
 								</button>
 								<div class="action-dropdown">
-									<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>">Ver Cliente</a>
-									<a href="AdminEditarCliente.jsp">Editar Cliente</a> 
+									<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>&action=detalleCliente">Ver Cliente</a>
+									<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>&action=editarCliente">Editar Cliente</a> 
 									<a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
 								</div>
 							</div>

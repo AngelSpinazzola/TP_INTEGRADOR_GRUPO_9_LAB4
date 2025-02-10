@@ -31,6 +31,8 @@ public class DetalleClienteSv extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String dniCliente = request.getParameter("dni");
+		String action = request.getParameter("action");
+		request.setAttribute("action", action);
 	    
 	    if (dniCliente == null || dniCliente.isEmpty()) {
 	        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "El parámetro 'dni' es obligatorio.");
@@ -62,10 +64,13 @@ public class DetalleClienteSv extends HttpServlet {
 	    request.setAttribute("totalPaginas", totalPaginas);
         request.setAttribute("paginaActual", page);
 
-	    
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("/AdminDetalleCliente.jsp");
-	    dispatcher.forward(request, response);
-	    
+        if ("detalleCliente".equals(action)) {
+            request.getRequestDispatcher("AdminDetalleCliente.jsp").forward(request, response);
+        } else if ("editarCliente".equals(action)) {
+            request.getRequestDispatcher("CargarDesplegablesSv").forward(request, response);
+        } else {
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+        } 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -60,5 +60,23 @@ public class ClienteNegocioImpl implements IClienteNegocio{
     public Cliente getDetalleCliente(int dni) {
 		return iClienteDao.getDetalleCliente(dni);
     }
+    
+	@Override
+	public boolean editarCliente(Cliente cliente) {
+		if (cliente == null) {
+			System.out.println("El cliente no puede ser nulo");
+			return false;
+		}
+
+		try {
+		} catch (ClienteNegocioException e) {
+			System.out.println("Error al verificar el cliente: " + e.getMessage());
+			return false;
+		}
+
+		boolean resultado = iClienteDao.EditarCliente(cliente);
+		
+		return resultado;
+	}
 
 }
