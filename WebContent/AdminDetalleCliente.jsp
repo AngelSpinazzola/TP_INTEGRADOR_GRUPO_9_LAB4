@@ -292,7 +292,7 @@ th {
 						for (Cuenta cuenta : cuentas) {
 					%>
 					<tr>
-						<td><%=cuenta.getNumeroCuenta()%></td>
+						<td><%=cuenta.getIdCuenta()%></td>
 						<td><%=cuenta.getCbu()%></td>
 						<td><%=cuenta.getFechaCreacion()%></td>
 						<td><%=cuenta.getTipoCuenta().getTipo()%></td>

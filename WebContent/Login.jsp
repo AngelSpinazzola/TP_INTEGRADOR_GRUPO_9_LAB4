@@ -2,7 +2,22 @@
     pageEncoding="UTF-8"%>
 <%@ include file="Componentes/Head.jsp"%>
 <head>
-</head>
+</head> 
+<style>
+        .btn-customContinuar {
+            background-color: #28a745; /* Verde Bootstrap */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-customContinuar:hover {
+            background-color: #218838; /* Verde más oscuro al pasar el mouse */
+        }
+</style>
 <body>
     <%@ include file="Componentes/Navbar.jsp"%>
     <div class="form-wrapper" style="margin-top: 70px;">
@@ -33,7 +48,7 @@
                             </div>
                         </div>
                         <div class="d-grid mb-3">
-                            <button type="submit" class="btn btn-customContinuar">Iniciar Sesión</button>
+                           <button type="submit" class="btn btn-customContinuar">Iniciar Sesión</button>
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="Home.jsp">Cancelar</a>

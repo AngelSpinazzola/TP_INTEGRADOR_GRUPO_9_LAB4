@@ -8,7 +8,6 @@ public class Conexion {
 	private static String host = "jdbc:mysql://localhost:3306/tpintegradorlaboratorio4?useSSL=false";
 	private static String user = "root";
 	private static String pass = "root";
-	//private static String dbName = "tpintegradorlaboratorio4";
 
 	static {
 		try {

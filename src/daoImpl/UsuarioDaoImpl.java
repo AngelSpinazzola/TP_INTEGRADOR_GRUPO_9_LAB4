@@ -76,7 +76,7 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	                cliente.setUsuario(usuario);
 	             
 
-	                // Aquí puedes enlazar el usuario al cliente si corresponde.
+	                
 	            }
 	        }
 	    } catch (SQLException e) {

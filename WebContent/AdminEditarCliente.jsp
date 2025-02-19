@@ -91,7 +91,6 @@
 	</head>
 	<body>
 		<jsp:include page="Componentes/NavbarAdmin.jsp"></jsp:include>
-	
 	<%
 		request.setCharacterEncoding("UTF-8");
 	
@@ -138,7 +137,6 @@
 	    int IDUsuario = (usuario != null && usuario.getId() > 0) ? usuario.getId() : 0;
 
 	%>
-	s
 	<div class="container">
 		<!-- Contenedor principal del formulario -->
 		<h3 class="form-title">Editar cliente</h3>
@@ -270,7 +268,7 @@
 
 						<!-- Código Postal, Calle, Número -->
 						<div class="col-md-4">
-							<label for="codigoPostal" class="form-label">Código
+							<label for="codigoPostal" class="form-label">Codigo
 								Postal</label> <input type="text" id="codigoPostal" name="codigoPostal"
 								class="form-control" required value="<%= codigoPostalDireccion %>">
 						</div>
@@ -280,7 +278,7 @@
 								required value="<%= calleDireccion  %>">
 						</div>
 						<div class="col-md-4">
-							<label for="numero" class="form-label">Número</label> <input
+							<label for="numero" class="form-label">Numero</label> <input
 								type="text" id="numero" name="numero" class="form-control"
 								required value="<%= numeroDireccion  %>">
 						</div>

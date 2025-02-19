@@ -124,7 +124,7 @@ h2 {
 <%@ include file="Componentes/Head.jsp"%>
 </head>
 <body>
-	<%@ include file="Componentes/NavbarAdmin.jsp"%>
+<%@ include file="Componentes/NavbarAdmin.jsp"%>
 
 
 
@@ -171,7 +171,7 @@ h2 {
 								<div class="action-dropdown">
 									<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>&action=detalleCliente">Ver Cliente</a>
 									<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>&action=editarCliente">Editar Cliente</a> 
-									<a href="AdminCuentasCliente.jsp">Gestionar Cuentas</a>
+									<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>&action=GestionarCuentas">Gestionar Cuentas</a>
 								</div>
 							</div>
 						</td>

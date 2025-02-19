@@ -79,7 +79,6 @@ body {
 <body>
 	<!-- Menú de Navegación -->
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
-
 	<div class="container">
 		<!-- Contenedor principal del formulario -->
 		<h3 class="form-title">Agregar nuevo cliente</h3>
@@ -190,7 +189,7 @@ body {
 
 						<!-- Código Postal, Calle, Número -->
 						<div class="col-md-4">
-							<label for="codigoPostal" class="form-label">Código
+							<label for="codigoPostal" class="form-label">Codigo
 								Postal</label> <input type="text" id="codigoPostal" name="codigoPostal"
 								class="form-control" required placeholder="Código Postal">
 						</div>
@@ -200,7 +199,7 @@ body {
 								required placeholder="Calle">
 						</div>
 						<div class="col-md-4">
-							<label for="numero" class="form-label">Número</label> <input
+							<label for="numero" class="form-label">Numero</label> <input
 								type="text" id="numero" name="numero" class="form-control"
 								required placeholder="Número">
 						</div>

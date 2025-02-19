@@ -93,5 +93,6 @@ public class EditarClientes extends HttpServlet {
      else {
     	 System.out.println("error al editar el registro");
      }
+     response.sendRedirect("ListarClientesSv");
  }
 }

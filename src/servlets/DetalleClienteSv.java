@@ -56,6 +56,7 @@ public class DetalleClienteSv extends HttpServlet {
         int totalPaginas = (int) Math.ceil((double) totalPrestamos / pageSize);
         
 	    ArrayList<Cuenta> cuentas = iCuentaNegocio.getCuentasDelCliente(dni);
+	    int proximoID = iCuentaNegocio.getProximoID();
 
 	    request.setAttribute("cliente", cliente);
 	    request.setAttribute("prestamos", prestamos);
@@ -63,14 +64,20 @@ public class DetalleClienteSv extends HttpServlet {
 	    request.setAttribute("totalPrestamos", totalPrestamos);
 	    request.setAttribute("totalPaginas", totalPaginas);
         request.setAttribute("paginaActual", page);
+        request.setAttribute("proximoID", proximoID);
 
         if ("detalleCliente".equals(action)) {
             request.getRequestDispatcher("AdminDetalleCliente.jsp").forward(request, response);
         } else if ("editarCliente".equals(action)) {
             request.getRequestDispatcher("CargarDesplegablesSv").forward(request, response);
-        } else {
-            request.getRequestDispatcher("Error.jsp").forward(request, response);
+        } else if("GestionarCuentas".equals(action)) {
+        	request.getRequestDispatcher("AdminCuentasCliente.jsp").forward(request, response);
+        } else if("CrearCuenta".equals(action)) {
+        	request.getRequestDispatcher("AdminAltaCuenta.jsp").forward(request, response);
         } 
+        else {
+        	request.getRequestDispatcher("AdminGestionClientes.jsp").forward(request, response);	
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

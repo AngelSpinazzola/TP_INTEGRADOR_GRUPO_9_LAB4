@@ -40,11 +40,14 @@ public class CargarDesplegablesSv extends HttpServlet {
             return;
         }
 
-        if ("editarCliente".equals(action)) {
+        else if ("editarCliente".equals(action)) {
             request.getRequestDispatcher("AdminEditarCliente.jsp").forward(request, response);
             return;
         }
-        request.getRequestDispatcher("Error.jsp").forward(request, response);
+        else {
+			
+        	request.getRequestDispatcher("Error.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

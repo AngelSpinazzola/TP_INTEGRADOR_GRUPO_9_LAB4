@@ -5,7 +5,6 @@ import java.sql.Date;
 public class Cuenta{
 	private int idCuenta;
 	private Date fechaCreacion;
-	private long numeroCuenta;
 	private String cbu;
 	private float saldo;
 	private boolean estadoCuenta;
@@ -15,10 +14,9 @@ public class Cuenta{
 		
 	}
 	
-	public Cuenta(int idCuenta, Date fechaCreacion, long numeroCuenta, String cbu, float saldo, TipoCuenta tipoCuenta, boolean estadoCuenta) {
+	public Cuenta(int idCuenta, Date fechaCreacion, String cbu, float saldo, TipoCuenta tipoCuenta, boolean estadoCuenta) {
         this.idCuenta = idCuenta;
         this.fechaCreacion = fechaCreacion;
-        this.numeroCuenta = numeroCuenta;
         this.cbu = cbu;
         this.saldo = saldo;
         this.tipoCuenta = tipoCuenta;  
@@ -39,14 +37,6 @@ public class Cuenta{
 
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
-	}
-
-	public long getNumeroCuenta() {
-		return numeroCuenta;
-	}
-
-	public void setNumeroCuenta(long numeroCuenta) {
-		this.numeroCuenta = numeroCuenta;
 	}
 
 	public String getCbu() {

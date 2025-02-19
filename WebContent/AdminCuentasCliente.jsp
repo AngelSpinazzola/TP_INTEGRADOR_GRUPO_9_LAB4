@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="entidad.Cliente"%>
+<%@ page import="entidad.Cuenta"%>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -144,8 +147,16 @@
 </head>
 
 <body>
-	<%@ include file="Componentes/NavbarAdmin.jsp"%>
-
+<%@ include file="Componentes/NavbarAdmin.jsp"%>
+<%
+Cliente cliente = (Cliente) request.getAttribute("cliente");
+ArrayList<Cuenta> cuentas =(ArrayList<Cuenta>) request.getAttribute("cuentas");
+if (cuentas == null) {
+	out.print("Cuentas no encontrado.");
+	return;
+}
+%>
+	
     <div class="container">
         <h1>Gestion de cuentas</h1>
         <p class="subtitle">Administra las cuentas del cliente</p>
@@ -154,64 +165,71 @@
             <div class="client-info">
                 <div class="info-row">
                     <label>Cliente:</label>
-                    Juan Perez
+                 <div class="info-row">
+				<span class="info-label">Nombre y Apellido:</span> <span><%=cliente.getNombre()%> <%=cliente.getApellido()%></span>
+				</div>   
                 </div>
                 <div class="info-row">
-                    <label>Usuario:</label>
-                    juanuser432
-                </div>
+				<span class="info-label">Usuario:</span> <span><%=cliente.getUsuario().getNombreUsuario()%></span>
+				</div>
                 <div class="info-row">
-                    <label>Email:</label>
-                    juan.perez@gmail.com
-                </div>
+							<span class="info-label">Email:</span> <span><%=cliente.getEmail()%></span>
+				</div>
                 <div class="info-row">
-                    <label>DNI:</label>
-                    2411232132
-                </div>
+				<span class="info-label">DNI:</span><span><%=cliente.getDni()%></span>
+				</div>
             </div>
+<div class="balance-info">
+    <h3>Balance total</h3>
+    <%
+        double balanceTotal = 0;
+        for (Cuenta cuenta : cuentas) {
+            balanceTotal += cuenta.getSaldo();
+        }
+    %>
+    <p><strong>Saldo total:</strong> $<%= String.format("%.2f", balanceTotal) %></p>
+    <h3>Cantidad de cuentas</h3>
+     <p><strong>Total de cuentas:</strong> <%= cuentas.size() %></p>
+</div>
+<div class="create-account">
+    <% if (cuentas.size() < 3) { %>
+        	<h3 style="width: 484px; ">Crear cuenta</h3>
+     <div class="btn-nuevo-cliente-container">
+			<a href="DetalleClienteSv?dni=<%= cliente.getDni() %>&action=CrearCuenta">
+				<button class="btn-general crear-cuenta-btn ">Nuevo Cliente</button>
+			</a>
+	</div>
+    <% } else { %>
+        <p style="color: blue; font-weight: bold;">El cliente ya tiene 3 cuentas y no se puede crear mas.</p>
+    <% } %>
+</div>
 
-            <div class="balance-info">
-                <h3>Balance total</h3>
-                <p>$225.000</p>
-                <p>3 cuentas activas</p>
-            </div>
-
-            <div class="create-account">
-                <h3>Crear cuenta</h3>
-                <p>Selecciona un tipo de cuenta</p>
-                <select>
-                    <option>Caja de ahorro</option>
-                </select>
-                <button class="crear-cuenta-btn">Crear cuenta</button>
-            </div>
         </div>
-
         <div class="accounts-grid">
-            <div class="account-card">
-                <h3 class="account-title">Caja de ahorro</h3>
-                <div class="account-details">
-                    <p>N° Cuenta: 100001</p>
-                    <p>CBU: 000022202202</p>
-                    <p>Saldo: $125.000,00</p>
-                </div>
-                <div class="button-group">
-                    <button class="eliminar-btn">Eliminar</button>
-                    <button class="modificar-btn">Modificar</button>
-                </div>
-            </div>
-
-            <div class="account-card">
-                <h3 class="account-title">Cuenta corriente</h3>
-                <div class="account-details">
-                    <p>N° Cuenta: 880001</p>
-                    <p>CBU: 00553220304</p>
-                    <p>Saldo: $75.000,00</p>
-                </div>
-                <div class="button-group">
-                    <button class="eliminar-btn">Eliminar</button>
-                    <button class="modificar-btn">Modificar</button>
-                </div>
-            </div>
+            <% for (Cuenta cuenta : cuentas) { %>
+                <div class="account-card">
+                    <h3 class="account-title"><%= cuenta.getTipoCuenta().getTipo() %></h3>
+                    <div class="account-details">
+                        <p><strong>Numero de Cuenta:</strong> <%= cuenta.getIdCuenta() %></p>
+                        <p><strong>Fecha:</strong><%= cuenta.getFechaCreacion()%></p>
+                        <p><strong>CBU:</strong> <%= cuenta.getCbu() %></p>
+                        <p><strong>Saldo:</strong> $<%= cuenta.getSaldo() %></p>
+                    </div>
+                    <div class="button-group">
+                        <form action="ServletEliminarCuenta" method="post">
+                            <input type="hidden" name="idCuenta" value="<%= cuenta.getIdCuenta() %>">
+                            <button type="submit" class="eliminar-btn">Eliminar</button>
+                        </form>
+                        <form action="ServletModificarCuenta" method="post">
+                            <input type="hidden" name="idCuenta" value="<%= cuenta.getIdCuenta() %>">
+                            <button type="submit" class="modificar-btn">Modificar</button>
+                        </form>
+                    </div>
+           </div>
+            <% } %>
+         </div>
+         <div class="button-group mt-4">
+            <button type="button" class="btn btn-secondary btn-volver" onclick="history.back()">Volver</button>
         </div>
     </div>
 </body>
