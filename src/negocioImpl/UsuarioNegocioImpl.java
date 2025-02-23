@@ -15,8 +15,6 @@ public class UsuarioNegocioImpl implements IUsuarioNegocio {
 
 		usuarioRegistrado = usuarioDaoImpl.Loguear(email, pass);
 		
-		
-
 		if (usuarioRegistrado == null) {
 			System.out.println("El usuario salio nulo"); 
 			return null;
