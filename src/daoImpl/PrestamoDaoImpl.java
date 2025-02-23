@@ -1,6 +1,7 @@
 package daoImpl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -78,6 +79,52 @@ public class PrestamoDaoImpl implements IPrestamoDao {
 	    int totalPrestamos = getTotalPrestamosCount(dniCliente); 
 	    return (int) Math.ceil((double) totalPrestamos / pageSize); 
 	}
+	
+	  @Override
+	    public boolean insertarPrestamo(Prestamo prestamo) {
+	        String query = "INSERT INTO prestamos (DNICliente, IDTipoPrestamo, MontoPedido, ImporteAPagar, Cuotas, Fecha, Estado) "
+	                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+	            ps.setInt(1, prestamo.getDniCliente());
+	            ps.setInt(2, prestamo.getIdTipoPrestamo());
+	            ps.setFloat(3, prestamo.getMontoPedido());
+	            ps.setFloat(4, prestamo.getMontoAPagar());
+	            ps.setInt(5, prestamo.getCuotas());
+	            ps.setDate(6, new Date(prestamo.getFecha().getTime()));
+	            ps.setInt(7, prestamo.getEstado()); // 0 = Pendiente, 1 = Aprobado, 2 = Rechazado
+	            return ps.executeUpdate() > 0;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
 
+	    @Override
+	    public boolean actualizarEstadoPrestamo(int idPrestamo, int nuevoEstado) {
+	        String query = "UPDATE prestamos SET Estado = ? WHERE IDPrestamo = ?";
+	        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+	            ps.setInt(1, nuevoEstado);
+	            ps.setInt(2, idPrestamo);
+	            return ps.executeUpdate() > 0;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+
+	    @Override
+	    public boolean pagarCuotaPrestamo(int idPrestamo, float monto, int numeroCuota) {
+	        String query = "INSERT INTO pagos_prestamos (IDPrestamo, Monto, NumeroCuota, FechaPago) "
+	                + "VALUES (?, ?, ?, NOW())";
+	        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+	            ps.setInt(1, idPrestamo);
+	            ps.setFloat(2, monto);
+	            ps.setInt(3, numeroCuota);
+	            return ps.executeUpdate() > 0;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
 
 }

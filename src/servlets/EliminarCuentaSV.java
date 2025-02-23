@@ -35,11 +35,11 @@ public class EliminarCuentaSV extends HttpServlet {
         
         if(res == true) {
         	session.setAttribute("success", "Cuenta eliminada correctamente");
-       	 System.out.println("Registro editado correctamente");
+       	 System.out.println("Registro Eliminado correctamente");
         }
         else {
         	session.setAttribute("error", "Error al eliminar la cuenta");
-       	 System.out.println("error al editar el registro");
+       	 System.out.println("error al Eliminar el registro");
         }
         response.sendRedirect("ListarClientesSv");
         
