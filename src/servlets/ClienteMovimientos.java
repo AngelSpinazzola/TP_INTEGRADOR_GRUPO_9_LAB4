@@ -29,13 +29,13 @@ public class ClienteMovimientos extends HttpServlet {
         int page = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
         int pageSize = (pageSizeParam != null && !pageSizeParam.isEmpty()) ? Integer.parseInt(pageSizeParam) : 5;
 
-        //ArrayList<Cliente> listaClientes = iClienteNegocio.listarClientes(page, pageSize);
+        ArrayList<Cliente> listaClientes = iClienteNegocio.listarClientes(page, pageSize);
 
-        //int totalClientes = iClienteNegocio.getTotalClientesCount();  
-        //int totalPages = (int) Math.ceil((double) totalClientes / pageSize);  
+        int totalClientes = iClienteNegocio.getTotalClientesCount();  
+        int totalPages = (int) Math.ceil((double) totalClientes / pageSize);  
 
-        //request.setAttribute("listaClientes", listaClientes);
-        //request.setAttribute("totalPages", totalPages);
+        request.setAttribute("listaClientes", listaClientes);
+        request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
 
         request.getRequestDispatcher("/AdminGestionClientes.jsp").forward(request, response);
