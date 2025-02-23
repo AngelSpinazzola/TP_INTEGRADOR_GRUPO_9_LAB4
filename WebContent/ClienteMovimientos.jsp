@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="entidad.Cuenta"%>
+<%@ page import="entidad.Cliente"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -143,11 +146,27 @@
 	<div class="container">
 		<div class="section-content">
 			<h4>Mi cuenta</h4>
-			<select class="form-select">
-				<option>CA - 100001</option>
-				<option>CC - 880001</option>
-			</select>
+			<select id="cuentaOrigen" name="CuentaOrigen" class="form-select">
+                   <option value="0">Seleccione una cuenta</option>
+                   <%
+				ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+				if (listaCuentas != null) {
+				    for (Cuenta cuenta : listaCuentas) {
+				%>
+				    <option value="<%=cuenta.getIdCuenta()%>" data-saldo="<%=cuenta.getSaldo()%>">
+				        <%=cuenta.getCbu()%> - $<%=cuenta.getSaldo()%>
+				    </option>
+				<%
+				    }
+				} else {
+				%>
+				    <option value="">No hay cuentas disponibles</option>
+				<%
+				}
+				%>
+               </select>
 		</div>
+		
 
 		<div class="section-title">Últimos movimientos</div>
 		<table class="transactions-table">

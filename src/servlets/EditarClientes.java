@@ -27,7 +27,8 @@ public class EditarClientes extends HttpServlet {
  @SuppressWarnings("unused")
 @Override 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	 
+ 	HttpSession session = request.getSession();
+
      String nombreUsuario = request.getParameter("nombreUsuario");
      String pass = request.getParameter("password");
      int idUsuario = Integer.parseInt(request.getParameter("IDUsuario"));
@@ -88,9 +89,11 @@ public class EditarClientes extends HttpServlet {
      boolean res = clienteNegocio.editarCliente(nuevoCliente);
      
      if(res == true) {
+     	session.setAttribute("success", "Cliente editado con éxito");
     	 System.out.println("Registro editado correctamente");
      }
      else {
+      	session.setAttribute("error", "Error al editar el cliente");
     	 System.out.println("error al editar el registro");
      }
      response.sendRedirect("ListarClientesSv");

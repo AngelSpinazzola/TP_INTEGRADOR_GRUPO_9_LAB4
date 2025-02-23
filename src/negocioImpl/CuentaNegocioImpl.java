@@ -37,10 +37,42 @@ public class CuentaNegocioImpl implements ICuentaNegocio{
 		return resultado;
 	}
 	
+	public boolean EliminarCuenta(int IDCuenta) {
+		if (IDCuenta == 0) {
+			System.out.println("El ID no puede ser igual a 0");
+			return false;
+		}
+
+		boolean res = iCuentaDao.EliminarCuenta(IDCuenta);
+		
+		return res;
+	}
+	
+	public boolean Transferir(int cuentaOrigen, int cuentaDestino, double monto) {
+		if (cuentaOrigen == 0 && cuentaDestino == 0 && monto <= 0) {
+			System.out.println("Los datos no pueden ser iguales a 0");
+			return false;
+		}
+
+		boolean res = iCuentaDao.Transferencia(cuentaOrigen, cuentaDestino, monto);
+		
+		return res;
+	}
+	
+	public boolean ValidarCBU(String cuentaDestino) {
+		if (cuentaDestino == null) {
+			System.out.println("La cuenta de destino no puede ser 0");
+			return false;
+		}
+
+		boolean res = iCuentaDao.ValidarCBU(cuentaDestino);
+		
+		return res;
+	}
+	
 	@Override
 	public int getProximoID(){
 		int ID = iCuentaDao.getProximoID();
-		
 		return ID;
 	}
 	

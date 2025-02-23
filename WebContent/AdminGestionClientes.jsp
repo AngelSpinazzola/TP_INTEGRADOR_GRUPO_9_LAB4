@@ -125,8 +125,28 @@ h2 {
 </head>
 <body>
 <%@ include file="Componentes/NavbarAdmin.jsp"%>
+	
+	
+	<%
+    // Obtener los mensajes de la sesión
+    String mensajeExito = (String) session.getAttribute("success");
+    String mensajeError = (String) session.getAttribute("error");
 
-
+    // Eliminar los mensajes de la sesión para que no se repitan
+    session.removeAttribute("success");
+    session.removeAttribute("error");
+	%>
+	<% if (mensajeExito != null) { %>
+    <div style="color: green; font-weight: bold; background-color: #d4edda; padding: 10px; border-radius: 5px;">
+        <%= mensajeExito %>
+    </div>
+	<% } %>
+	
+	<% if (mensajeError != null) { %>
+	    <div style="color: red; font-weight: bold; background-color: #f8d7da; padding: 10px; border-radius: 5px;">
+	        <%= mensajeError %>
+	    </div>
+	<% } %>
 
 	<div class="container">
 		<h2>Gestión de Clientes</h2>

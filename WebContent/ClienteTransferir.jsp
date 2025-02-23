@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="entidad.Cuenta"%>
+<%@ page import="entidad.Cliente"%>
 
 <!DOCTYPE html>
 <head>
@@ -110,37 +113,121 @@
    <%@ include file="Componentes/Head.jsp"%>
    <jsp:include page="Componentes/Navbar.jsp"></jsp:include>
    
+   <%
+    ArrayList<Cuenta> listaCuenta = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+    if (listaCuenta == null) {
+        out.println("<p style='color:red;'>Error: listaCuentas es null</p>");
+    } else if (listaCuenta.isEmpty()) {
+        out.println("<p style='color:orange;'>Aviso: listaCuentas está vacía</p>");
+    }
+	%>
+	
+	<%
+    // Obtener los mensajes de la sesión
+    String mensajeExito = (String) session.getAttribute("success");
+    String mensajeError = (String) session.getAttribute("error");
+
+    // Eliminar los mensajes de la sesión para que no se repitan
+    session.removeAttribute("success");
+    session.removeAttribute("error");
+    
+    
+	%>
+	
+	<% if (mensajeExito != null) { %>
+	
+    <div style="color: green; font-weight: bold; background-color: #d4edda; padding: 10px; border-radius: 5px; text-align: center; display: flex; justify-content: center; ">
+        <%= mensajeExito %>
+    </div>
+	<% } %>
+	
+	<% if (mensajeError != null) { %>
+	    <div style="color: red; font-weight: bold; background-color: #f8d7da; padding: 10px; border-radius: 5px; text-align: center; display: flex; justify-content: center;">
+	        <%= mensajeError %>
+	    </div>
+	<% } %>
+	
+			<%
+			HttpSession MiSession = request.getSession(false);
+			
+			Cliente usuario = new Cliente();
+			
+			if (MiSession != null) {
+	            // Obtener el objeto Cliente de la sesión
+				usuario = (Cliente) MiSession.getAttribute("usuario");
+	            if (usuario != null) {
+	            } else {
+	            	System.out.println("No hay usuario en la sesión.");
+	            }
+	        } else {
+            	System.out.println("No hay sesión activa.");
+	        }
+			
+		    int dniCliente = usuario.getDni();
+			%>
+   
+<form action="TransferenciaSV" method="post"> 
    <div class="transfer-container">
        <h2>Transferir dinero</h2>
        <p class="transfer-subtitle">Selecciona una cuenta de origen, ingresa el monto y realiza la transferencia</p>
-
+	
+		
+       <input type="hidden" name="dni" id="dni" value=<%=dniCliente%> >		
+		
        <!-- Formulario de cuenta de origen -->
        <div class="transfer-form">
            <div class="section-header">Cuenta de origen</div>
            <div class="section-content">
-               <label>Selecciona una cuenta</label>
-               <select class="form-select">
-                   <option>CA - 100001 - $10,000.00</option>
-                   <option>CC - 880001 - $75,000.00</option>
+               <select id="cuentaOrigen" name="CuentaOrigen" class="form-control">
+                   <option value="0">Seleccione una cuenta</option>
+                   <%
+				ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+				if (listaCuentas != null) {
+				    for (Cuenta cuenta : listaCuentas) {
+				%>
+				    <option value="<%=cuenta.getIdCuenta()%>" data-saldo="<%=cuenta.getSaldo()%>">
+				        <%=cuenta.getCbu()%> - $<%=cuenta.getSaldo()%>
+				    </option>
+				<%
+				    }
+				} else {
+				%>
+				    <option value="">No hay cuentas disponibles</option>
+				<%
+				}
+				%>
                </select>
            </div>
        </div>
+       
+       <input type="hidden" name="saldoCuentaOrigen" id="saldoCuentaOrigen">
 
-       <!-- Formulario de cuenta de destino -->
+
+       <!-- Formulario de cuenta de destino --> 
        <div class="transfer-form">
            <div class="section-header">Cuenta de destino</div>
            <div class="section-content">
                <label>Ingresá el CBU</label>
-               <input type="text" class="form-input" placeholder="CBU">
+ 		       <input type="number" id="cuentaDestino" name="cuentaDestino" required class="form-control">
                
                <label>Monto</label>
-               <input type="text" class="form-input" placeholder="$0.00">
+               <input type="number" id="monto" name="monto" step="0.01" required class="form-control">
+               
                
                <div class="button-container">
                    <a href="ClientePanel.jsp" class="btn-volver">Volver</a>
-                   <button class="btn-transferir">Transferir</button>
+                   <button type="submit" class="btn-transferir">Transferir</button>
                </div>
            </div>
        </div>
    </div>
+</form>
+
+<script>
+   document.getElementById("cuentaOrigen").addEventListener("change", function() {
+       var saldoSeleccionado = this.options[this.selectedIndex].getAttribute("data-saldo");
+       document.getElementById("saldoCuentaOrigen").value = saldoSeleccionado;
+   });
+</script>
+
 </body>

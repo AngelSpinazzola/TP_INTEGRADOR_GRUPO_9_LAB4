@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import entidad.Cliente;
 import entidad.Direccion;
 import entidad.Localidad;
@@ -28,6 +30,8 @@ public class AltaClienteSv extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+		
+	 	HttpSession session = request.getSession();
 		
         String nombreUsuario = request.getParameter("nombreUsuario");
         String pass = request.getParameter("password");
@@ -70,8 +74,16 @@ public class AltaClienteSv extends HttpServlet {
         nuevoCliente.setUsuario(usuario);
         
         ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
-        clienteNegocio.agregarCliente(nuevoCliente);
+        boolean res = clienteNegocio.agregarCliente(nuevoCliente);
 
-        response.sendRedirect("ListarClientesSv");   
+        if(res == true) {
+         	session.setAttribute("success", "Cliente creado con éxito");
+        	 System.out.println("Registro editado correctamente");
+         }
+         else {
+          	session.setAttribute("error", "Error al crear el cliente");
+        	 System.out.println("error al editar el registro");
+         }
+         response.sendRedirect("ListarClientesSv");
 	}
 }

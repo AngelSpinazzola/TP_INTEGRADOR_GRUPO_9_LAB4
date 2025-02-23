@@ -62,7 +62,7 @@ public class ClienteDaoImpl implements IClienteDao {
 		
 		int offset = (page - 1) * pageSize;
 
-		String query = "SELECT c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado, COUNT(cu.IDCuenta) AS cantCuentas "
+		String query = "SELECT c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado, COUNT(CASE WHEN cu.Estado = 1 THEN cu.IDCuenta END) AS cantCuentas  "
 				+ "FROM CLIENTES c " + "LEFT JOIN Usuarios u ON u.IDUsuario = c.IDUsuario "
 				+ "LEFT JOIN Cuentas cu ON cu.DNICliente = c.DNI " + "WHERE u.TipoUsuario = 2 "
 				+ "GROUP BY c.IDUsuario, c.DNI, c.Nombre, c.Apellido, c.Estado " + "LIMIT ? OFFSET ?";

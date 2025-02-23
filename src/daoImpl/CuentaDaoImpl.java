@@ -24,7 +24,7 @@ public  class CuentaDaoImpl implements ICuentaDao {
 				"FROM cuentas cu\r\n" + 
 				"INNER JOIN tipo_cuentas tc ON tc.IDTipoCuenta = cu.IDTipoCuenta \r\n" + 
 				"INNER JOIN clientes c ON c.DNI = cu.DNICliente\r\n" + 
-				"WHERE cu.DNICliente = ?";
+				"WHERE cu.DNICliente = ? AND cu.ESTADO = 1";
 
 		try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
 			ps.setInt(1, dni);
@@ -50,8 +50,28 @@ public  class CuentaDaoImpl implements ICuentaDao {
 		return cuentas;
 	}
 	
+	public boolean Transferencia(int cuentaOrigen, int cuentaDestino, double monto) {
+		
+        System.out.println("monto: " + monto);
+        System.out.println("cuenta origen: " + cuentaOrigen);
+        System.out.println("cuenta destino: " + cuentaDestino);
+		
+        try (Connection conn = Conexion.getConnection();
+             CallableStatement stmt = conn.prepareCall("{CALL SP_TransferirDinero(?, ?, ?)}")) {
+            
+            stmt.setInt(1, cuentaOrigen);
+            stmt.setInt(2, cuentaDestino);
+            stmt.setDouble(3, monto);
 
+            int resultado = stmt.executeUpdate();
+            return resultado > 0;
+        } catch (SQLException e) {
+            System.out.println("Error en la base de datos: " + e.getMessage());
+        }
+		return false;
+    }
 	@Override
+
 	public boolean agregarCuenta(Cuenta cuenta, Cliente cliente){
 	    try(Connection cn = Conexion.getConnection();){
 	    	
@@ -64,6 +84,9 @@ public  class CuentaDaoImpl implements ICuentaDao {
 	        stmt.setFloat(4, cuenta.getSaldo());
 	        stmt.setInt(5, cuenta.getTipoCuenta().getIdTipoCuenta());
 	        
+	        System.out.println(cuenta.getTipoCuenta().getIdTipoCuenta());
+	        System.out.println(cliente.getDni());
+	        
 	        int filasInsertadas = stmt.executeUpdate();
 	        return filasInsertadas > 0;
 	    } catch (SQLException e) {
@@ -75,7 +98,6 @@ public  class CuentaDaoImpl implements ICuentaDao {
 			return false;
 		}
 	}
-	
 	public int getProximoID(){
 		
 		int nextId = 0;
@@ -97,6 +119,40 @@ public  class CuentaDaoImpl implements ICuentaDao {
 	        System.out.println("Error: " + e.getMessage());
 	      }
 		return nextId;
+	}
+	public boolean EliminarCuenta(int iDCuenta) {
+		try (Connection conn = Conexion.getConnection();
+	             CallableStatement stmt = conn.prepareCall("{CALL SP_EliminarCuenta(?)}")) {
+	            
+	            stmt.setInt(1, iDCuenta);
+		        int filasInsertadas = stmt.executeUpdate();
+		        return filasInsertadas > 0;
+		       
+	        } catch (SQLException e) {
+	        	e.printStackTrace();
+				return false;
+	        }
+	}
+
+	@Override
+	public boolean ValidarCBU(String cuentaDestino) {
+	    String query = "SELECT COUNT(*) FROM cuentas WHERE CBU = ? AND ESTADO = 1";
+	    boolean existe = false;
+
+	    try (Connection conn = Conexion.getConnection();
+	         PreparedStatement ps = conn.prepareStatement(query)) {
+	        
+	        ps.setString(1, cuentaDestino);
+	        ResultSet rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            existe = rs.getInt(1) > 0; // Si COUNT(*) > 0, significa que el CBU existe
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return existe;
 	}
 }    
 

@@ -216,11 +216,11 @@ if (cuentas == null) {
                         <p><strong>Saldo:</strong> $<%= cuenta.getSaldo() %></p>
                     </div>
                     <div class="button-group">
-                        <form action="ServletEliminarCuenta" method="post">
+                        <form action="EliminarCuentaSV" method="post">
                             <input type="hidden" name="idCuenta" value="<%= cuenta.getIdCuenta() %>">
                             <button type="submit" class="eliminar-btn">Eliminar</button>
                         </form>
-                        <form action="ServletModificarCuenta" method="post">
+                        <form action="ModificarCuentaSV" method="post">
                             <input type="hidden" name="idCuenta" value="<%= cuenta.getIdCuenta() %>">
                             <button type="submit" class="modificar-btn">Modificar</button>
                         </form>
