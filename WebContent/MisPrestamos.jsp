@@ -128,50 +128,46 @@
             <h1>Gestión de Préstamos</h1>
             
             <div class="tabs">
-			    <a href="Prestamos.jsp" class="tab-button">Solicitar prestamo</a>
-			    <a href="MisPrestamos.jsp" class="tab-button active">Mis prestamos</a>
+			    <a href="Prestamos.jsp" class="tab-button">Solicitar préstamo</a>
+			    <a href="MisPrestamos.jsp" class="tab-button active">Mis préstamos</a>
 			    <a href="PagarCuotas.jsp" class="tab-button ">Pagar cuotas</a>
 			</div>
 
 
-            <form id="loanForm" action="solicitarPrestamo" method="post">
-    <!-- DNI del Cliente -->
-    <div class="form-group">
-        <label for="dniCliente">DNI del Cliente</label>
-        <input type="text" id="dniCliente" name="dniCliente" required>
-    </div>
+            <form id="loanForm">
+                <div class="form-group">
+                    <label>Monto solicitado</label>
+                    <input type="range" id="loanAmount" min="0" max="5238000" step="1000" value="2238000">
+                    <div class="amount-display">$ <span id="amountValue">2238000.00</span></div>
+                </div>
 
-    <!-- Monto Solicitado -->
-    <div class="form-group">
-        <label for="montoPedido">Monto solicitado</label>
-        <input type="range" id="montoPedido" name="montoPedido" min="0" max="5238000" step="1000" value="2238000">
-        <div class="amount-display">$ <span id="amountValue">2238000.00</span></div>
-    </div>
+                <div class="form-group">
+                    <label>Plazo en cuotas</label>
+                    <select id="loanTerm">
+                        <option value="12">12 meses</option>
+                        <option value="24">24 meses</option>
+                        <option value="36">36 meses</option>
+                    </select>
+                </div>
 
-    <!-- Plazo en Cuotas -->
-    <div class="form-group">
-        <label for="cuotas">Plazo en cuotas</label>
-        <select id="cuotas" name="cuotas">
-            <option value="12">12 meses</option>
-            <option value="24">24 meses</option>
-            <option value="36">36 meses</option>
-        </select>
-    </div>
+                <div class="form-group">
+                    <label>Cuenta para acreditación</label>
+                    <select id="accountNumber">
+                        <option value="">Seleccione una cuenta</option>
+                        <option value="1">Cuenta Corriente ****1234</option>
+                        <option value="2">Caja de Ahorro ****5678</option>
+                    </select>
+                </div>
 
-    <!-- Tipo de Préstamo -->
-    <div class="form-group">
-        <label for="idTipoPrestamo">Tipo de Prestamo</label>
-        <select id="idTipoPrestamo" name="idTipoPrestamo">
-            <option value="1">Personal</option>
-            <option value="2">Hipotecario</option>
-            <option value="3">Automotor</option>
-        </select>
-    </div>
+                <div class="loan-summary">
+                    <h3>Resumen del préstamo</h3>
+                    <p>Monto solicitado: $<span id="summaryAmount">2238000.00</span></p>
+                    <p>Plazo: <span id="summaryTerm">12</span> cuotas</p>
+                    <p>Cuota mensual con interés: $<span id="monthlyPayment">28778.30</span></p>
+                </div>
 
-    <!-- Botón de Enviar -->
-    <button type="submit" class="submit-button">Solicitar</button>
-</form>
-
+                <button type="submit" class="submit-button">Solicitar</button>
+            </form>
         </div>
     </div>
 
