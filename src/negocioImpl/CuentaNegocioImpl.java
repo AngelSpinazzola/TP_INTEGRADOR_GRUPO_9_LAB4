@@ -1,11 +1,11 @@
 package negocioImpl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.ICuentaDao;
 import daoImpl.CuentaDaoImpl;
 import entidad.Cliente;
 import entidad.Cuenta;
+import entidad.Movimientos;
 import excepciones.ClienteNegocioException;
 import negocio.ICuentaNegocio;
 
@@ -48,13 +48,13 @@ public class CuentaNegocioImpl implements ICuentaNegocio{
 		return res;
 	}
 	
-	public boolean Transferir(int cuentaOrigen, int cuentaDestino, double monto) {
-		if (cuentaOrigen == 0 && cuentaDestino == 0 && monto <= 0) {
-			System.out.println("Los datos no pueden ser iguales a 0");
-			return false;
+	public int Transferir(Movimientos Transferencia) {
+		if (Transferencia == null) {
+			System.out.println("La transferencia no puede ser nulo");
+			return 0;
 		}
 
-		boolean res = iCuentaDao.Transferencia(cuentaOrigen, cuentaDestino, monto);
+		int res = iCuentaDao.Transferencia(Transferencia);
 		
 		return res;
 	}
@@ -75,5 +75,20 @@ public class CuentaNegocioImpl implements ICuentaNegocio{
 		int ID = iCuentaDao.getProximoID();
 		return ID;
 	}
+	
+	public ArrayList<Movimientos> listarMovimientos(int page, int pageSize, int idCuenta) {
+	    ArrayList<Movimientos> Movimientos = iCuentaDao.obtenerMovimientosPorCuenta(page, pageSize, idCuenta);
+
+	    if (Movimientos == null || Movimientos.isEmpty()) {
+	        System.out.println("No hay Movimientos.");
+	        return new ArrayList<>();
+	    }
+
+	    return Movimientos;
+	}
+	
+	public int getTotalMovimientosCount(int idCuenta) {
+        return iCuentaDao.getTotalMovimientosCount(idCuenta);
+    }
 	
 }

@@ -160,7 +160,7 @@
             <h2>Crear Nueva Cuenta</h2>
         </div>
         
-        <form action="CuntasSV" method="post">
+        <form action="CuentasSV" method="post">
             <div class="form-group">
                 <label for="IDcuenta">ID Cuenta</label>
                 <input type="number" id="IDcuenta" name="IDcuenta" class="form-control" value="<%=ProximoID%>" required>
@@ -177,7 +177,7 @@
 
             <div class="form-group">
                 <label for="CBU">CBU</label>
-                <input type="text" id="CBU" name="CBU" class="form-control" required>
+                <input type="text" id="CBU" minlength="12" maxlength="12" name="CBU" class="form-control" required>
             </div>
 
             <div class="form-group">           

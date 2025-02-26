@@ -32,6 +32,7 @@ public class AltaClienteSv extends HttpServlet {
 		doGet(request, response);
 		
 	 	HttpSession session = request.getSession();
+        ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
 		
         String nombreUsuario = request.getParameter("nombreUsuario");
         String pass = request.getParameter("password");
@@ -48,6 +49,13 @@ public class AltaClienteSv extends HttpServlet {
         String codigoPostal = request.getParameter("codigoPostal");
         String calle = request.getParameter("calle");
         int numero = Integer.parseInt(request.getParameter("numero"));
+        
+        boolean existeDNI = clienteNegocio.ValidarDNI(dni);
+        if(existeDNI == true) {
+         	session.setAttribute("error", "Este DNI ya se encuentra en uso");
+            response.sendRedirect("ListarClientesSv");
+            return;
+         }
         
         Cliente nuevoCliente = new Cliente();
         nuevoCliente.setNombre(nombre);
@@ -72,17 +80,16 @@ public class AltaClienteSv extends HttpServlet {
         usuario.setTipo(2);
         usuario.setEstado(1);
         nuevoCliente.setUsuario(usuario);
-        
-        ClienteNegocioImpl clienteNegocio = new ClienteNegocioImpl();
+             
         boolean res = clienteNegocio.agregarCliente(nuevoCliente);
 
         if(res == true) {
          	session.setAttribute("success", "Cliente creado con éxito");
-        	 System.out.println("Registro editado correctamente");
+        	 System.out.println("Registro creado correctamente correctamente");
          }
          else {
           	session.setAttribute("error", "Error al crear el cliente");
-        	 System.out.println("error al editar el registro");
+        	 System.out.println("error al crear el registro");
          }
          response.sendRedirect("ListarClientesSv");
 	}

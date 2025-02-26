@@ -78,5 +78,16 @@ public class ClienteNegocioImpl implements IClienteNegocio{
 		
 		return resultado;
 	}
+	
+	public boolean ValidarDNI(int dni) {
+		if (dni == 0) {
+			System.out.println("El DNI no puede ser 0");
+			return false;
+		}
+
+		boolean res = iClienteDao.ValidarDNI(dni);
+		
+		return res;
+	}
 
 }

@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entidad.Cliente;
-import entidad.Direccion;
-import entidad.Localidad;
-import entidad.Provincia;
-import entidad.Usuario;
 import negocioImpl.UsuarioNegocioImpl;
 
 @WebServlet("/ServletLogin")

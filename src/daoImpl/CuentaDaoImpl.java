@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import dao.ICuentaDao;
 import entidad.Cliente;
 import entidad.Cuenta;
+import entidad.Movimientos;
 import entidad.TipoCuenta;
 
 public  class CuentaDaoImpl implements ICuentaDao {
@@ -50,25 +51,26 @@ public  class CuentaDaoImpl implements ICuentaDao {
 		return cuentas;
 	}
 	
-	public boolean Transferencia(int cuentaOrigen, int cuentaDestino, double monto) {
-		
-        System.out.println("monto: " + monto);
-        System.out.println("cuenta origen: " + cuentaOrigen);
-        System.out.println("cuenta destino: " + cuentaDestino);
+	public int Transferencia(Movimientos Transferencia) {
 		
         try (Connection conn = Conexion.getConnection();
-             CallableStatement stmt = conn.prepareCall("{CALL SP_TransferirDinero(?, ?, ?)}")) {
+             CallableStatement stmt = conn.prepareCall("{CALL SP_TransferirDinero(?, ?, ?, ?, ?)}")) {
             
-            stmt.setInt(1, cuentaOrigen);
-            stmt.setInt(2, cuentaDestino);
-            stmt.setDouble(3, monto);
-
-            int resultado = stmt.executeUpdate();
-            return resultado > 0;
+            stmt.setInt(1, Transferencia.getIDCuentaEnvia());
+            stmt.setString(2, Transferencia.getIDCuentaRecibe());
+            stmt.setDouble(3, Transferencia.getImporte());
+            stmt.setDate(4, new java.sql.Date(Transferencia.getFecha().getTime()));
+            
+            stmt.registerOutParameter(5, java.sql.Types.INTEGER);
+            
+            stmt.execute();  
+            
+            return stmt.getInt(5);
+            
         } catch (SQLException e) {
             System.out.println("Error en la base de datos: " + e.getMessage());
         }
-		return false;
+		return 0;
     }
 	@Override
 
@@ -133,7 +135,6 @@ public  class CuentaDaoImpl implements ICuentaDao {
 				return false;
 	        }
 	}
-
 	@Override
 	public boolean ValidarCBU(String cuentaDestino) {
 	    String query = "SELECT COUNT(*) FROM cuentas WHERE CBU = ? AND ESTADO = 1";
@@ -154,6 +155,62 @@ public  class CuentaDaoImpl implements ICuentaDao {
 
 	    return existe;
 	}
+
+	
+    public ArrayList<Movimientos> obtenerMovimientosPorCuenta(int page, int pageSize, int idCuenta) {
+    	
+    	int offset = (page - 1) * pageSize;
+    	
+        ArrayList<Movimientos> listaMovimientos = new ArrayList<>();
+        String sql = "SELECT * FROM movimientos WHERE IDCuentaEnvia = ? ORDER BY Fecha DESC LIMIT ? OFFSET ?";
+
+        try (Connection conn = Conexion.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idCuenta);
+			stmt.setInt(2, pageSize);
+			stmt.setInt(3, offset);
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+				Movimientos Mov = new Movimientos();
+				Mov.setFecha(rs.getDate("Fecha"));
+				Mov.setDetalle(rs.getString("Detalle"));
+				Mov.setImporte(rs.getDouble("Importe"));
+				Mov.setIDMovimiento(rs.getInt("IDMovimiento"));
+
+				listaMovimientos.add(Mov);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaMovimientos;
+    }
+    
+    public int getTotalMovimientosCount(int idCuenta) {
+        String query = "SELECT COUNT(*) AS cantidad_total_movimientos FROM movimientos WHERE IDCuentaEnvia = ?";
+        
+        int totalMovimientos = 0;
+        
+        try (Connection cn = Conexion.getConnection();
+             PreparedStatement statement = cn.prepareStatement(query)) {
+            
+            statement.setInt(1, idCuenta);
+            
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    totalMovimientos = resultSet.getInt(1);
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return totalMovimientos;
+    }
+	
 }    
 
 

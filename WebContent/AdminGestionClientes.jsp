@@ -106,15 +106,15 @@ h2 {
 	color: white;
 }
 
+.pagination-info {
+	font-size: 16px;
+	color: #333;
+}
+
 .btn-nuevo-cliente-container {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 10px;
-}
-
-.pagination-info {
-	font-size: 16px;
-	color: #333;
 }
 
 .btn-nuevo-cliente {
@@ -159,10 +159,10 @@ h2 {
 			<table class="client-table">
 				<thead>
 					<tr>
+						<th>ID Cuenta</th>
 						<th>DNI</th>
 						<th>Nombre</th>
 						<th>Apellido</th>
-						<th>Cuentas</th>
 						<th>Cuentas</th>
 						<th>Estado</th>
 					</tr>

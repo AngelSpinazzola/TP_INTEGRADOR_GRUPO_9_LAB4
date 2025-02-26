@@ -1,6 +1,5 @@
 package daoImpl;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
@@ -10,7 +9,6 @@ import entidad.Cliente;
 import entidad.Direccion;
 import entidad.Localidad;
 import entidad.Provincia;
-import entidad.TipoUsuario;
 import entidad.Usuario;
 
 public class UsuarioDaoImpl implements IUsuarioDao {

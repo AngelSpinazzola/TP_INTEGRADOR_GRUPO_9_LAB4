@@ -224,4 +224,24 @@ public class ClienteDaoImpl implements IClienteDao {
 		return false;
 		
 	}
+
+	public boolean ValidarDNI(int dni) {
+	    boolean existe = false;
+	    String query = "SELECT COUNT(*) FROM clientes WHERE DNI = ?";
+	    
+	    try (Connection cn = Conexion.getConnection();
+	         PreparedStatement stmt = cn.prepareStatement(query)) {
+	        
+	        stmt.setInt(1, dni);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if (rs.next() && rs.getInt(1) > 0) {
+	            existe = true; // Si COUNT > 0, el DNI existe
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return existe;
+	    }
 }

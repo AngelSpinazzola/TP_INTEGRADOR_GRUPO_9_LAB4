@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="entidad.Cuenta"%>
 <%@ page import="entidad.Cliente"%>
+<%@ page import="java.util.Date, java.text.SimpleDateFormat" %>
 
 <!DOCTYPE html>
 <head>
@@ -147,24 +148,31 @@
 	    </div>
 	<% } %>
 	
-			<%
-			HttpSession MiSession = request.getSession(false);
+	<%
+	    HttpSession MiSession = request.getSession(false);
 			
-			Cliente usuario = new Cliente();
+		Cliente usuario = new Cliente();
 			
-			if (MiSession != null) {
-	            // Obtener el objeto Cliente de la sesión
-				usuario = (Cliente) MiSession.getAttribute("usuario");
-	            if (usuario != null) {
-	            } else {
-	            	System.out.println("No hay usuario en la sesión.");
-	            }
-	        } else {
-            	System.out.println("No hay sesión activa.");
-	        }
-			
-		    int dniCliente = usuario.getDni();
-			%>
+		if (MiSession != null) {
+	        // Obtener el objeto Cliente de la sesión
+			usuario = (Cliente) MiSession.getAttribute("usuario");
+	        if (usuario != null) {
+            } else {
+	        	System.out.println("No hay usuario en la sesión.");
+            }
+	    } else {
+           	System.out.println("No hay sesión activa.");
+        }		
+       int dniCliente = usuario.getDni();
+	%>
+
+	<%
+	    // Obtener la fecha actual
+	    Date fechaActual = new Date();
+	    // Formatear la fecha en el formato "yyyy-MM-dd"
+	    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	    String fechaCreacion = formato.format(fechaActual);
+	%>    
    
 <form action="TransferenciaSV" method="post"> 
    <div class="transfer-container">
@@ -201,14 +209,15 @@
        </div>
        
        <input type="hidden" name="saldoCuentaOrigen" id="saldoCuentaOrigen">
-
+       
+       <input type="hidden" id="FechaCreacion" name="FechaCreacion" class="form-control" value="<%= fechaCreacion %>" required>
 
        <!-- Formulario de cuenta de destino --> 
        <div class="transfer-form">
            <div class="section-header">Cuenta de destino</div>
            <div class="section-content">
                <label>Ingresá el CBU</label>
- 		       <input type="number" id="cuentaDestino" name="cuentaDestino" required class="form-control">
+ 		       <input type="number" id="cuentaDestino" min="12" name="cuentaDestino" required class="form-control">
                
                <label>Monto</label>
                <input type="number" id="monto" name="monto" step="0.01" required class="form-control">

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
 <%@ page import="entidad.Cuenta"%>
+<%@ page import="entidad.Movimientos"%>
 <%@ page import="entidad.Cliente"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -10,16 +12,68 @@
 <title>Banco UTN - Movimientos</title>
 <%@ include file="Componentes/Head.jsp"%>
 	<style>
-		body {
-			background-color: #f5f5f5;
-			margin: 0;
-			padding: 0;
+		.pagination-container {
+			display: flex;
+			justify-content: space-around;
+			align-items: center; 
+		}
+		.pagination {
+			display: flex;
+			justify-content: flex-end; 
 		}
 		
+		.pagination button {
+			background-color: #aac4ee;
+			border: none;
+			color: white;
+			padding: 8px 16px;
+			text-decoration: none;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			border-radius: 2px;
+		}
+		
+		.pagination button:hover {
+			background-color: #2F4E93;
+			color: white;
+		}
+		
+		.pagination button.active {
+			text-color: white;
+			background-color: #2F4E93;
+			color: white;
+		}
+		
+		.pagination-info {
+			font-size: 16px;
+			color: #333;
+		}
+		
+		.btn-mov {
+           background-color: var(--primary-color);
+           color: white;
+           border: none;
+           margin-top: 10px;
+           padding: 10px 20px;
+           border-radius: 4px;
+           cursor: pointer;
+           font-size: 14px;
+           width: 200px;
+       }
+
+       .btn-mov:hover {
+           background-color: var(--secondary-color);
+       }
+
+       .btn-volver:hover {
+           background-color: #d0d0d0;
+       }
+		
 		.container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
+			max-width: 1000px;
+			margin: 30px auto;
 		}
 		
 		.section-title {
@@ -113,9 +167,8 @@
 		
 		.pagination {
 			display: flex;
-			justify-content: center;
+			justify-content: space-evenly;
 			gap: 10px;
-			margin-top: 20px;
 		}
 		
 		.pagination a {
@@ -135,86 +188,105 @@
 			background-color: #0066cc;
 			color: white;
 		}
-		.container{
-			margin-top: 30px;
-		}
 	</style>
 </head>
 <body>
 	<%@ include file="Componentes/Navbar.jsp"%>
 
 	<div class="container">
-		<div class="section-content">
-			<h4>Mi cuenta</h4>
-			<select id="cuentaOrigen" name="CuentaOrigen" class="form-select">
-                   <option value="0">Seleccione una cuenta</option>
-                   <%
-				ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
-				if (listaCuentas != null) {
-				    for (Cuenta cuenta : listaCuentas) {
-				%>
-				    <option value="<%=cuenta.getIdCuenta()%>" data-saldo="<%=cuenta.getSaldo()%>">
-				        <%=cuenta.getCbu()%> - $<%=cuenta.getSaldo()%>
-				    </option>
-				<%
-				    }
-				} else {
-				%>
-				    <option value="">No hay cuentas disponibles</option>
-				<%
-				}
-				%>
-               </select>
-		</div>
-		
+		<form action="ClienteMovimientos?param=1" method="get">
+			<div class="section-content">
+				<h4>Mi cuenta</h4>
+				<select id="idCuenta" name="idCuenta" class="form-select">
+	                   <option value="0">Seleccione una cuenta</option>
+	                   <%
+					ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+					if (listaCuentas != null) {
+					    for (Cuenta cuenta : listaCuentas) {
+					%>
+					    <option value="<%=cuenta.getIdCuenta()%>">
+					        <%=cuenta.getCbu()%>
+					    </option>
+					<%
+					    }
+					} else {
+					%>
+					    <option value="">No hay cuentas disponibles</option>
+					<%
+					}
+					%>
+	               </select>
+	               <input type="submit" value="Ver Movimientos" class="btn-mov">
+			</div>
+		</form>
 
 		<div class="section-title">Últimos movimientos</div>
 		<table class="transactions-table">
 			<thead>
-				<tr>
-					<th>Fecha</th>
-					<th>Concepto</th>
-					<th>Cuenta</th>
-					<th>Monto</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>15-12-24</td>
-					<td>Transferencia a Ignacio D.</td>
-					<td>CA - 100005</td>
-					<td class="negative">- $7,000.00</td>
-				</tr>
-				<tr>
-					<td>23-9-24</td>
-					<td>Pago préstamo</td>
-					<td>CC - 880001</td>
-					<td class="negative">- $25,000.00</td>
-				</tr>
-				<tr>
-					<td>10-8-24</td>
-					<td>Transferencia de Mario G.</td>
-					<td>CA - 100020</td>
-					<td class="positive">+ $10,000.00</td>
-				</tr>
-				<tr>
-					<td>2-8-24</td>
-					<td>Transferencia de Pedro C.</td>
-					<td>CC - 885503</td>
-					<td class="positive">+ $27,000.00</td>
-				</tr>
-				<tr>
-					<td>2-8-24</td>
-					<td>Transferencia a Juan B.</td>
-					<td>CA - 100005</td>
-					<td class="negative">- $5,000.00</td>
-				</tr>
-			</tbody>
+	            <tr>
+	                <th>Fecha</th>
+	                <th>Detalle</th>
+	                <th>Importe</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <%
+	                ArrayList<Movimientos> movimientos = (ArrayList<Movimientos>) request.getAttribute("listaMovimientos");
+	                if (movimientos != null && !movimientos.isEmpty()) {
+	                    for (Movimientos mov : movimientos) {
+			            String color = (mov.getImporte() < 0) ? "red" : "green";
+		        %>
+		                    <tr>
+		                        <td><%= mov.getFecha() %></td>
+		                        <td><%= mov.getDetalle() %></td>
+		                        <td style="color: <%= color %>; ">
+		                            <%= mov.getImporte() %>
+		                        </td>
+		                    </tr>
+		        <%
+	                    }
+	                } else {
+	            %>
+	                    <tr><td colspan="3">No hay movimientos</td></tr>
+	            <%
+	                }
+	            %>
+	        </tbody>
 		</table>
 
-		<div class="pagination">
-			<a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a>
-			<a href="#">...</a> <a href="#">Siguiente</a>
+		<div class="pagination-container">
+			<div class="pagination-info">
+				Mostrando página
+				<%=request.getAttribute("currentPage")%>
+				de
+				<%=request.getAttribute("totalPages")%>
+			</div>
+
+			<!-- Botones de paginación -->
+			<div class="pagination">
+				<%
+				    Integer totalPagesAttr = (Integer) request.getAttribute("totalPages");
+				    Integer currentPageAttr = (Integer) request.getAttribute("currentPage");
+	
+				    int totalPages = (totalPagesAttr != null) ? totalPagesAttr : 1; // Si es null, poner 1 por defecto
+				    int currentPage = (currentPageAttr != null) ? currentPageAttr : 1;
+				    
+					for (int i = 1; i <= totalPages; i++) {
+						String activeClass = (i == currentPage) ? "active" : "";
+				%>
+				    
+				<%
+			    Integer idCuenta = (Integer) request.getAttribute("idCuenta"); 
+				%>    
+				
+				<button class="<%=activeClass%>"
+					onclick="window.location.href='ClienteMovimientos?page=<%=i%>&pageSize=5&idCuenta=<%=idCuenta%>'">
+					<%=i%>
+				</button>
+				<%
+					}	
+				%>
+			</div>
 		</div>
 	</div>
 </body>

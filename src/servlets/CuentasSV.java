@@ -24,7 +24,7 @@ import negocioImpl.ClienteNegocioImpl;
 import negocioImpl.CuentaNegocioImpl;
 
 
-@WebServlet("/CuntasSV")
+@WebServlet("/CuentasSV")
 public class CuentasSV extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ICuentaNegocio iCuentaNegocio = new CuentaNegocioImpl();
