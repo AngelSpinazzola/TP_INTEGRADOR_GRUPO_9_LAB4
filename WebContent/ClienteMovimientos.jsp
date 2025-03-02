@@ -51,6 +51,7 @@
 			color: #333;
 		}
 		
+		
 		.btn-mov {
            background-color: var(--primary-color);
            color: white;

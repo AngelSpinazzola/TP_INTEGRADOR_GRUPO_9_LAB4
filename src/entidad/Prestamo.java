@@ -15,7 +15,7 @@ public class Prestamo extends TipoPrestamo{
 		super();
 	}
 
-	public Prestamo(int idPrestamo, int dniCliente, float montoPedido, float montoAPagar, int cuotas, Date fecha, int estado) {
+	public Prestamo(int idPrestamo, int dniCliente, float montoPedido, float montoAPagar, int cuotas, Date fecha, int estado, TipoPrestamo tipoPrestamo) {
 		super();
 		this.idPrestamo = idPrestamo;
 		this.dniCliente = dniCliente;

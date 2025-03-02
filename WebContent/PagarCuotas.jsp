@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="entidad.Cliente"%>
+<%@ page import="entidad.Cuenta"%>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -159,15 +162,65 @@
 <body>
      <%@ include file="Componentes/Head.jsp"%>
    <jsp:include page="Componentes/Navbar.jsp"></jsp:include>
+<%
+ArrayList<Cuenta> listaCuenta = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+if (listaCuenta == null) {
+    out.println("<p style='color:red;'>Error: listaCuentas es null</p>");
+} else if (listaCuenta.isEmpty()) {
+    out.println("<p style='color:orange;'>Aviso: listaCuentas está vacía</p>");
+}
+%>
+<%
+    // Obtener los mensajes de la sesión
+    String mensajeExito = (String) session.getAttribute("success");
+    String mensajeError = (String) session.getAttribute("error");
+
+    // Eliminar los mensajes de la sesión para que no se repitan
+    session.removeAttribute("success");
+    session.removeAttribute("error");
     
+    
+	%>
+	
+	<% if (mensajeExito != null) { %>
+	
+    <div style="color: green; font-weight: bold; background-color: #d4edda; padding: 10px; border-radius: 5px; text-align: center; display: flex; justify-content: center; ">
+        <%= mensajeExito %>
+    </div>
+	<% } %>
+	
+	<% if (mensajeError != null) { %>
+	    <div style="color: red; font-weight: bold; background-color: #f8d7da; padding: 10px; border-radius: 5px; text-align: center; display: flex; justify-content: center;">
+	        <%= mensajeError %>
+	    </div>
+<% } %>
+	
+			<%
+			HttpSession MiSession = request.getSession(false);
+			
+			Cliente usuario = new Cliente();
+			
+			if (MiSession != null) {
+	            // Obtener el objeto Cliente de la sesión
+				usuario = (Cliente) MiSession.getAttribute("usuario");
+	            if (usuario != null) {
+	            } else {
+	            	System.out.println("No hay usuario en la sesión.");
+	            }
+	        } else {
+            	System.out.println("No hay sesión activa.");
+	        }
+			
+		    int dniCliente = usuario.getDni();
+			%>    
 
     <div class="container">
         <div class="card">
             <h1>Gestión de Préstamos</h1>
             
            <div class="tabs">
-			    <a href="Prestamos.jsp" class="tab-button ">Solicitar préstamo</a>
-			    <a href="MisPrestamos.jsp" class="tab-button ">Mis préstamos</a>
+			    <a href="Prestamos.jsp" class="tab-button ">Mis Prestamos</a>
+			    <a href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getMisPrestamos"class="tab-button ">Solicitar préstamo</a>
 			    <a href="PagarCuotas.jsp" class="tab-button active">Pagar cuotas</a>
 			</div>
 

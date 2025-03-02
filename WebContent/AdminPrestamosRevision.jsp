@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entidad.Prestamo" %>
 <!DOCTYPE html>
 <html lang="es"><meta charset="UTF-8">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco UTN - Solicitudes de préstamos</title>
+<title>Banco UTN - Solicitudes de prï¿½stamos</title>
 	<style>
 		* {
 			box-sizing: border-box;
@@ -113,10 +115,11 @@
 	<%@ include file="Componentes/Head.jsp"%>
 </head>
 <body>
+	
 
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
 	<div class="main-content">
-		<h2 class="page-title">Solicitudes de préstamos</h2>
+		<h2 class="page-title">Solicitudes de prï¿½stamos</h2>
 		<table>
 			<thead>
 				<tr>
@@ -166,7 +169,7 @@
 		</table>
 
 		<div class="pagination">
-			<span>Mostrando página 1 de 2</span> <a href="#" class="active">1</a>
+			<span>Mostrando pï¿½gina 1 de 2</span> <a href="#" class="active">1</a>
 			<a href="#">2</a> <a href="#">3</a> <a href="#">Siguiente</a>
 		</div>
 	</div>

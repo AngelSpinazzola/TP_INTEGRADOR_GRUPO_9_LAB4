@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="entidad.Cliente"%>
+<%@ page import="entidad.Cuenta"%>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -122,87 +125,147 @@
   
    <%@ include file="Componentes/Head.jsp"%>
    <jsp:include page="Componentes/Navbar.jsp"></jsp:include>
+<%
+ArrayList<Cuenta> listaCuenta = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+if (listaCuenta == null) {
+    out.println("<p style='color:red;'>Error: listaCuentas es null</p>");
+} else if (listaCuenta.isEmpty()) {
+    out.println("<p style='color:orange;'>Aviso: listaCuentas está vacía</p>");
+}
+%>
+<%
+    // Obtener los mensajes de la sesión
+    String mensajeExito = (String) session.getAttribute("success");
+    String mensajeError = (String) session.getAttribute("error");
 
+    // Eliminar los mensajes de la sesión para que no se repitan
+    session.removeAttribute("success");
+    session.removeAttribute("error");
+    
+    
+	%>
+	
+	<% if (mensajeExito != null) { %>
+	
+    <div style="color: green; font-weight: bold; background-color: #d4edda; padding: 10px; border-radius: 5px; text-align: center; display: flex; justify-content: center; ">
+        <%= mensajeExito %>
+    </div>
+	<% } %>
+	
+	<% if (mensajeError != null) { %>
+	    <div style="color: red; font-weight: bold; background-color: #f8d7da; padding: 10px; border-radius: 5px; text-align: center; display: flex; justify-content: center;">
+	        <%= mensajeError %>
+	    </div>
+<% } %>
+	
+			<%
+			HttpSession MiSession = request.getSession(false);
+			
+			Cliente usuario = new Cliente();
+			
+			if (MiSession != null) {
+	            // Obtener el objeto Cliente de la sesión
+				usuario = (Cliente) MiSession.getAttribute("usuario");
+	            if (usuario != null) {
+	            } else {
+	            	System.out.println("No hay usuario en la sesión.");
+	            }
+	        } else {
+            	System.out.println("No hay sesión activa.");
+	        }
+			
+		    int dniCliente = usuario.getDni();
+			%>
     <div class="container">
         <div class="card">
             <h1>Gestión de Préstamos</h1>
             
             <div class="tabs">
-			    <a href="Prestamos.jsp" class="tab-button">Solicitar préstamo</a>
-			    <a href="MisPrestamos.jsp" class="tab-button active">Mis préstamos</a>
+			    <a href="Prestamos.jsp" class="tab-button">Mis préstamos</a>
+			    <a href="CargarDesplegablesSv?dni=<%=dniCliente%>&action=getMisPrestamos"class="tab-button active">Solicitar préstamo</a>
 			    <a href="PagarCuotas.jsp" class="tab-button ">Pagar cuotas</a>
 			</div>
 
 
-            <form id="loanForm">
-                <div class="form-group">
-                    <label>Monto solicitado</label>
-                    <input type="range" id="loanAmount" min="0" max="5238000" step="1000" value="2238000">
-                    <div class="amount-display">$ <span id="amountValue">2238000.00</span></div>
-                </div>
+	<form id="loanForm" action="PrestamosSV" method="post">
+	    <div class="form-group">
+	        <label>Monto solicitado</label>
+	        <input type="range" id="MontoPedido" min="0" max="100000" step="1000" value="0">
+	        <div class="amount-display">$ <span id="valorMonto">0.0</span></div>
+	    </div>
+	
+	    <input type="hidden" name="dni" id="dni" value=<%=dniCliente%> >		
+	
+	    <div class="form-group">
+	        <label>Plazo en cuotas</label>
+	        <select id="cantMeses">
+	            <option value="12">12 meses</option>
+	            <option value="24">24 meses</option>
+	            <option value="36">36 meses</option>
+	        </select>
+	    </div>
+	
+	    <label>Cuenta para acreditación</label>
+	    <select id="cuentaOrigen" name="CuentaOrigen" class="form-control">
+	        <option value="0">Seleccione el CBU de la cuenta</option>
+	        <% 
+	        ArrayList<Cuenta> listaCuentas = (ArrayList<Cuenta>) request.getAttribute("listaCuentas");
+	        if (listaCuentas != null) {
+	            for (Cuenta cuenta : listaCuentas) {
+	        %>
+	            <option value="<%=cuenta.getIdCuenta()%>">
+	                <%=cuenta.getCbu()%>
+	            </option>
+	        <% 
+	            }
+	        } else {
+	        %>
+	            <option value="">No hay cuentas disponibles</option>
+	        <% 
+	        }
+	        %>
+	    </select>
+	
+	    <div class="loan-summary">
+	        <h3>Resumen del préstamo</h3>
+	        <p>Monto solicitado: $<span id="resumenMonto">0.0</span></p>
+	        <p>Plazo: <span id="resumenPlazo">12</span> cuotas</p>
+	        <p>Cuota mensual con interés: $<span id="pagoMensual">0.0</span></p>
+	    </div>
+	
+	    <button type="submit" class="submit-button">Solicitar</button>
+	</form>
+	</div>
+	</div>
+	
+	<script>
+	    const montoPedido = document.getElementById('MontoPedido');
+	    const valorMonto = document.getElementById('valorMonto');
+	    const resumenMonto = document.getElementById('resumenMonto');
+	    const cantidadMeses = document.getElementById('cantMeses');
+	    const resumenPlazo = document.getElementById('resumenPlazo');
+	    const pagoMensual = document.getElementById('pagoMensual');
+	
+	    function actualizarResumenPrestamo() {
+	        const monto = parseFloat(montoPedido.value);
+	        const plazo = parseInt(cantidadMeses.value);
+	        const tasaInteres = 0.25; // 25% de tasa de interés anual
+	
+	        valorMonto.textContent = monto.toFixed(2);
+	        resumenMonto.textContent = monto.toFixed(2);
+	        resumenPlazo.textContent = plazo;
+	
+	        // Calcular el pago mensual con interés
+	        const tasaInteresMensual = tasaInteres / 12;
+	        const pago = (monto * tasaInteresMensual * Math.pow(1 + tasaInteresMensual, plazo)) / 
+	                    (Math.pow(1 + tasaInteresMensual, plazo) - 1);
+	        
+	        pagoMensual.textContent = pago.toFixed(2);
+	    }
+	
+	    montoPedido.addEventListener('input', actualizarResumenPrestamo);
+	    cantidadMeses.addEventListener('change', actualizarResumenPrestamo);
+	</script>
 
-                <div class="form-group">
-                    <label>Plazo en cuotas</label>
-                    <select id="loanTerm">
-                        <option value="12">12 meses</option>
-                        <option value="24">24 meses</option>
-                        <option value="36">36 meses</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Cuenta para acreditación</label>
-                    <select id="accountNumber">
-                        <option value="">Seleccione una cuenta</option>
-                        <option value="1">Cuenta Corriente ****1234</option>
-                        <option value="2">Caja de Ahorro ****5678</option>
-                    </select>
-                </div>
-
-                <div class="loan-summary">
-                    <h3>Resumen del préstamo</h3>
-                    <p>Monto solicitado: $<span id="summaryAmount">2238000.00</span></p>
-                    <p>Plazo: <span id="summaryTerm">12</span> cuotas</p>
-                    <p>Cuota mensual con interés: $<span id="monthlyPayment">28778.30</span></p>
-                </div>
-
-                <button type="submit" class="submit-button">Solicitar</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        const loanAmount = document.getElementById('loanAmount');
-        const amountValue = document.getElementById('amountValue');
-        const summaryAmount = document.getElementById('summaryAmount');
-        const loanTerm = document.getElementById('loanTerm');
-        const summaryTerm = document.getElementById('summaryTerm');
-        const monthlyPayment = document.getElementById('monthlyPayment');
-
-        function updateLoanSummary() {
-            const amount = parseFloat(loanAmount.value);
-            const term = parseInt(loanTerm.value);
-            const interestRate = 0.25; // 25% annual interest rate
-
-            amountValue.textContent = amount.toFixed(2);
-            summaryAmount.textContent = amount.toFixed(2);
-            summaryTerm.textContent = term;
-
-            // Calculate monthly payment with interest
-            const monthlyInterestRate = interestRate / 12;
-            const payment = (amount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, term)) / 
-                          (Math.pow(1 + monthlyInterestRate, term) - 1);
-            
-            monthlyPayment.textContent = payment.toFixed(2);
-        }
-
-        loanAmount.addEventListener('input', updateLoanSummary);
-        loanTerm.addEventListener('change', updateLoanSummary);
-
-        document.getElementById('loanForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Solicitud de préstamo enviada correctamente');
-        });
-    </script>
 </body>
-</html>
+</html> 

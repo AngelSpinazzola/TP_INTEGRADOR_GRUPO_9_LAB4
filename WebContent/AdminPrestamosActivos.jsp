@@ -1,3 +1,7 @@
+<%@page import="entidad.Prestamo"%>
+<%@page import="entidad.Cliente"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -5,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banco UTN - Préstamos Activos</title>
+    <title>Banco UTN - Prï¿½stamos Activos</title>
     <style>
         * {
             box-sizing: border-box;
@@ -127,64 +131,107 @@
 </head>
 <body>
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
- 
+ <%
+ Cliente cliente = (Cliente) request.getAttribute("cliente");
+
+	if (cliente == null) {
+		out.print("Cliente no encontrado.");
+		return;
+	}
+ ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) request.getAttribute("prestamos");
+ %>
     <div class="main-content">
-        <h2 class="page-title">Préstamos activos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre y apellido</th>
-                    <th>DNI</th>
-                    <th>Concepto</th>
-                    <th>Monto solicitado</th>
-                    <th>Deuda pendiente</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Armando Barreda</td>
-                    <td>3850005</td>
-                    <td>Hipotecario</td>
-                    <td>$50.000</td>
-                    <td>$41.666</td>
-                </tr>
-                <tr>
-                    <td>Bob Arnold</td>
-                    <td>6850005</td>
-                    <td>Personal</td>
-                    <td>$95.000</td>
-                    <td>$95.000</td>
-                </tr>
-                <tr>
-                    <td>Leo Pondo</td>
-                    <td>1241334</td>
-                    <td>Hipotecario</td>
-                    <td>$50.000</td>
-                    <td>$50.000</td>
-                </tr>
-                <tr>
-                    <td>Pepe Saenz</td>
-                    <td>4214141</td>
-                    <td>Vacaciones</td>
-                    <td>$35.000</td>
-                    <td>$35.000</td>
-                </tr>
-                <tr>
-                    <td>Ricardo Iorio</td>
-                    <td>9850005</td>
-                    <td>Vacaciones</td>
-                    <td>$195.000</td>
-                    <td>$162.500</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <span>Mostrando página 1 de 3</span>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">Siguiente</a>
-        </div>
-    </div>
+        <h2 class="page-title">Prï¿½stamos activos</h2>
+       <%
+				if (prestamos != null && !prestamos.isEmpty()) {
+			%>
+			<table>
+				<thead>
+					<tr>
+						<th>Nombre y Apelldio</th>
+						<th>ID</th>
+						<th>Tipo de prï¿½stamo</th>
+						<th>Monto pedido</th>
+						<th>Monto a pagar</th>
+						<th>Cuotas</th>
+						<th>Estado</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						for (Prestamo prestamo : prestamos ) {
+					%>
+					<tr>
+						<td><%=cliente.getNombre() + " " + cliente.getApellido()%></td>
+						<td><%=prestamo.getIdPrestamo()%></td>
+						<td><%=prestamo.getNombreTipoPrestamo()%></td>
+						<td><%=prestamo.getMontoPedido()%></td>
+						<td><%=prestamo.getMontoAPagar()%></td>
+						<td><%=prestamo.getCuotas()%></td>
+						<td>
+							<%
+								int estadoInt = prestamo.getEstado();
+										String estado = "";
+										String claseEstado = "";
+
+										if (estadoInt == 0) {
+											estado = "Pendiente";
+											claseEstado = "pending";
+										} else if (estadoInt == 1) {
+											estado = "Aprobado";
+											claseEstado = "approved";
+										} else if (estadoInt == 2) {
+											estado = "Rechazado";
+											claseEstado = "rejected";
+										}
+							%> <span class="status <%=claseEstado%>"><%=estado%></span>
+						</td>
+					</tr>
+					<%
+						}
+					%>
+				</tbody>
+			</table>
+
+			<!-- Paginaciï¿½n -->
+			<div class="pagination-container">
+				<%
+					int totalPrestamos = (Integer) request.getAttribute("totalPrestamos");
+						if (totalPrestamos > 3) {
+				%>
+				<div class="pagination-info">
+					Mostrando pï¿½gina
+					<%=request.getAttribute("currentPage")%>
+					de
+					<%=request.getAttribute("totalPages")%>
+				</div>
+				<div class="pagination">
+					<%
+						int totalPaginas = (Integer) request.getAttribute("totalPages");
+								int paginaActual = (Integer) request.getAttribute("currentPage");
+				
+								for (int i = 1; i <= totalPaginas; i++) {
+									String activeClass = (i == paginaActual) ? "active" : "";
+					%>
+					<button class="<%=activeClass%>"
+						onclick="window.location.href='ListarPrestamosSV?page=<%=i%>&pageSize=3'">
+						<%=i%>
+					</button>
+					<%
+						}
+					%>
+				</div>
+				<%
+					}
+				%>
+			</div>
+			<%
+				} else {
+			%>
+			<p>No se encontraron prï¿½stamos pendientes.</p>
+			<%
+				}
+			%>
+		</div>
 </body>
 </html>

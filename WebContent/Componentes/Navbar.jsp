@@ -28,14 +28,14 @@
 			Cliente usuario = new Cliente();
 			
 			if (MiSession != null) {
-	            // Obtener el objeto Cliente de la sesión
+	            // Obtener el objeto Cliente de la sesiï¿½n
 				usuario = (Cliente) MiSession.getAttribute("usuario");
 	            if (usuario != null) {
 	            } else {
-	            	System.out.println("No hay usuario en la sesión.");
+	            	System.out.println("No hay usuario en la sesiï¿½n.");
 	            }
 	        } else {
-            	System.out.println("No hay sesión activa.");
+            	System.out.println("No hay sesiï¿½n activa.");
 	        }
 			
 		    int dniCliente = usuario.getDni();
@@ -44,7 +44,7 @@
 			<div class="navbar-nav">
 				<a class="nav-link text-white" href="Home.jsp">Inicio</a> 
 				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getCuentas">Transferir</a>
-				<a class="nav-link text-white" href="Prestamos.jsp">Préstamos</a> 
+				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getPrestamos">PrÃ©stamos</a> 
 				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getCuentasMov">Movimientos</a>
 			</div>
 			<div class="ms-auto">

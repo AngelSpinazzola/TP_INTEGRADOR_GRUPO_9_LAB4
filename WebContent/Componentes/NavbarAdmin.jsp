@@ -1,3 +1,7 @@
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="entidad.Cliente"%>
+<%@page import="entidad.Usuario"%>
 <style>
 	* {
 		margin: 0;
@@ -130,7 +134,6 @@
 			<a class="btn btn-success me-2 logout-btn" href="LogoutServlet">Salir</a>
 		<%} %>
 	</div>
-
 	<div class="side-bar" id="sidebar">
 		<div class="close-btn" onclick="closeSidebar()">
 			<i class="fas fa-times"></i>
@@ -140,21 +143,22 @@
 				<a href="AdminPanel.jsp"><i class="fas fa-home"></i>Inicio</a>
 			</div>
 			<div class="item">
+			
 				<a href="ListarClientesSv?param=1"><i class="fa-solid fa-users"></i>Clientes</a>
 			</div>
 			<div class="item">
-				<a class="sub-btn"><i class="fas fa-wallet"></i>Préstamos<i
+				<a class="sub-btn"><i class="fas fa-wallet"></i>Prï¿½stamos<i
 					class="fas fa-angle-right dropdown"></i></a>
-				<div class="sub-menu">
-					<a href="AdminPrestamosRevision.jsp" class="sub-item"><i class="fas fa-hourglass-half"></i>Préstamos en revisión</a> 
-					<a href="AdminPrestamosActivos.jsp"class="sub-item"><i class="fas fa-check-circle"></i>Préstamos activos</a> 
-					<a href="AdminResumenPrestamos.jsp"class="sub-item"><i class="fas fa-list-alt"></i>Resumen de préstamos</a>
+				
+				<div class="sub-menu">			
+					<a href="AdminPrestamosRevision.jsp" class="sub-item"><i class="fas fa-hourglass-half"></i>Prï¿½stamos en revisiï¿½n</a> 
+					<a href="ListarPrestamosSV?dni=<%=%>&action=ListarPrestamos"class="sub-item"><i class="fas fa-check-circle"></i>Prï¿½stamos activos</a> 
+					<a href="AdminResumenPrestamos.jsp"class="sub-item"><i class="fas fa-list-alt"></i>Resumen de prï¿½stamos</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </nav>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.sub-btn').click(function() {

@@ -26,5 +26,21 @@ public class PrestamoNegocioImpl implements IPrestamoNegocio{
 	    int totalPrestamos = getTotalPrestamosCount(dniCliente); 
 	    return (int) Math.ceil((double) totalPrestamos / pageSize);
 	}
+	
+	 @Override
+	    public boolean solicitarPrestamo(Prestamo prestamo) {
+	        return iPrestamoDao.solicitarPrestamo(prestamo);
+	    }
+	    
+	    @Override
+	    public boolean aprobarPrestamo(int idPrestamo) {
+	        return iPrestamoDao.aprobarPrestamo(idPrestamo);
+	    }
+	    
+	    @Override
+	    public boolean rechazarPrestamo(int idPrestamo) {
+	        return iPrestamoDao.rechazarPrestamo(idPrestamo);
+	    }
 
+   
 }

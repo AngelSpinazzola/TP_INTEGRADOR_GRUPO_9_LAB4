@@ -1,3 +1,9 @@
 eclipse.preferences.version=1
 encoding//WebContent/AdminCuentasCliente.jsp=UTF-8
 encoding//WebContent/AdminEditarCliente.jsp=UTF-8
+encoding//WebContent/AdminPrestamosActivos.jsp=UTF-8
+encoding//WebContent/AdminPrestamosRevision.jsp=UTF-8
+encoding//WebContent/Componentes/Navbar.jsp=UTF-8
+encoding//WebContent/Componentes/NavbarAdmin.jsp=UTF-8
+encoding//src/servlets/ListarPrestamosSV.java=UTF-8
+encoding//src/servlets/PrestamosSV.java=UTF-8

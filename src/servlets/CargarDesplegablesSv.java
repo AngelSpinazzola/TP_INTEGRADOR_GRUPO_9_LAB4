@@ -66,10 +66,19 @@ public class CargarDesplegablesSv extends HttpServlet {
             request.getRequestDispatcher("ClienteMovimientos.jsp").forward(request, response);
             return;
         }
+        else if("getPrestamos".equals(action)) {
+        	 request.getRequestDispatcher("Prestamos.jsp").forward(request, response);
+             return;
+        }
+        else if("getMisPrestamos".equals(action)) {
+       	 request.getRequestDispatcher("MisPrestamos.jsp").forward(request, response);
+            return;
+       }
         else {
 			
         	request.getRequestDispatcher("Error.jsp").forward(request, response);
 		}
+        
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
