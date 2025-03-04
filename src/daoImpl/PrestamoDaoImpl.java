@@ -36,14 +36,12 @@ public class PrestamoDaoImpl implements IPrestamoDao {
 	        while (rs.next()) {
 	            Prestamo prestamo = new Prestamo();
 	            prestamo.setIdPrestamo(rs.getInt("IDPrestamo"));
-	            prestamo.setIdTipoPrestamo(rs.getInt("IDTipoPrestamo"));
+	            prestamo.setIdCuenta(rs.getInt("IDCuenta"));
 	            prestamo.setMontoAPagar(rs.getFloat("ImporteAPagar"));
 	            prestamo.setMontoPedido(rs.getFloat("MontoPedido"));
 	            prestamo.setCuotas(rs.getInt("Cuotas"));
 	            prestamo.setFecha(rs.getDate("Fecha"));
 	            prestamo.setEstado(rs.getInt("Estado"));
-	            prestamo.setNombreTipoPrestamo(rs.getString("Tipo"));
-	            prestamo.setTna(rs.getFloat("TNA"));
 
 	            prestamos.add(prestamo);
 	        }
@@ -84,43 +82,40 @@ public class PrestamoDaoImpl implements IPrestamoDao {
 	    return (int) Math.ceil((double) totalPrestamos / pageSize); 
 	}
 
+	@Override
+	public boolean aprobarPrestamo(int idPrestamo) {
+	    String query = "{CALL AprobarPrestamo(?)}";
 	
-@Override
-public boolean aprobarPrestamo(int idPrestamo) {
-    String query = "{CALL AprobarPrestamo(?)}";
-
-    try (Connection conn = Conexion.getConnection();
-         CallableStatement cs = conn.prepareCall(query)) {
-        
-        cs.setInt(1, idPrestamo);
-        return cs.executeUpdate() > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    }
-}
+	    try (Connection conn = Conexion.getConnection();
+	         CallableStatement cs = conn.prepareCall(query)) {
+	        
+	        cs.setInt(1, idPrestamo);
+	        return cs.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+		
+	@Override
+	public boolean solicitarPrestamo(Prestamo prestamo) {
+	    String query = "{CALL SolicitarPrestamo(?, ?, ?, ?, ?)}";
+	    	
+	    try (Connection conn = Conexion.getConnection();
+	         CallableStatement cs = conn.prepareCall(query)) {
+	        
+	        cs.setInt(1, prestamo.getIdCuenta());
+	        cs.setFloat(2, prestamo.getMontoPedido());
+	        cs.setFloat(3, prestamo.getMontoAPagar());
+	        cs.setInt(4, prestamo.getCuotas());
+	        cs.setDate(5, new java.sql.Date(prestamo.getFecha().getTime()));
 	
-	
-@Override
-public boolean solicitarPrestamo(Prestamo prestamo) {
-    String query = "{CALL SolicitarPrestamo(?, ?, ?, ?, ?, ?)}";
-
-    try (Connection conn = Conexion.getConnection();
-         CallableStatement cs = conn.prepareCall(query)) {
-        
-    	cs.setInt(1, prestamo.getIdTipoPrestamo());
-        cs.setInt(2, prestamo.getDniCliente());
-        cs.setFloat(3, prestamo.getMontoPedido());
-        cs.setFloat(4, prestamo.getMontoAPagar());
-        cs.setInt(5, prestamo.getCuotas());
-        cs.setDate(6, new java.sql.Date(prestamo.getFecha().getTime()));
-
-        return cs.executeUpdate() > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    }
-}
+	        return cs.executeUpdate() > 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 
 	@Override
 	public boolean rechazarPrestamo(int idPrestamo) {

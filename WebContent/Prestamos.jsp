@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="entidad.Cliente"%>
 <%@ page import="entidad.Cuenta"%>
+<%@ page import="entidad.Prestamo"%>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -9,13 +10,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banco UTN - Mis Préstamos</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+		.pagination-container {
+			display: flex;
+			justify-content: space-around;
+			align-items: center; 
+		}
+		.pagination {
+			display: flex;
+			justify-content: flex-end; 
+		}
+		
+		.pagination button {
+			background-color: #aac4ee;
+			border: none;
+			color: white;
+			padding: 8px 16px;
+			text-decoration: none;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			border-radius: 2px;
+		}
+		
+		.pagination button:hover {
+			background-color: #2F4E93;
+			color: white;
+		}
+		
+		.pagination button.active {
+			text-color: white;
+			background-color: #2F4E93;
+			color: white;
+		}
+		
+		.pagination-info {
+			font-size: 16px;
+			color: #333;
+		}
+		
+		
+		.btn-mov {
+           background-color: var(--primary-color);
+           color: white;
+           border: none;
+           margin-top: 10px;
+           padding: 10px 20px;
+           border-radius: 4px;
+           cursor: pointer;
+           font-size: 14px;
+           width: 200px;
+       }
 
+       .btn-mov:hover {
+           background-color: var(--secondary-color);
+       }
+
+       .btn-volver:hover {
+           background-color: #d0d0d0;
+       }
+		
+		.container {
+			max-width: 1000px;
+			margin: 30px auto;
+		}
+		
+		.section-title {
+			font-size: 24px;
+			color: #333;
+			margin-top: 20px;
+			text-align: center;
+		}
+		
+		.section-content {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+		}
+		
+		.account-cards {
+			display: flex;
+			gap: 20px;
+			justify-content: center;
+			margin-top: 20px;
+		}
+		
+		.form-select {
+			width: 300px;
+			padding: 8px;
+			/* Añadido para que el select sea más alto y mejor alineado */
+			font-size: 14px;
+			margin-top: 5px;
+			/* Un pequeño margen para separar el texto y el select */
+		}
+		
+		.account-card {
+			border: 1px solid #d1d1d1;
+			border-radius: 20px;
+			padding: 20px;
+			width: 382px;
+			text-align: left;
+			background-color: #fff;
+		}
+		
+		.account-card h3 {
+			margin: 0;
+			font-size: 18px;
+			color: #333;
+		}
+		
+		.account-card p {
+			margin: 5px 0;
+			font-size: 14px;
+		}
+		
+		.account-card button {
+			background-color: #0066cc;
+			color: white;
+			border: none;
+			padding: 5px 10px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		
+		.transactions-table {
+			width: 80%;
+			margin: 20px auto;
+			background-color: #fff;
+			border-collapse: collapse;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+		
+		.transactions-table th, .transactions-table td {
+			padding: 10px;
+			text-align: center;
+			border: 1px solid #ddd;
+		}
+		
+		.transactions-table th {
+			background-color: #e0e0e0;
+			font-size: 16px;
+		}
+		
+		.transactions-table .negative {
+			color: red;
+		}
+		
+		.transactions-table .positive {
+			color: green;
+		}
+		
+		.pagination {
+			display: flex;
+			justify-content: space-evenly;
+			gap: 10px;
+		}
+		
+		.pagination a {
+			padding: 8px 16px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			text-decoration: none;
+			color: #333;
+		}
+		
+		.pagination a:hover {
+			background-color: #0066cc;
+			color: white;
+		}
+		
+		.pagination a.active {
+			background-color: #0066cc;
+			color: white;
+		}
         body {
             background-color: #f5f5f5;
         }
@@ -190,95 +361,90 @@ if (listaCuenta == null) {
 			
 		    int dniCliente = usuario.getDni();
 			%>
-    <div class="container">
-        <div class="card">
-            <h1>Gestión de Préstamos</h1>
+
+
+	<div class="container">
+		<h1>Gestión de Préstamos</h1>
             
-            <div class="tabs">
-			    <a href="Prestamos.jsp" class="tab-button active">Mis préstamos</a>
-			    <a href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getMisPrestamos" class="tab-button">Solicitar Prestamo</a>
-			    <a href="PagarCuotas.jsp" class="tab-button">Pagar cuotas</a>
+        <div class="tabs">
+			<a href="PrestamosSV?dni<%=dniCliente%>" class="tab-button active">Mis préstamos</a>
+			<a href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getMisPrestamos" class="tab-button">Solicitar Prestamo</a>
+	    	<a href="PagarCuotas.jsp" class="tab-button">Pagar cuotas</a>
+		</div>
+		
+		<div class="section-title">Últimos Prestamos</div>
+		<table class="transactions-table">
+			<thead>
+	            <tr>
+	                <th>ID Prestamo</th>
+	                <th>ID Cuenta</th>
+	                <th>Monto Pedido</th>
+	                <th>Total a pagar</th>
+	                <th>Cuotas</th>
+	                <th>Fecha</th>
+	                <th>Estado</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <%
+	                ArrayList<Prestamo> prestamos = (ArrayList<Prestamo>) request.getAttribute("listaPrestamos");
+	                if (prestamos != null && !prestamos.isEmpty()) {
+	                    for (Prestamo pres : prestamos) {
+		        %>
+		                    <tr>
+		                        <td><%= pres.getIdPrestamo() %></td>
+		                        <td><%= pres.getIdCuenta() %></td>
+		                        <td><%= pres.getMontoPedido() %></td>
+		                        <td><%= pres.getMontoAPagar() %></td>
+		                        <td><%= pres.getCuotas() %></td>
+		                        <td><%= pres.getFecha() %></td>
+		                        <td><%= pres.getEstado() %></td>
+		                    </tr>
+		        <%
+	                    }
+	                } else {
+	            %>
+	                    <tr><td colspan="3">No hay Prestamos hechos</td></tr>
+	            <%
+	                }
+	            %>
+	        </tbody>
+		</table>
+
+		<div class="pagination-container">
+			<div class="pagination-info">
+				Mostrando página
+				<%=request.getAttribute("currentPage")%>
+				de
+				<%=request.getAttribute("totalPages")%>
 			</div>
 
-            <table class="loans-table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Cuenta</th>
-                        <th>Importe</th>
-                        <th>Importe total</th>
-                        <th>Cuota mensual</th>
-                        <th>Plazo</th>
-                        <th>Progreso</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>10-8-2024</td>
-                        <td>CA - 100005</td>
-                        <td>$100.000,00</td>
-                        <td>$120.000,00</td>
-                        <td>$12.000,00</td>
-                        <td>12</td>
-                      	 <td>3/12</td>
-                        <td><span class="status status-approved">Aprobado</span></td>
-                    </tr>
-                    <tr>
-                        <td>9-5-2024</td>
-                        <td>CA - 100005</td>
-                        <td>$200.000,00</td>
-                        <td>$240.000,00</td>
-                        <td>$24.000,00</td>
-                        <td>24</td>
-                        <td>-</td>
-                        <td><span class="status status-pending">Pendiente</span></td>
-                    </tr>
-                    <tr>
-                        <td>15-9-2024</td>
-                        <td>CA - 100005</td>
-                        <td>$50.000,00</td>
-                        <td>$60.000,00</td>
-                        <td>$10.000,00</td>
-                        <td>6</td>
-                        <td>2/6</td>
-                        <td><span class="status status-approved">Aprobado</span></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="pagination">
-                <div class="pagination-info">
-                    Mostrando página 1 de 3
-                </div>
-                <div class="pagination-controls">
-                    <button class="pagination-button" disabled>Anterior</button>
-                    <button class="pagination-button active">1</button>
-                    <button class="pagination-button">2</button>
-                    <button class="pagination-button">3</button>
-                    <button class="pagination-button">Siguiente</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Manejo de la paginación
-        const paginationButtons = document.querySelectorAll('.pagination-button');
-        
-        paginationButtons.forEach(button => {
-            if (!button.disabled) {
-                button.addEventListener('click', function() {
-                    // Remover clase active de todos los botones
-                    paginationButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Agregar clase active al botón clickeado si es un número
-                    if (!isNaN(this.textContent)) {
-                        this.classList.add('active');
-                    }
-                });
-            }
-        });
-    </script>
+			<!-- Botones de paginación -->
+			<div class="pagination">
+				<%
+				    Integer totalPagesAttr = (Integer) request.getAttribute("totalPages");
+				    Integer currentPageAttr = (Integer) request.getAttribute("currentPage");
+	
+				    int totalPages = (totalPagesAttr != null) ? totalPagesAttr : 1; // Si es null, poner 1 por defecto
+				    int currentPage = (currentPageAttr != null) ? currentPageAttr : 1;
+				    
+					for (int i = 1; i <= totalPages; i++) {
+						String activeClass = (i == currentPage) ? "active" : "";
+				%>
+				    
+				<%
+			    Integer idCuenta = (Integer) request.getAttribute("idCuenta"); 
+				%>    
+				
+				<button class="<%=activeClass%>"
+					onclick="window.location.href='ClienteMovimientos?page=<%=i%>&pageSize=5&idCuenta=<%=idCuenta%>'">
+					<%=i%>
+				</button>
+				<%
+					}	
+				%>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

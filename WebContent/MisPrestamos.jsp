@@ -2,6 +2,8 @@
 <%@ page import="entidad.Cliente"%>
 <%@ page import="entidad.Cuenta"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Date, java.text.SimpleDateFormat" %>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -181,16 +183,15 @@ if (listaCuenta == null) {
             <h1>Gestión de Préstamos</h1>
             
             <div class="tabs">
-			    <a href="Prestamos.jsp" class="tab-button">Mis préstamos</a>
+			    <a href="PrestamosSV?dni<%=dniCliente%>" class="tab-button">Mis préstamos</a>
 			    <a href="CargarDesplegablesSv?dni=<%=dniCliente%>&action=getMisPrestamos"class="tab-button active">Solicitar préstamo</a>
 			    <a href="PagarCuotas.jsp" class="tab-button ">Pagar cuotas</a>
 			</div>
 
-
 	<form id="loanForm" action="PrestamosSV" method="post">
 	    <div class="form-group">
 	        <label>Monto solicitado</label>
-	        <input type="range" id="MontoPedido" min="0" max="100000" step="1000" value="0">
+	        <input type="range" id="MontoPedido" name="MontoPedido" min="0" max="100000" step="1000" value="0">
 	        <div class="amount-display">$ <span id="valorMonto">0.0</span></div>
 	    </div>
 	
@@ -198,7 +199,7 @@ if (listaCuenta == null) {
 	
 	    <div class="form-group">
 	        <label>Plazo en cuotas</label>
-	        <select id="cantMeses">
+	        <select id="cantMeses" name="cantMeses">
 	            <option value="12">12 meses</option>
 	            <option value="24">24 meses</option>
 	            <option value="36">36 meses</option>
@@ -231,8 +232,20 @@ if (listaCuenta == null) {
 	        <p>Monto solicitado: $<span id="resumenMonto">0.0</span></p>
 	        <p>Plazo: <span id="resumenPlazo">12</span> cuotas</p>
 	        <p>Cuota mensual con interés: $<span id="pagoMensual">0.0</span></p>
+	        <p><strong>Total a pagar:</strong> $<span id="resumenTotalPagar">0.0</span></p>
 	    </div>
-	
+	    
+		<%
+		    // Obtener la fecha actual
+		    Date fechaActual = new Date();
+		    // Formatear la fecha en el formato "yyyy-MM-dd"
+		    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		    String fechaCreacion = formato.format(fechaActual);
+		%>  
+       	<input type="hidden" id="FechaCreacion" name="FechaCreacion" class="form-control" value="<%= fechaCreacion %>" required>
+		
+ 	  	<input type="hidden" name="TotalPagar" id="TotalPagar">
+		
 	    <button type="submit" class="submit-button">Solicitar</button>
 	</form>
 	</div>
@@ -240,27 +253,33 @@ if (listaCuenta == null) {
 	
 	<script>
 	    const montoPedido = document.getElementById('MontoPedido');
-	    const valorMonto = document.getElementById('valorMonto');
 	    const resumenMonto = document.getElementById('resumenMonto');
 	    const cantidadMeses = document.getElementById('cantMeses');
 	    const resumenPlazo = document.getElementById('resumenPlazo');
 	    const pagoMensual = document.getElementById('pagoMensual');
+	    const resumenTotalPagar = document.getElementById('resumenTotalPagar');
+	    const totalPagarInput = document.getElementById('TotalPagar'); // input hidden que se enviará
 	
 	    function actualizarResumenPrestamo() {
-	        const monto = parseFloat(montoPedido.value);
-	        const plazo = parseInt(cantidadMeses.value);
+	        const monto = parseFloat(montoPedido.value) || 0;
+	        const plazo = parseInt(cantidadMeses.value) || 12;
 	        const tasaInteres = 0.25; // 25% de tasa de interés anual
-	
-	        valorMonto.textContent = monto.toFixed(2);
+			
+	        document.getElementById('valorMonto').textContent = monto.toFixed(2);
 	        resumenMonto.textContent = monto.toFixed(2);
 	        resumenPlazo.textContent = plazo;
 	
-	        // Calcular el pago mensual con interés
 	        const tasaInteresMensual = tasaInteres / 12;
-	        const pago = (monto * tasaInteresMensual * Math.pow(1 + tasaInteresMensual, plazo)) / 
+	        const pago = (monto * tasaInteresMensual * Math.pow(1 + tasaInteresMensual, plazo)) /
 	                    (Math.pow(1 + tasaInteresMensual, plazo) - 1);
 	        
 	        pagoMensual.textContent = pago.toFixed(2);
+	        
+	        const totalAPagar = pago * plazo;
+	        resumenTotalPagar.textContent = totalAPagar.toFixed(2);
+	
+	        // Asegurar que el valor del input hidden también se actualiza
+	        totalPagarInput.value = totalAPagar.toFixed(2);	        
 	    }
 	
 	    montoPedido.addEventListener('input', actualizarResumenPrestamo);

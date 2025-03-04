@@ -219,7 +219,7 @@ if (listaCuenta == null) {
             <h1>Gestión de Préstamos</h1>
             
            <div class="tabs">
-			    <a href="Prestamos.jsp" class="tab-button ">Mis Prestamos</a>
+			    <a href="PrestamosSV?dni<%=dniCliente%>" class="tab-button ">Mis Prestamos</a>
 			    <a href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getMisPrestamos"class="tab-button ">Solicitar préstamo</a>
 			    <a href="PagarCuotas.jsp" class="tab-button active">Pagar cuotas</a>
 			</div>

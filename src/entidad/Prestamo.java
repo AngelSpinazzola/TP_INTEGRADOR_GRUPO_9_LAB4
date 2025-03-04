@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Prestamo extends TipoPrestamo{
 	private int idPrestamo;
-	private int dniCliente;
+	private int idCuenta;
 	private float montoPedido;
 	private float montoAPagar;
 	private int cuotas;
@@ -15,10 +15,10 @@ public class Prestamo extends TipoPrestamo{
 		super();
 	}
 
-	public Prestamo(int idPrestamo, int dniCliente, float montoPedido, float montoAPagar, int cuotas, Date fecha, int estado, TipoPrestamo tipoPrestamo) {
+	public Prestamo(int idPrestamo, int idCuenta, float montoPedido, float montoAPagar, int cuotas, Date fecha, int estado, TipoPrestamo tipoPrestamo) {
 		super();
 		this.idPrestamo = idPrestamo;
-		this.dniCliente = dniCliente;
+		this.idCuenta = idCuenta;
 		this.montoPedido = montoPedido;
 		this.montoAPagar = montoAPagar;
 		this.cuotas = cuotas;
@@ -34,12 +34,13 @@ public class Prestamo extends TipoPrestamo{
 		this.idPrestamo = idPrestamo;
 	}
 
-	public int getDniCliente() {
-		return dniCliente;
+
+	public int getIdCuenta() {
+		return idCuenta;
 	}
 
-	public void setDniCliente(int dniCliente) {
-		this.dniCliente = dniCliente;
+	public void setIdCuenta(int idCuenta) {
+		this.idCuenta = idCuenta;
 	}
 
 	public float getMontoPedido() {

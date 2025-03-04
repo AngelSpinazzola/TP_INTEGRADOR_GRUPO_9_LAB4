@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entidad.Cliente;
+import entidad.Cuenta;
+import entidad.Movimientos;
 import entidad.Prestamo;
 import entidad.TipoPrestamo;
 import negocio.IPrestamoNegocio;
+import negocioImpl.CuentaNegocioImpl;
 import negocioImpl.PrestamoNegocioImpl;
 
 @WebServlet("/PrestamosSV")
@@ -28,8 +32,7 @@ public class PrestamosSV extends HttpServlet {
 
     // LISTAR PR�STAMOS POR CLIENTE
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain");
-        PrintWriter out = response.getWriter();
+
         String pageParam = request.getParameter("page");
         String pageSizeParam = request.getParameter("pageSize");
 
@@ -38,60 +41,87 @@ public class PrestamosSV extends HttpServlet {
         HttpSession MiSession = request.getSession(false);
 		
 		Cliente usuario = new Cliente();
+        
+        if (MiSession != null) {
+            // Obtener el objeto Cliente de la sesión
+			usuario = (Cliente) MiSession.getAttribute("usuario");
+            if (usuario != null) {
+            } else {
+            	System.out.println("No hay usuario en la sesión.");
+            }
+        } else {
+        	System.out.println("No hay sesión activa.");
+        }
+		
 	    int dniCliente = usuario.getDni();
 	    
-        if (dniCliente!=0 ) {
-            List<Prestamo> prestamos = prestamoNegocio.getPrestamosPorCliente(dniCliente, page, pageSize);
-            for (Prestamo p : prestamos) {
-                out.println("ID: " + p.getIdPrestamo() + " - Monto: " + p.getMontoPedido());
-            }
-        }
-        out.flush();
+        PrestamoNegocioImpl PrestamoNegocioImpl = new PrestamoNegocioImpl();
+
+        ArrayList<Prestamo> listaPrestamos = PrestamoNegocioImpl.getPrestamosPorCliente(dniCliente, page, pageSize);
+
+	    int totalPrestamos = PrestamoNegocioImpl.getTotalPrestamosCount(dniCliente);
+        int totalPaginas = (int) Math.ceil((double) totalPrestamos / pageSize);
+
+        request.setAttribute("listaPrestamos", listaPrestamos);
+        request.setAttribute("totalPages", totalPaginas);
+        request.setAttribute("currentPage", page);
+
+
+        request.getRequestDispatcher("Prestamos.jsp").forward(request, response);
+
     }
 
     // SOLICITAR PR�STAMO
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+    	HttpSession session = request.getSession();
+    	
     	int dniCliente = Integer.parseInt(request.getParameter("dni"));
-        int cuotas = Integer.parseInt(request.getParameter("cuotas"));
-        int idTipoPrestamo = Integer.parseInt(request.getParameter("idTipoPrestamo"));
-        int idPrestamo = Integer.parseInt(request.getParameter("idpresatmo"));
-		float montoPedido = parseFloatSafe(request.getParameter("MontoPedido"));;		
-		float montoAPagar = parseFloatSafe(request.getParameter("ImporteAPagar"));
-		String fecha =request.getParameter("fecha");
+    	int idCuenta = Integer.parseInt(request.getParameter("CuentaOrigen"));
+        int cuotas = Integer.parseInt(request.getParameter("cantMeses"));
+		float montoPedido = parseFloatSafe(request.getParameter("MontoPedido"));	
+		float montoAPagar = parseFloatSafe(request.getParameter("TotalPagar"));
+		String fecha = request.getParameter("FechaCreacion");
 		
+		System.out.println(idCuenta);
+		System.out.println(cuotas);
+		System.out.println(montoPedido);
+		System.out.println(montoAPagar);
+		System.out.println(fecha);
 		
-		Prestamo prestamo=new Prestamo();
-		prestamo.setIdPrestamo(idPrestamo);
-		prestamo.setIdTipoPrestamo(idTipoPrestamo);
-		prestamo.setDniCliente(dniCliente);
+		Prestamo prestamo = new Prestamo();
+
+		if (fecha != null && !fecha.trim().isEmpty()) {
+		    try {
+		        java.sql.Date fechaSQL = java.sql.Date.valueOf(fecha.trim());
+		        prestamo.setFecha(fechaSQL);
+		    } catch (IllegalArgumentException e) {
+		        System.out.println("Error: Formato de fecha incorrecto - " + fecha);
+		        response.getWriter().write("Error en la fecha ingresada.");
+		        return;
+		    }
+		} else {
+		    System.out.println("Error: Fecha no recibida.");
+		    response.getWriter().write("Fecha no válida.");
+		    return;
+		}
+		
+		prestamo.setIdCuenta(idCuenta);
 		prestamo.setMontoPedido(montoPedido);
 		prestamo.setMontoAPagar(montoAPagar);
 		prestamo.setCuotas(cuotas);
-		prestamo.setFecha(Date.valueOf(fecha));
-		prestamo.setEstado(1);
-        boolean resultado = prestamoNegocio.solicitarPrestamo(prestamo);
+		prestamo.setEstado(0);
+        boolean res = prestamoNegocio.solicitarPrestamo(prestamo);
         
-        response.setContentType("text/plain");
-        response.getWriter().write(resultado ? "Solicitud exitosa" : "Error en la solicitud");
-    }
-
-// APROBAR PR�STAMO
-protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
-        boolean resultado = prestamoNegocio.aprobarPrestamo(idPrestamo);
-        
-        response.setContentType("text/plain");
-        response.getWriter().write(resultado ? "Prestamo aprobado" : "Error al aprobar");
-    }
-
-// RECHAZAR PR�STAMO
-protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idPrestamo = Integer.parseInt(request.getParameter("idPrestamo"));
-        boolean resultado = prestamoNegocio.rechazarPrestamo(idPrestamo);
-        
-        response.setContentType("text/plain");
-        response.getWriter().write(resultado ? "Prestamo rechazado" : "Error al rechazar");
+        if(res == true) {
+        	session.setAttribute("success", "Prestamo solicitado correctamente");
+       	 	System.out.println("Prestamo solicitado correctamente");
+        }
+        else {
+        	session.setAttribute("error", "Error al solicitar prestamo");
+       	 	System.out.println("Error al solicitar prestamo");
+        }
+         response.sendRedirect("CargarDesplegablesSv?dni= " + dniCliente + "&action=getPrestamos");
     }
     
 private float parseFloatSafe(String parameter) {
