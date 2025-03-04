@@ -6,7 +6,7 @@
 <html lang="es"><meta charset="UTF-8">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banco UTN - Solicitudes de pr�stamos</title>
+<title>Banco UTN - Solicitudes de Prestamos</title>
 	<style>
 		* {
 			box-sizing: border-box;
@@ -119,7 +119,7 @@
 
 	<%@ include file="Componentes/NavbarAdmin.jsp"%>
 	<div class="main-content">
-		<h2 class="page-title">Solicitudes de pr�stamos</h2>
+		<h2 class="page-title">Solicitudes de Prestamos</h2>
 		<table>
 			<thead>
 				<tr>

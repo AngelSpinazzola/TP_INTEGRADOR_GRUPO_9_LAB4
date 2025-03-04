@@ -147,13 +147,13 @@
 				<a href="ListarClientesSv?param=1"><i class="fa-solid fa-users"></i>Clientes</a>
 			</div>
 			<div class="item">
-				<a class="sub-btn"><i class="fas fa-wallet"></i>Pr�stamos<i
+				<a class="sub-btn"><i class="fas fa-wallet"></i>Prestamos<i
 					class="fas fa-angle-right dropdown"></i></a>
 				
 				<div class="sub-menu">			
-					<a href="AdminPrestamosRevision.jsp" class="sub-item"><i class="fas fa-hourglass-half"></i>Pr�stamos en revisi�n</a> 
-					<a href="ListarPrestamosSV?dni=<%=%>&action=ListarPrestamos"class="sub-item"><i class="fas fa-check-circle"></i>Pr�stamos activos</a> 
-					<a href="AdminResumenPrestamos.jsp"class="sub-item"><i class="fas fa-list-alt"></i>Resumen de pr�stamos</a>
+					<a href="AdminPrestamosRevision.jsp" class="sub-item"><i class="fas fa-hourglass-half"></i>Prestamos en revision</a> 
+					<a href="ListarPrestamosSV?&action=ListarPrestamos"class="sub-item"><i class="fas fa-check-circle"></i>Prestamos activos</a> 
+					<a href="AdminReportes.jsp"class="sub-item"><i class="fas fa-list-alt"></i>Reportes</a>
 				</div>
 			</div>
 		</div>

@@ -44,7 +44,7 @@
 			<div class="navbar-nav">
 				<a class="nav-link text-white" href="Home.jsp">Inicio</a> 
 				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getCuentas">Transferir</a>
-				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getPrestamos">Préstamos</a> 
+				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getPrestamos">Prestamos</a> 
 				<a class="nav-link text-white" href="CargarDesplegablesSv?dni=<%= dniCliente %>&action=getCuentasMov">Movimientos</a>
 			</div>
 			<div class="ms-auto">

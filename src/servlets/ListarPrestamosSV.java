@@ -37,7 +37,7 @@ public class ListarPrestamosSV extends HttpServlet {
 		if (dniCliente != null && !dniCliente.isEmpty() && dniCliente.matches("\\d+")) {
 		    dni = Integer.parseInt(dniCliente);
 		} else {
-		    request.setAttribute("error", "DNI inv�lido o no proporcionado.");
+		    request.setAttribute("error", "DNI invalido o no proporcionado.");
 		    request.getRequestDispatcher("/AdminPrestamosActivos.jsp").forward(request, response);
 		    return; 
 		}

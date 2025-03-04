@@ -68,7 +68,5 @@ public class Movimientos {
 	public void setTIpoMov(TipoMovimiento tIpoMov) {
 		TIpoMov = tIpoMov;
 	}
-	
-	
-	
+			
 }
