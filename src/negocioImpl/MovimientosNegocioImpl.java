@@ -8,12 +8,13 @@ import negocio.IMovimientoNegocio;
 
 public class MovimientosNegocioImpl implements IMovimientoNegocio {
 private IMovimientosDao iMovimientosDao;
-public ArrayList<Movimientos> listarMovimientos(Date fechaInicio, Date fechaFin){	
-ArrayList<Movimientos> movimientos= iMovimientosDao.listarMovimientos(fechaInicio, fechaFin);
-if(movimientos== null || movimientos.isEmpty()) {
- System.out.println("No hay Movimientos activos.");
-return new ArrayList<>();
+
+@Override
+public ArrayList<Movimientos> listarMovimientos(Date fechaInicio, Date fechaFin, int page, int pageSize) {
+	return iMovimientosDao.listarMovimientos(fechaInicio, fechaFin, page, pageSize);
 }
-return movimientos;		
-    }
+@Override
+public int getTotalMovimientosCount(Date fechaInicio, Date fechaFin) {
+	return iMovimientosDao.getTotalMovimientosCount(fechaInicio, fechaFin);	
+}
 }

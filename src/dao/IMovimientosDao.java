@@ -4,6 +4,6 @@ import java.util.ArrayList;
 import entidad.Movimientos; ;
 public interface IMovimientosDao {
 
-public ArrayList<Movimientos> listarMovimientos(Date fechaInicio, Date fechaFin);
-
+ArrayList<Movimientos> listarMovimientos(Date fechaInicio, Date fechaFin, int page, int pageSize);
+int getTotalMovimientosCount(Date fechaInicio, Date fechaFin);
 }

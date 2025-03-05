@@ -2,7 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.List;
+import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,17 +21,16 @@ public class ListarMovimientosSV extends HttpServlet {
         super();
     }
 
-protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         String fechaInicioStr = request.getParameter("fechaInicio");
         String fechaFinStr = request.getParameter("fechaFin");
-
-        System.out.println("Fecha Inicio: " + fechaInicioStr);
-        System.out.println("Fecha Fin: " + fechaFinStr);
+        String pageParam = request.getParameter("page");
+        String pageSizeParam = request.getParameter("pageSize");
 
         if (fechaInicioStr == null || fechaFinStr == null) {
             request.setAttribute("error", "Debe seleccionar un rango de fechas válido.");
-            RequestDispatcher rd = request.getRequestDispatcher("reportes.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("AdminReportes.jsp");
             rd.forward(request, response);
             return;
         }
@@ -38,14 +38,18 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
         try {
             Date fechaInicio = Date.valueOf(fechaInicioStr);
             Date fechaFin = Date.valueOf(fechaFinStr);
+            int page = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1;
+            int pageSize = (pageSizeParam != null && !pageSizeParam.isEmpty()) ? Integer.parseInt(pageSizeParam) : 5;
 
             MovimientosDaoimpl dao = new MovimientosDaoimpl();
-            List<Movimientos> movimientos = dao.listarMovimientos(fechaInicio, fechaFin);
-            System.out.println("Movimientos encontrados: " + movimientos.size());
+            ArrayList<Movimientos> movimientos = dao.listarMovimientos(fechaInicio, fechaFin, page, pageSize);
+            int totalMovimientos = dao.getTotalMovimientosCount(fechaInicio, fechaFin);
+            int totalPages = (int) Math.ceil((double) totalMovimientos / pageSize);
 
             request.setAttribute("movimientos", movimientos);
-            RequestDispatcher rd = request.getRequestDispatcher("AdminReportes.jsp");
-            rd.forward(request, response);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
+            request.getRequestDispatcher("AdminReportes.jsp").forward(request, response);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             request.setAttribute("error", "Formato de fecha incorrecto.");
